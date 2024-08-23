@@ -176,7 +176,7 @@ void pi_feed_forward(PI_REGS *piRegs)
 
 	piRegs->fUf = piRegs->fRef * piRegs->fKf;
 
-	piRegs->fURf = piRegs->fFbk * piRegs->fRKf ;
+	piRegs->fURf = piRegs->fFbk * piRegs->fRKf;
 
 	piRegs->fOutSat = piRegs->fUp + piRegs->fUi + piRegs->fUf - piRegs->fURf;
 
