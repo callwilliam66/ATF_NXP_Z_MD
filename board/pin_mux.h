@@ -37,7 +37,7 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
-#define BOARD_INITPINS_IOMUXC_GPR_GPR26_GPIO_MUX1_GPIO_SEL_MASK 0x30U /*!< GPIO1 and GPIO6 share same IO MUX function, GPIO_MUX1 selects one GPIO function: affected bits mask */
+#define BOARD_INITPINS_IOMUXC_GPR_GPR26_GPIO_MUX1_GPIO_SEL_MASK 0x100030U /*!< GPIO1 and GPIO6 share same IO MUX function, GPIO_MUX1 selects one GPIO function: affected bits mask */
 #define BOARD_INITPINS_IOMUXC_GPR_GPR27_GPIO_MUX2_GPIO_SEL_MASK 0xAFC00000U /*!< GPIO2 and GPIO7 share same IO MUX function, GPIO_MUX2 selects one GPIO function: affected bits mask */
 #define BOARD_INITPINS_IOMUXC_GPR_GPR28_GPIO_MUX3_GPIO_SEL_MASK 0x0E100000U /*!< GPIO3 and GPIO8 share same IO MUX function, GPIO_MUX3 selects one GPIO function: affected bits mask */
 #define BOARD_INITPINS_IOMUXC_GPR_GPR29_GPIO_MUX4_GPIO_SEL_MASK 0x8C000008U /*!< GPIO4 and GPIO9 share same IO MUX function, GPIO_MUX4 selects one GPIO function: affected bits mask */
@@ -436,6 +436,20 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_HSIO5_PORT                                          GPIO2   /*!< PORT peripheral base pointer */
 #define BOARD_INITPINS_HSIO5_PIN                                             26U   /*!< PORT pin number */
 #define BOARD_INITPINS_HSIO5_PIN_MASK                                (1U << 26U)   /*!< PORT pin mask */
+
+/* GPIO_AD_B1_04 (coord L12), UART2_SEL */
+/* Routed pin properties */
+#define BOARD_INITPINS_UART2_SEL_PERIPHERAL                                GPIO1   /*!< Peripheral name */
+#define BOARD_INITPINS_UART2_SEL_SIGNAL                                  gpio_io   /*!< Signal name */
+#define BOARD_INITPINS_UART2_SEL_CHANNEL                                     20U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_UART2_SEL_GPIO                                      GPIO1   /*!< GPIO peripheral base pointer */
+#define BOARD_INITPINS_UART2_SEL_GPIO_PIN                                    20U   /*!< GPIO pin number */
+#define BOARD_INITPINS_UART2_SEL_GPIO_PIN_MASK                       (1U << 20U)   /*!< GPIO pin mask */
+#define BOARD_INITPINS_UART2_SEL_PORT                                      GPIO1   /*!< PORT peripheral base pointer */
+#define BOARD_INITPINS_UART2_SEL_PIN                                         20U   /*!< PORT pin number */
+#define BOARD_INITPINS_UART2_SEL_PIN_MASK                            (1U << 20U)   /*!< PORT pin mask */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

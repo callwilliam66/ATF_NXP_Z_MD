@@ -25,7 +25,7 @@
             <power_domains/>
             <pin_labels>
                <pin_label pin_num="L11" pin_signal="GPIO_AD_B1_02" label="DI_10" identifier="DI_10"/>
-               <pin_label pin_num="L12" pin_signal="GPIO_AD_B1_04" label="MCU_TP4" identifier="MCU_TP4"/>
+               <pin_label pin_num="L12" pin_signal="GPIO_AD_B1_04" label="UART2_SEL" identifier="MCU_TP4;UART2_SEL"/>
                <pin_label pin_num="L13" pin_signal="GPIO_AD_B1_10" label="MCU_TP6" identifier="MCU_TP6"/>
                <pin_label pin_num="M11" pin_signal="GPIO_AD_B0_02" label="DI_6" identifier="DI_6"/>
                <pin_label pin_num="M12" pin_signal="GPIO_AD_B1_03" label="MCU_TP3" identifier="MCU_TP3"/>
@@ -452,6 +452,12 @@
                   <pin peripheral="JTAG" signal="TDI" pin_num="F14" pin_signal="GPIO_AD_B0_09"/>
                   <pin peripheral="JTAG" signal="TDO" pin_num="G13" pin_signal="GPIO_AD_B0_10"/>
                   <pin peripheral="JTAG" signal="TRSTB" pin_num="G10" pin_signal="GPIO_AD_B0_11"/>
+                  <pin peripheral="GPIO1" signal="gpio_io, 20" pin_num="L12" pin_signal="GPIO_AD_B1_04">
+                     <pin_features>
+                        <pin_feature name="identifier" value="UART2_SEL"/>
+                        <pin_feature name="direction" value="OUTPUT"/>
+                     </pin_features>
+                  </pin>
                </pins>
             </function>
          </functions_list>

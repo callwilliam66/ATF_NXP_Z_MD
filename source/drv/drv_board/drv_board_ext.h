@@ -208,8 +208,12 @@ extern void board_dac_dataUpdate(uint32 ulDacChannel,uint32 ulData);
 #define board_pwm_outputEnable_disable_macro()
 
 //// UART
-#define board_uart_en_on_macro() GPIO_PortClear(BOARD_INITPINS_USB_UART_RST_GPIO,BOARD_INITPINS_USB_UART_RST_GPIO_PIN_MASK)
-#define board_uart_en_off_macro() GPIO_PortSet(BOARD_INITPINS_USB_UART_RST_GPIO,BOARD_INITPINS_USB_UART_RST_GPIO_PIN_MASK)
+#define board_uart_en_on_macro()    GPIO_PortClear(BOARD_INITPINS_USB_UART_RST_GPIO,BOARD_INITPINS_USB_UART_RST_GPIO_PIN_MASK)
+#define board_uart_en_off_macro()   GPIO_PortSet(BOARD_INITPINS_USB_UART_RST_GPIO,BOARD_INITPINS_USB_UART_RST_GPIO_PIN_MASK)
 #define board_uart_det_read_macro() GPIO_PinRead(BOARD_INITPINS_USB_UART_RST_GPIO,BOARD_INITPINS_USB_UART_RST_GPIO_PIN)
+
+#define board_uart2_sel_on_macro()  GPIO_PortSet(BOARD_INITPINS_UART2_SEL_GPIO, BOARD_INITPINS_UART2_SEL_GPIO_PIN_MASK)
+#define board_uart2_sel_off_macro() GPIO_PortClear(BOARD_INITPINS_UART2_SEL_GPIO, BOARD_INITPINS_UART2_SEL_GPIO_PIN_MASK)
+
 
 #endif // end of file

@@ -13,7 +13,7 @@ mcu_data: ksdk2_0
 processor_version: 9.0.1
 pin_labels:
 - {pin_num: L11, pin_signal: GPIO_AD_B1_02, label: DI_10, identifier: DI_10}
-- {pin_num: L12, pin_signal: GPIO_AD_B1_04, label: MCU_TP4, identifier: MCU_TP4}
+- {pin_num: L12, pin_signal: GPIO_AD_B1_04, label: UART2_SEL, identifier: MCU_TP4;UART2_SEL}
 - {pin_num: L13, pin_signal: GPIO_AD_B1_10, label: MCU_TP6, identifier: MCU_TP6}
 - {pin_num: M11, pin_signal: GPIO_AD_B0_02, label: DI_6, identifier: DI_6}
 - {pin_num: M12, pin_signal: GPIO_AD_B1_03, label: MCU_TP3, identifier: MCU_TP3}
@@ -188,6 +188,7 @@ BOARD_InitPins:
   - {pin_num: F14, peripheral: JTAG, signal: TDI, pin_signal: GPIO_AD_B0_09}
   - {pin_num: G13, peripheral: JTAG, signal: TDO, pin_signal: GPIO_AD_B0_10}
   - {pin_num: G10, peripheral: JTAG, signal: TRSTB, pin_signal: GPIO_AD_B0_11}
+  - {pin_num: L12, peripheral: GPIO1, signal: 'gpio_io, 20', pin_signal: GPIO_AD_B1_04, identifier: UART2_SEL, direction: OUTPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -218,6 +219,15 @@ void BOARD_InitPins(void) {
   };
   /* Initialize GPIO functionality on GPIO_AD_B0_05 (pin G14) */
   GPIO_PinInit(GPIO1, 5U, &MCU_BOOT1_config);
+
+  /* GPIO configuration of UART2_SEL on GPIO_AD_B1_04 (pin L12) */
+  gpio_pin_config_t UART2_SEL_config = {
+      .direction = kGPIO_DigitalOutput,
+      .outputLogic = 0U,
+      .interruptMode = kGPIO_NoIntmode
+  };
+  /* Initialize GPIO functionality on GPIO_AD_B1_04 (pin L12) */
+  GPIO_PinInit(GPIO1, 20U, &UART2_SEL_config);
 
   /* GPIO configuration of HSIO3 on GPIO_B1_06 (pin C12) */
   gpio_pin_config_t HSIO3_config = {
@@ -374,6 +384,7 @@ void BOARD_InitPins(void) {
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_12_LPUART1_TX, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_13_LPUART1_RX, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_14_GPIO1_IO14, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_04_GPIO1_IO20, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_06_GPIO1_IO22, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_07_GPIO1_IO23, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_08_GPIO1_IO24, 0U); 
