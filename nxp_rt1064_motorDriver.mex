@@ -24,11 +24,11 @@
             <processor_version>9.0.1</processor_version>
             <power_domains/>
             <pin_labels>
-               <pin_label pin_num="L11" pin_signal="GPIO_AD_B1_02" label="DI_10" identifier="DI_10"/>
+               <pin_label pin_num="L11" pin_signal="GPIO_AD_B1_02" label="UART2_TX" identifier="DI_10;UART2_TX"/>
                <pin_label pin_num="L12" pin_signal="GPIO_AD_B1_04" label="UART2_SEL" identifier="MCU_TP4;UART2_SEL"/>
                <pin_label pin_num="L13" pin_signal="GPIO_AD_B1_10" label="MCU_TP6" identifier="MCU_TP6"/>
                <pin_label pin_num="M11" pin_signal="GPIO_AD_B0_02" label="DI_6" identifier="DI_6"/>
-               <pin_label pin_num="M12" pin_signal="GPIO_AD_B1_03" label="MCU_TP3" identifier="MCU_TP3"/>
+               <pin_label pin_num="M12" pin_signal="GPIO_AD_B1_03" label="UART2_RX" identifier="MCU_TP3;UART2_RX"/>
                <pin_label pin_num="M13" pin_signal="GPIO_AD_B1_09" label="MCU_TP5" identifier="MCU_TP5"/>
                <pin_label pin_num="C1" pin_signal="GPIO_EMC_21" label="LED_G5" identifier="LED_G5"/>
                <pin_label pin_num="C2" pin_signal="GPIO_EMC_09" label="LED_G1" identifier="LED_G1"/>
@@ -205,6 +205,11 @@
                      </feature>
                   </dependency>
                   <dependency resourceType="Peripheral" resourceId="JTAG" description="Peripheral JTAG is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="Peripheral" resourceId="LPUART2" description="Peripheral LPUART2 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
                      <feature name="initialized" evaluation="equal">
                         <data>true</data>
                      </feature>
@@ -456,6 +461,16 @@
                      <pin_features>
                         <pin_feature name="identifier" value="UART2_SEL"/>
                         <pin_feature name="direction" value="OUTPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="LPUART2" signal="TX" pin_num="L11" pin_signal="GPIO_AD_B1_02">
+                     <pin_features>
+                        <pin_feature name="identifier" value="UART2_TX"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="LPUART2" signal="RX" pin_num="M12" pin_signal="GPIO_AD_B1_03">
+                     <pin_features>
+                        <pin_feature name="identifier" value="UART2_RX"/>
                      </pin_features>
                   </pin>
                </pins>
@@ -957,6 +972,21 @@
                      </feature>
                   </dependency>
                   <dependency resourceType="PeripheralUnifiedSignal" resourceId="PWM4.pwm_fault.3" description="PWM4.FAULT, 3 pin needs to be routed" problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="routed" evaluation="equal">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="ClockOutput" resourceId="UART_CLK_ROOT" description="UART_CLK_ROOT is inactive." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="frequency" evaluation="greaterThan">
+                        <data type="Frequency" unit="Hz">0</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="LPUART2.uart_tx" description="Signal TX of the peripheral LPUART2 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="routed" evaluation="equal">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="LPUART2.uart_rx" description="Signal RX of the peripheral LPUART2 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
@@ -1487,7 +1517,7 @@
                         </struct>
                      </config_set>
                   </instance>
-                  <instance name="LPUART1" uuid="a3741353-75a7-4a26-8cff-570afdf81916" type="lpuart" type_id="lpuart_54a65a580e3462acdbacefd5299e0cac" mode="interrupts" peripheral="LPUART1" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                  <instance name="LPUART1" uuid="a3741353-75a7-4a26-8cff-570afdf81916" type="lpuart" type_id="lpuart_54a65a580e3462acdbacefd5299e0cac" mode="polling" peripheral="LPUART1" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
                      <config_set name="lpuartConfig_t">
                         <struct name="lpuartConfig">
                            <setting name="clockSource" value="LpuartClock"/>
@@ -1507,24 +1537,6 @@
                            <setting name="rxIdleConfig" value="kLPUART_IdleCharacter1"/>
                            <setting name="enableTx" value="true"/>
                            <setting name="enableRx" value="true"/>
-                        </struct>
-                     </config_set>
-                     <config_set name="interruptsCfg">
-                        <set name="interrupts">
-                           <selected>
-                              <id>kLPUART_RxDataRegFullInterruptEnable</id>
-                              <id>kLPUART_IdleLineInterruptEnable</id>
-                           </selected>
-                        </set>
-                        <struct name="interrupt_vectors">
-                           <setting name="enable_rx_tx_irq" value="true"/>
-                           <struct name="interrupt_rx_tx">
-                              <setting name="IRQn" value="LPUART1_IRQn"/>
-                              <setting name="enable_interrrupt" value="noInit"/>
-                              <setting name="enable_priority" value="true"/>
-                              <setting name="priority" value="1"/>
-                              <setting name="enable_custom_name" value="false"/>
-                           </struct>
                         </struct>
                      </config_set>
                   </instance>
@@ -2350,6 +2362,48 @@
                            <setting name="enable_priority" value="true"/>
                            <setting name="priority" value="5"/>
                            <setting name="enable_custom_name" value="false"/>
+                        </struct>
+                     </config_set>
+                  </instance>
+                  <instance name="LPUART2" uuid="6f8dbedc-6310-411f-94c3-b617979991b9" type="lpuart" type_id="lpuart_54a65a580e3462acdbacefd5299e0cac" mode="interrupts" peripheral="LPUART2" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="lpuartConfig_t">
+                        <struct name="lpuartConfig">
+                           <setting name="clockSource" value="LpuartClock"/>
+                           <setting name="lpuartSrcClkFreq" value="BOARD_BootClockRUN"/>
+                           <setting name="baudRate_Bps" value="230400"/>
+                           <setting name="parityMode" value="kLPUART_ParityDisabled"/>
+                           <setting name="dataBitsCount" value="kLPUART_EightDataBits"/>
+                           <setting name="isMsb" value="false"/>
+                           <setting name="stopBitCount" value="kLPUART_OneStopBit"/>
+                           <setting name="txFifoWatermark" value="0"/>
+                           <setting name="rxFifoWatermark" value="1"/>
+                           <setting name="enableRxRTS" value="false"/>
+                           <setting name="enableTxCTS" value="false"/>
+                           <setting name="txCtsSource" value="kLPUART_CtsSourcePin"/>
+                           <setting name="txCtsConfig" value="kLPUART_CtsSampleAtStart"/>
+                           <setting name="rxIdleType" value="kLPUART_IdleTypeStartBit"/>
+                           <setting name="rxIdleConfig" value="kLPUART_IdleCharacter1"/>
+                           <setting name="enableTx" value="true"/>
+                           <setting name="enableRx" value="true"/>
+                        </struct>
+                     </config_set>
+                     <config_set name="interruptsCfg">
+                        <set name="interrupts">
+                           <selected>
+                              <id>kLPUART_TransmissionCompleteInterruptEnable</id>
+                              <id>kLPUART_RxDataRegFullInterruptEnable</id>
+                              <id>kLPUART_RxOverrunInterruptEnable</id>
+                           </selected>
+                        </set>
+                        <struct name="interrupt_vectors">
+                           <setting name="enable_rx_tx_irq" value="true"/>
+                           <struct name="interrupt_rx_tx">
+                              <setting name="IRQn" value="LPUART2_IRQn"/>
+                              <setting name="enable_interrrupt" value="enabled"/>
+                              <setting name="enable_priority" value="false"/>
+                              <setting name="priority" value="0"/>
+                              <setting name="enable_custom_name" value="false"/>
+                           </struct>
                         </struct>
                      </config_set>
                   </instance>

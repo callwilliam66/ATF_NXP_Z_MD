@@ -19,7 +19,7 @@ void motorControl_isr(void)
 	mCtrl_homeLimitDataUpdate(&mCtrlRegs.homeLimitRegs);			//Limit Update
 
 	// controller process
-
+	mCtrl_uart_isr(&mCtrlRegs.uart1Regs);
 	mCtrl_uart_isr(&mCtrlRegs.uart2Regs);
 	//mCtrl_fpga_uart_isr(&mCtrlRegs.uart2Regs);
 	mCtrl_inner_uart_isr(&mCtrlRegs.uart3Regs);

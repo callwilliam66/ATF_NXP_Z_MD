@@ -824,7 +824,7 @@ static void GPIO2_init(void) {
 instance:
 - name: 'LPUART1'
 - type: 'lpuart'
-- mode: 'interrupts'
+- mode: 'polling'
 - custom_name_enabled: 'false'
 - type_id: 'lpuart_54a65a580e3462acdbacefd5299e0cac'
 - functional_group: 'BOARD_InitPeripherals'
@@ -849,16 +849,6 @@ instance:
       - rxIdleConfig: 'kLPUART_IdleCharacter1'
       - enableTx: 'true'
       - enableRx: 'true'
-  - interruptsCfg:
-    - interrupts: 'kLPUART_RxDataRegFullInterruptEnable kLPUART_IdleLineInterruptEnable'
-    - interrupt_vectors:
-      - enable_rx_tx_irq: 'true'
-      - interrupt_rx_tx:
-        - IRQn: 'LPUART1_IRQn'
-        - enable_interrrupt: 'noInit'
-        - enable_priority: 'true'
-        - priority: '1'
-        - enable_custom_name: 'false'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 const lpuart_config_t LPUART1_config = {
@@ -881,11 +871,6 @@ const lpuart_config_t LPUART1_config = {
 
 static void LPUART1_init(void) {
   LPUART_Init(LPUART1_PERIPHERAL, &LPUART1_config, LPUART1_CLOCK_SOURCE);
-  LPUART_EnableInterrupts(LPUART1_PERIPHERAL, kLPUART_RxDataRegFullInterruptEnable | kLPUART_IdleLineInterruptEnable);
-  /* Interrupt vector LPUART1_IRQn priority settings in the NVIC. */
-  NVIC_SetPriority(LPUART1_SERIAL_RX_TX_IRQN, LPUART1_SERIAL_RX_TX_IRQ_PRIORITY);
-  /* Interrupt LPUART1_IRQn request in the NVIC is not initialized (disabled by default). */
-  /* It can be enabled later by EnableIRQ(LPUART1_SERIAL_RX_TX_IRQN);  function call. */
 }
 
 /***********************************************************************************************************************
@@ -2024,6 +2009,76 @@ static void PWM4_init(void) {
 }
 
 /***********************************************************************************************************************
+ * LPUART2 initialization code
+ **********************************************************************************************************************/
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+instance:
+- name: 'LPUART2'
+- type: 'lpuart'
+- mode: 'interrupts'
+- custom_name_enabled: 'false'
+- type_id: 'lpuart_54a65a580e3462acdbacefd5299e0cac'
+- functional_group: 'BOARD_InitPeripherals'
+- peripheral: 'LPUART2'
+- config_sets:
+  - lpuartConfig_t:
+    - lpuartConfig:
+      - clockSource: 'LpuartClock'
+      - lpuartSrcClkFreq: 'BOARD_BootClockRUN'
+      - baudRate_Bps: '230400'
+      - parityMode: 'kLPUART_ParityDisabled'
+      - dataBitsCount: 'kLPUART_EightDataBits'
+      - isMsb: 'false'
+      - stopBitCount: 'kLPUART_OneStopBit'
+      - txFifoWatermark: '0'
+      - rxFifoWatermark: '1'
+      - enableRxRTS: 'false'
+      - enableTxCTS: 'false'
+      - txCtsSource: 'kLPUART_CtsSourcePin'
+      - txCtsConfig: 'kLPUART_CtsSampleAtStart'
+      - rxIdleType: 'kLPUART_IdleTypeStartBit'
+      - rxIdleConfig: 'kLPUART_IdleCharacter1'
+      - enableTx: 'true'
+      - enableRx: 'true'
+  - interruptsCfg:
+    - interrupts: 'kLPUART_TransmissionCompleteInterruptEnable kLPUART_RxDataRegFullInterruptEnable kLPUART_RxOverrunInterruptEnable'
+    - interrupt_vectors:
+      - enable_rx_tx_irq: 'true'
+      - interrupt_rx_tx:
+        - IRQn: 'LPUART2_IRQn'
+        - enable_interrrupt: 'enabled'
+        - enable_priority: 'false'
+        - priority: '0'
+        - enable_custom_name: 'false'
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
+const lpuart_config_t LPUART2_config = {
+  .baudRate_Bps = 230400UL,
+  .parityMode = kLPUART_ParityDisabled,
+  .dataBitsCount = kLPUART_EightDataBits,
+  .isMsb = false,
+  .stopBitCount = kLPUART_OneStopBit,
+  .txFifoWatermark = 0U,
+  .rxFifoWatermark = 1U,
+  .enableRxRTS = false,
+  .enableTxCTS = false,
+  .txCtsSource = kLPUART_CtsSourcePin,
+  .txCtsConfig = kLPUART_CtsSampleAtStart,
+  .rxIdleType = kLPUART_IdleTypeStartBit,
+  .rxIdleConfig = kLPUART_IdleCharacter1,
+  .enableTx = true,
+  .enableRx = true
+};
+
+static void LPUART2_init(void) {
+  LPUART_Init(LPUART2_PERIPHERAL, &LPUART2_config, LPUART2_CLOCK_SOURCE);
+  LPUART_EnableInterrupts(LPUART2_PERIPHERAL, kLPUART_TransmissionCompleteInterruptEnable | kLPUART_RxDataRegFullInterruptEnable | kLPUART_RxOverrunInterruptEnable);
+  /* Enable interrupt LPUART2_IRQn request in the NVIC. */
+  EnableIRQ(LPUART2_SERIAL_RX_TX_IRQN);
+}
+
+/***********************************************************************************************************************
  * Initialization functions
  **********************************************************************************************************************/
 void BOARD_InitPeripherals(void)
@@ -2047,6 +2102,7 @@ void BOARD_InitPeripherals(void)
   GPIO5_init();
   LPUART4_init();
   PWM4_init();
+  LPUART2_init();
 }
 
 /***********************************************************************************************************************

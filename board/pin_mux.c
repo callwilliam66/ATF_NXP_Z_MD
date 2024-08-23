@@ -12,11 +12,11 @@ package_id: MIMXRT1064DVL6A
 mcu_data: ksdk2_0
 processor_version: 9.0.1
 pin_labels:
-- {pin_num: L11, pin_signal: GPIO_AD_B1_02, label: DI_10, identifier: DI_10}
+- {pin_num: L11, pin_signal: GPIO_AD_B1_02, label: UART2_TX, identifier: DI_10;UART2_TX}
 - {pin_num: L12, pin_signal: GPIO_AD_B1_04, label: UART2_SEL, identifier: MCU_TP4;UART2_SEL}
 - {pin_num: L13, pin_signal: GPIO_AD_B1_10, label: MCU_TP6, identifier: MCU_TP6}
 - {pin_num: M11, pin_signal: GPIO_AD_B0_02, label: DI_6, identifier: DI_6}
-- {pin_num: M12, pin_signal: GPIO_AD_B1_03, label: MCU_TP3, identifier: MCU_TP3}
+- {pin_num: M12, pin_signal: GPIO_AD_B1_03, label: UART2_RX, identifier: MCU_TP3;UART2_RX}
 - {pin_num: M13, pin_signal: GPIO_AD_B1_09, label: MCU_TP5, identifier: MCU_TP5}
 - {pin_num: C1, pin_signal: GPIO_EMC_21, label: LED_G5, identifier: LED_G5}
 - {pin_num: C2, pin_signal: GPIO_EMC_09, label: LED_G1, identifier: LED_G1}
@@ -189,6 +189,8 @@ BOARD_InitPins:
   - {pin_num: G13, peripheral: JTAG, signal: TDO, pin_signal: GPIO_AD_B0_10}
   - {pin_num: G10, peripheral: JTAG, signal: TRSTB, pin_signal: GPIO_AD_B0_11}
   - {pin_num: L12, peripheral: GPIO1, signal: 'gpio_io, 20', pin_signal: GPIO_AD_B1_04, identifier: UART2_SEL, direction: OUTPUT}
+  - {pin_num: L11, peripheral: LPUART2, signal: TX, pin_signal: GPIO_AD_B1_02, identifier: UART2_TX}
+  - {pin_num: M12, peripheral: LPUART2, signal: RX, pin_signal: GPIO_AD_B1_03, identifier: UART2_RX}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -384,6 +386,8 @@ void BOARD_InitPins(void) {
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_12_LPUART1_TX, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_13_LPUART1_RX, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_14_GPIO1_IO14, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_02_LPUART2_TX, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_03_LPUART2_RX, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_04_GPIO1_IO20, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_06_GPIO1_IO22, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_07_GPIO1_IO23, 0U); 

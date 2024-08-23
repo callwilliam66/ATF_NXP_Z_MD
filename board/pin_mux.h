@@ -451,6 +451,16 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_UART2_SEL_PIN                                         20U   /*!< PORT pin number */
 #define BOARD_INITPINS_UART2_SEL_PIN_MASK                            (1U << 20U)   /*!< PORT pin mask */
 
+/* GPIO_AD_B1_02 (coord L11), UART2_TX */
+/* Routed pin properties */
+#define BOARD_INITPINS_UART2_TX_PERIPHERAL                               LPUART2   /*!< Peripheral name */
+#define BOARD_INITPINS_UART2_TX_SIGNAL                                        TX   /*!< Signal name */
+
+/* GPIO_AD_B1_03 (coord M12), UART2_RX */
+/* Routed pin properties */
+#define BOARD_INITPINS_UART2_RX_PERIPHERAL                               LPUART2   /*!< Peripheral name */
+#define BOARD_INITPINS_UART2_RX_SIGNAL                                        RX   /*!< Signal name */
+
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *
