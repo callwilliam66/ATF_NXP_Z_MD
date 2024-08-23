@@ -1517,7 +1517,7 @@
                         </struct>
                      </config_set>
                   </instance>
-                  <instance name="LPUART1" uuid="a3741353-75a7-4a26-8cff-570afdf81916" type="lpuart" type_id="lpuart_54a65a580e3462acdbacefd5299e0cac" mode="polling" peripheral="LPUART1" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                  <instance name="LPUART1" uuid="a3741353-75a7-4a26-8cff-570afdf81916" type="lpuart" type_id="lpuart_54a65a580e3462acdbacefd5299e0cac" mode="interrupts" peripheral="LPUART1" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
                      <config_set name="lpuartConfig_t">
                         <struct name="lpuartConfig">
                            <setting name="clockSource" value="LpuartClock"/>
@@ -1537,6 +1537,24 @@
                            <setting name="rxIdleConfig" value="kLPUART_IdleCharacter1"/>
                            <setting name="enableTx" value="true"/>
                            <setting name="enableRx" value="true"/>
+                        </struct>
+                     </config_set>
+                     <config_set name="interruptsCfg">
+                        <set name="interrupts">
+                           <selected>
+                              <id>kLPUART_RxDataRegFullInterruptEnable</id>
+                              <id>kLPUART_IdleLineInterruptEnable</id>
+                           </selected>
+                        </set>
+                        <struct name="interrupt_vectors">
+                           <setting name="enable_rx_tx_irq" value="true"/>
+                           <struct name="interrupt_rx_tx">
+                              <setting name="IRQn" value="LPUART1_IRQn"/>
+                              <setting name="enable_interrrupt" value="noInit"/>
+                              <setting name="enable_priority" value="true"/>
+                              <setting name="priority" value="1"/>
+                              <setting name="enable_custom_name" value="false"/>
+                           </struct>
                         </struct>
                      </config_set>
                   </instance>
@@ -2365,7 +2383,7 @@
                         </struct>
                      </config_set>
                   </instance>
-                  <instance name="LPUART2" uuid="6f8dbedc-6310-411f-94c3-b617979991b9" type="lpuart" type_id="lpuart_54a65a580e3462acdbacefd5299e0cac" mode="interrupts" peripheral="LPUART2" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                  <instance name="LPUART2" uuid="6f8dbedc-6310-411f-94c3-b617979991b9" type="lpuart" type_id="lpuart_54a65a580e3462acdbacefd5299e0cac" mode="polling" peripheral="LPUART2" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
                      <config_set name="lpuartConfig_t">
                         <struct name="lpuartConfig">
                            <setting name="clockSource" value="LpuartClock"/>
@@ -2385,25 +2403,6 @@
                            <setting name="rxIdleConfig" value="kLPUART_IdleCharacter1"/>
                            <setting name="enableTx" value="true"/>
                            <setting name="enableRx" value="true"/>
-                        </struct>
-                     </config_set>
-                     <config_set name="interruptsCfg">
-                        <set name="interrupts">
-                           <selected>
-                              <id>kLPUART_TransmissionCompleteInterruptEnable</id>
-                              <id>kLPUART_RxDataRegFullInterruptEnable</id>
-                              <id>kLPUART_RxOverrunInterruptEnable</id>
-                           </selected>
-                        </set>
-                        <struct name="interrupt_vectors">
-                           <setting name="enable_rx_tx_irq" value="true"/>
-                           <struct name="interrupt_rx_tx">
-                              <setting name="IRQn" value="LPUART2_IRQn"/>
-                              <setting name="enable_interrrupt" value="enabled"/>
-                              <setting name="enable_priority" value="false"/>
-                              <setting name="priority" value="0"/>
-                              <setting name="enable_custom_name" value="false"/>
-                           </struct>
                         </struct>
                      </config_set>
                   </instance>
