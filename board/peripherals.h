@@ -268,6 +268,12 @@ enum ADC_ETC_trigger_config_trigger_group_names
 #define LPUART2_PERIPHERAL LPUART2
 /* Definition of the clock source frequency */
 #define LPUART2_CLOCK_SOURCE 80000000UL
+/* LPUART2 interrupt vector ID (number). */
+#define LPUART2_SERIAL_RX_TX_IRQN LPUART2_IRQn
+/* LPUART2 interrupt vector priority. */
+#define LPUART2_SERIAL_RX_TX_IRQ_PRIORITY 1
+/* LPUART2 interrupt handler identifier. */
+#define LPUART2_SERIAL_RX_TX_IRQHANDLER LPUART2_IRQHandler
 
 /***********************************************************************************************************************
  * Global variables

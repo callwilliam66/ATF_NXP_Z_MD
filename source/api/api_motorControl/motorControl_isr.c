@@ -20,8 +20,8 @@ void motorControl_isr(void)
 
 	// controller process
 	mCtrl_uart_isr(&mCtrlRegs.uart1Regs);
-	mCtrl_uart_isr(&mCtrlRegs.uart2Regs);
-	//mCtrl_fpga_uart_isr(&mCtrlRegs.uart2Regs);
+	//mCtrl_uart_isr(&mCtrlRegs.uart2Regs);
+	mCtrl_fpga_uart_isr(&mCtrlRegs.uart2Regs);
 	mCtrl_inner_uart_isr(&mCtrlRegs.uart3Regs);
 	// servo on control
 	if((mCtrlRegs.uart1Regs.firmwareUpdateFlag == 1) || (mCtrlRegs.uart2Regs.firmwareUpdateFlag == 1)|| (mCtrlRegs.uart3Regs.firmwareUpdateFlag == 1))

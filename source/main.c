@@ -58,8 +58,7 @@ int main(void)
 	//// power counter start
 	device_pwm_start();
 
-//	board_uart2_sel_on_macro();
-//	board_uart2_sel_off_macro();
+
 	/// enable uart isr
 	EnableIRQ(LPUART1_SERIAL_RX_TX_IRQN);
 	EnableIRQ(LPUART3_SERIAL_RX_TX_IRQN);

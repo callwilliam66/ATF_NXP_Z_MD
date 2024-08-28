@@ -114,28 +114,21 @@ typedef struct
 	volatile uint32	rxisrCnt;
 	volatile uint32	rxcmdCnt;
 	volatile uint32	global_read_cnt;
+	volatile uint32 ulCheckCnt;
 
-	uint32 Zcmd;
-	uint32 Xcmd;
-
-	uint32 TestZcmd;
-	uint32 TestXcmd;
-
-	uint32 TestXcmd1;
-	uint32 TestZcmd1;
 	volatile  uint32 packetMode;
 	volatile  uint32 rxpacketMode;
-
 	volatile  uint32 txpacketMode;
 
 	volatile  uint32 RxPacket[2];
+
+	volatile uint32 XcmdPendStatus;
 
 	UART_PACKET_REGS txRegs;
 	UART_PACKET_REGS rxRegs;
 
 	uint32 rxdataReg_H;
 	uint32 rxdataReg_L;
-	volatile uint32 ulCheckCnt;
 
 	uint32   Rx_Isr_Status;
 	CcQueue  Rx_Data_Queue;
@@ -144,6 +137,7 @@ typedef struct
 	uint32 firmwareUpdateFlag;
 	uint32 firmwareUpdateLength;
 	uint32 firmwareReceiveFlag;
+	uint32 firmwareRxDoneFlag;
 	uint32 firmwareUpdatePacketLength;
 
 	uint32 ulrestflag;

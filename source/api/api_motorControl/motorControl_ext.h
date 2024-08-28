@@ -90,6 +90,7 @@ typedef struct
 	UART_REGS		uart1Regs;
 	UART_REGS		uart2Regs;
 	UART_REGS		uart3Regs;
+	UART_REGS		uart4Regs;
 
 	void (*uartRxCmd[256])(uint32);
 
