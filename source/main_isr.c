@@ -93,6 +93,9 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 /* LPUART3_IRQn interrupt handler */
 void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 
+#ifdef TESTMODE
+
+#else
 	uint8 u8rxisrtempdata;
 
 	if ((kLPUART_RxDataRegFullFlag) & LPUART_GetStatusFlags(LPUART3_PERIPHERAL))
@@ -130,7 +133,7 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 			LPUART_DisableInterrupts(LPUART3, kLPUART_TxDataRegEmptyInterruptEnable);
 		}
 	}
-
+#endif
 }
 
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)

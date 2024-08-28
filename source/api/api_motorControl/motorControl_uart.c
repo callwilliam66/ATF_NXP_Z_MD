@@ -175,7 +175,7 @@ void mCtrl_uart_tx_dataUpdate(UART_REGS *uartRegs)
 				}
 				else
 				{
-					uulData.dword =	0;
+					uulData.dword =	mCtrl_ulPfbkGet_macro();
 				}
 			break;
 		}
@@ -365,7 +365,9 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
 void mCtrl_inner_uart_tx_dataUpdate(UART_REGS *uartRegs)
 {
+#ifdef TESTMODE
 
+#else
 	//if( mCtrlRegs.uart1Regs.txState == UART_TX_STATE_BUSY)	return;
 
 	if(uartRegs->txUpdate == UART_TX_STATE_IDLE)		return;
@@ -395,6 +397,7 @@ void mCtrl_inner_uart_tx_dataUpdate(UART_REGS *uartRegs)
 	TxXcmdUpdateFlag = 0;
 
 	uartRegs->txUpdate = UART_TX_STATE_IDLE;
+#endif
 }
 
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
@@ -410,6 +413,9 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
 void mCtrl_inner_uart_rx(UART_REGS *uartRegs)
 {
+#ifdef TESTMODE
+
+#else
 	int32 queue_size;
 	int32 local_read_cnt;
 
@@ -456,6 +462,7 @@ void mCtrl_inner_uart_rx(UART_REGS *uartRegs)
 	uartRegs->rxCnt = 0;
 
 	DisableIRQ(LPUART4_SERIAL_RX_TX_IRQN);
+#endif
 }
 
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
@@ -463,6 +470,9 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
 void mCtrl_fpga_uart_tx_dataUpdate(UART_REGS *uartRegs)
 {
+#ifdef TESTMODE
+
+#else
 	if(uartRegs->txpwmCnt == uartRegs->rxcmdCnt  || uartRegs->txpwmCnt != uartRegs->tx_expect_Cnt ||  uartRegs->firmwareReceiveFlag == 1)
 	{
 		return;
@@ -587,7 +597,7 @@ void mCtrl_fpga_uart_tx_dataUpdate(UART_REGS *uartRegs)
 
 	LPUART_EnableInterrupts(uartRegs->module, kLPUART_TxDataRegEmptyInterruptEnable);
 
-
+#endif
 }
 
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
@@ -603,6 +613,9 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
 void mCtrl_fpga_uart_rx(UART_REGS *uartRegs)
 {
+#ifdef TESTMODE
+
+#else
 	int32 queue_size;
 	int32 local_read_cnt;
 	static uint32 ulreset_cnt = 0;
@@ -761,7 +774,7 @@ void mCtrl_fpga_uart_rx(UART_REGS *uartRegs)
 	// clear rx counter
 
 	uartRegs->rxUpdate = UART_RX_DATA_UPDATE;
-
+#endif
 }
 
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
@@ -769,6 +782,9 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
 void mCtrl_fpga_uart_rx_dataUpdate(UART_REGS *uartRegs)
 {
+#ifdef TESTMODE
+
+#else
 	if(uartRegs->rxUpdate == UART_RX_DATA_IDLE) return; // check rx process finish
 
 	uuint8 uucCtrl;
@@ -810,7 +826,7 @@ void mCtrl_fpga_uart_rx_dataUpdate(UART_REGS *uartRegs)
 
 	uartRegs->rxcmdCnt++;
 	uartRegs->rxUpdate = UART_RX_DATA_IDLE;
-
+#endif
 }
 
 

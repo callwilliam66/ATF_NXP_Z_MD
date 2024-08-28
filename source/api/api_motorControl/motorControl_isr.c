@@ -19,10 +19,15 @@ void motorControl_isr(void)
 	mCtrl_homeLimitDataUpdate(&mCtrlRegs.homeLimitRegs);			//Limit Update
 
 	// controller process
-	mCtrl_uart_isr(&mCtrlRegs.uart1Regs);
-	//mCtrl_uart_isr(&mCtrlRegs.uart2Regs);
-	mCtrl_fpga_uart_isr(&mCtrlRegs.uart2Regs);
+#ifdef TESTMODE
+	mCtrl_uart_isr(&mCtrlRegs.uart2Regs);
+	mCtrl_fpga_uart_isr(&mCtrlRegs.uart1Regs);
 	mCtrl_inner_uart_isr(&mCtrlRegs.uart3Regs);
+#else
+	mCtrl_uart_isr(&mCtrlRegs.uart1Regs);
+	mCtrl_uart_isr(&mCtrlRegs.uart2Regs);
+	mCtrl_inner_uart_isr(&mCtrlRegs.uart3Regs);
+#endif
 	// servo on control
 	if((mCtrlRegs.uart1Regs.firmwareUpdateFlag == 1) || (mCtrlRegs.uart2Regs.firmwareUpdateFlag == 1)|| (mCtrlRegs.uart3Regs.firmwareUpdateFlag == 1))
 	{
