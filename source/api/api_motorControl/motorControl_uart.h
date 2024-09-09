@@ -123,6 +123,7 @@ typedef struct
 	volatile  uint32 RxPacket[2];
 
 	volatile uint32 XcmdPendStatus;
+	volatile uint32 XcmdPendTime;
 
 	UART_PACKET_REGS txRegs;
 	UART_PACKET_REGS rxRegs;

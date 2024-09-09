@@ -121,16 +121,15 @@ typedef struct
 	HOME_LIMIT_REGS homeLimitRegs;
 	EMG_REGS		emgRegs;
 	TCURVE_REGS     tcurveRegs;
+
 	uint32          ulledfr;
 	uint32          ulledfg;
 
-
-	uint32          timer100kcnt;
-	uint32          timer40kcnt;
+	uint32          ulProgramTime;
 
 	uint32          ulCmdRenewFlag;
 	uint32          ulCmdRenewCnt;
-	uint32          ulTest;
+
 	uint32 			commandReceiveEnableFlag;
 	uint32 			ulfirmwareflashkey;
 
