@@ -389,8 +389,8 @@ void mCtrl_inner_uart_tx_dataUpdate(UART_REGS *uartRegs)
 
 	mCtrlRegs.uart1Regs.txState = UART_TX_STATE_BUSY;
 
-	LPUART_EnableInterrupts(LPUART3, kLPUART_TxDataRegEmptyInterruptEnable);
-	EnableIRQ(LPUART3_SERIAL_RX_TX_IRQN);
+	LPUART_EnableInterrupts(LPUART1, kLPUART_TxDataRegEmptyInterruptEnable);
+	EnableIRQ(LPUART1_SERIAL_RX_TX_IRQN);
 
 	TxXcmdUpdateFlag = 0;
 

@@ -50,7 +50,43 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 void LPUART1_SERIAL_RX_TX_IRQHANDLER(void) {
 
 	uint8 u8rxisrtempdata;
+#ifdef TESTMODE
+	if ((kLPUART_RxDataRegFullFlag) & LPUART_GetStatusFlags(LPUART1_PERIPHERAL))
+	{
+		mCtrlRegs.uart1Regs.rxisrCnt++;
+		u8rxisrtempdata = device_uart_module_rxReadByte_macro(LPUART1_PERIPHERAL);
+		Queue_Push(&mCtrlRegs.uart1Regs.Rx_Data_Queue, u8rxisrtempdata);
 
+	}else if((kLPUART_IdleLineFlag ) & LPUART_GetStatusFlags(LPUART1_PERIPHERAL))
+	{
+		LPUART1_PERIPHERAL->STAT |= 0x1<<20;
+
+		if(device_uart_module_rxFifoEmpty_macro(LPUART1_PERIPHERAL) == 0)
+		{
+			mCtrlRegs.uart1Regs.rxisrCnt++;
+			u8rxisrtempdata = device_uart_module_rxReadByte_macro(LPUART1_PERIPHERAL);
+			Queue_Push(&mCtrlRegs.uart1Regs.Rx_Data_Queue,u8rxisrtempdata);
+		}
+
+	}else if( (kLPUART_TxDataRegEmptyFlag ) & LPUART_GetStatusFlags(LPUART1_PERIPHERAL))
+	{
+		mCtrlRegs.uart1Regs.txState = UART_TX_STATE_BUSY;
+
+		device_uart_module_txWriteByte_macro(LPUART1_PERIPHERAL, mCtrlRegs.uart1Regs.txRegs.data[UART_TX_PACKET_LENGTH - mCtrlRegs.uart1Regs.txCnt]);
+
+		mCtrlRegs.uart1Regs.txCnt--;
+
+		if(mCtrlRegs.uart1Regs.txCnt == 0)
+		{
+			if( mCtrlRegs.uart1Regs.XcmdPendStatus == 0)
+				mCtrlRegs.uart1Regs.txpwmCnt++;
+
+			mCtrlRegs.uart1Regs.txCnt = UART_TX_PACKET_LENGTH;
+			mCtrlRegs.uart1Regs.txState = UART_TX_STATE_IDLE;
+			LPUART_DisableInterrupts(LPUART1, kLPUART_TxDataRegEmptyInterruptEnable);
+		}
+	}
+#else
 	/* Reading all interrupt flags of status registers */
 	if ((kLPUART_RxDataRegFullFlag) & LPUART_GetStatusFlags(LPUART1_PERIPHERAL))
 	{
@@ -85,6 +121,8 @@ void LPUART1_SERIAL_RX_TX_IRQHANDLER(void) {
 			LPUART_DisableInterrupts(LPUART1,kLPUART_TxDataRegEmptyInterruptEnable);
 		}
 	}
+#endif
+
 }
 
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
