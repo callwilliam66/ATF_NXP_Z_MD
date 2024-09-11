@@ -141,6 +141,7 @@ typedef struct
 	uint32 firmwareRxDoneFlag;
 	uint32 firmwareUpdatePacketLength;
 
+
 	uint32 ulrestflag;
 
 }UART_REGS;

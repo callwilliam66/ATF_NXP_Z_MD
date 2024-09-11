@@ -368,7 +368,7 @@ void mCtrl_inner_uart_tx_dataUpdate(UART_REGS *uartRegs)
 #ifdef TESTMODE
 	//if( mCtrlRegs.uart1Regs.txState == UART_TX_STATE_BUSY)	return;
 
-	if(uartRegs->txUpdate == UART_TX_STATE_IDLE)		return;
+	if(uartRegs->txUpdate == UART_TX_STATE_IDLE)				return;
 
 	static uint32 TxXcmdUpdateFlag;
 
@@ -386,7 +386,7 @@ void mCtrl_inner_uart_tx_dataUpdate(UART_REGS *uartRegs)
 
 		TxXcmdUpdateFlag = 1;
 	}
-
+	mCtrlRegs.ulProgramTimeWatch = 0;
 	mCtrlRegs.uart1Regs.txState = UART_TX_STATE_BUSY;
 
 	LPUART_EnableInterrupts(LPUART1, kLPUART_TxDataRegEmptyInterruptEnable);
@@ -483,6 +483,7 @@ void mCtrl_inner_uart_rx(UART_REGS *uartRegs)
 	{
 		return;
 	}
+
 
 	uartRegs->txUpdate= UART_TX_DATA_UPDATE;
 	// clear rx counter
@@ -953,6 +954,8 @@ void mCtrl_fpga_uart_rx(UART_REGS *uartRegs)
 		uartRegs->XcmdPendStatus = 1;
 
 		EnableIRQ(LPUART4_SERIAL_RX_TX_IRQN);
+
+		mCtrlRegs.ulProgramTimeWatch = mCtrlRegs.ulProgramTime;
 
 		return;
 
