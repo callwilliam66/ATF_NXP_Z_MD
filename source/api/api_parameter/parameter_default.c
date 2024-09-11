@@ -17,7 +17,7 @@ const char paraName_limitPosEna[]			= "limitPosEnable";
 const char paraName_limitNegEna[]			= "limitNegEnable";
 const char paraName_positionKp[]			= "positionKp";
 const char paraName_positionKd[]			= "poistionKd";
-
+const char paraName_positionCoefficient[]	= "positionCoefficient";
 const char paraName_speedindex[]		    = "speedindex";
 const char paraName_speedKp[]				= "speedKp";
 const char paraName_speedKi[]				= "speedKi";

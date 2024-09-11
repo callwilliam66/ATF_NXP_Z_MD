@@ -13,6 +13,7 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 void motorControl_isr(void)
 {
 	// state
+	mCtrlRegs.ulProgramTime++;
 
 	motorControl_statusUpdate();									//State Update
 

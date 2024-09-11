@@ -68,6 +68,9 @@ typedef enum
 
 #define PARA_P_KP						20  // 0x0000_0014
 #define PARA_P_KD						21  // 0x0000_0015
+#define PARA_P_COEFF					22  // 0x0000_0016
+
+
 
 #define PARA_V_KP1						27  // 0x0000_001B
 #define PARA_V_KI1						28  // 0x0000_001C
@@ -218,7 +221,7 @@ typedef enum
 #define PARA_LIMIT_NEG_ENABLE_DEFAULT           {	0,			1,			0,			paraType_wr,			para_servo_on_locked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_limitNegEna,			para_limitNegEnable}
 #define PARA_P_KP_DEFAULT                       {	30,			100000,		0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_positionKp,				para_pKp}
 #define PARA_P_KD_DEFAULT                       {	0,			100000,		0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_positionKd,				para_pKd}
-
+#define PARA_P_COEFF_DEFAULT					{	0,			100000,		0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_positionCoefficient,	para_pCoefficient}
 #define PARA_V_INDEX_DEFAULT                    {	0,		    10,		    0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_speedindex,			para_vindex}
 #define PARA_V_KP_DEFAULT                       {	330,		10000,		0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_speedKp,			para_vKp}
 #define PARA_V_KI_DEFAULT                       {	350,		1000000,	0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_speedKi,			para_vKi}
@@ -364,7 +367,7 @@ typedef enum
 #define PR_019_DEFAULT	PARA_BLANK_DEFAULT
 #define PR_020_DEFAULT	PARA_P_KP_DEFAULT
 #define PR_021_DEFAULT	PARA_P_KD_DEFAULT
-#define PR_022_DEFAULT	PARA_BLANK_DEFAULT
+#define PR_022_DEFAULT	PARA_P_COEFF_DEFAULT
 #define PR_023_DEFAULT	PARA_BLANK_DEFAULT
 #define PR_024_DEFAULT	PARA_BLANK_DEFAULT
 #define PR_025_DEFAULT	PARA_BLANK_DEFAULT
