@@ -126,6 +126,8 @@ typedef struct
 	uint32          ulledfg;
 
 	uint32          ulProgramTime;
+	uint32          ulProgramTimeWatch;
+	uint32 			ulTimeOutFlag;
 
 	uint32          ulCmdRenewFlag;
 	uint32          ulCmdRenewCnt;
