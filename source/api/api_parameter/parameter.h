@@ -41,6 +41,7 @@ extern void para_limitNegEnable(void);
 
 extern void para_pKp(void);
 extern void para_pKd(void);
+extern void para_pCoefficient(void);
 
 extern void para_vindex(void);
 extern void para_vKp(void);

@@ -43,6 +43,7 @@ int32 para_valueGet(uint32 ulPara)
 	if(ulPara == 331) return mCtrlRegs.homeLimitRegs.ulSoftNegLimit;
 	if(ulPara == 332) return mCtrlRegs.homeLimitRegs.softPosLimitEnable;
 	if(ulPara == 333) return mCtrlRegs.homeLimitRegs.ulSoftPosLimit;
+	if(ulPara == 22)  return (uint32)100000/mParaRegs.motor.fSpeedMax;
 
 	return paraRegs.para[ulPara].lValue;
 }

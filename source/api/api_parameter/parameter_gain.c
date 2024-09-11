@@ -36,6 +36,16 @@ void para_pKd(void)
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
 __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
+void para_pCoefficient(void)
+{
+
+}
+
+
+
+#if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
+__RAMFUNC(RAM_FUNC_BLOCK)
+#endif
 // 10
 void para_vindex(void)
 {
