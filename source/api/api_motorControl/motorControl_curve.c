@@ -32,7 +32,7 @@ void mCtrl_Tcurve_Setting(TCURVE_REGS *tcurveRegs,int32 lpcmd)
 	fAacc = tcurveRegs->fVmax - fVinit;
 	fAdec = tcurveRegs->fVmax - fVend;
 
-	tcurveRegs->fsm = fVinit * tcurveRegs->ultacc + fVend* tcurveRegs->ultdec;
+	tcurveRegs->fsm = fVinit * tcurveRegs->ultacc + fVend * tcurveRegs->ultdec;
 	tcurveRegs->fsm += math_abs_macro(fAacc)*(tcurveRegs->ultacc * tcurveRegs->ultacc + 1)/2;
 	tcurveRegs->fsm += math_abs_macro(fAdec)*(tcurveRegs->ultdec * tcurveRegs->ultdec + 1)/2;
 
@@ -106,6 +106,8 @@ void mCtrl_Tcurve_Calc(TCURVE_REGS *tcurveRegs)
 			tcurveRegs->ulfirsthome = 1;
 			tcurveRegs->lpcmd = tcurveRegs->ldistance;
 			tcurveRegs->ultcurve_enable = 0;
+			tcurveRegs->flogPcmd = 0.0F;
+			tcurveRegs->flogVinit = 0.0F;
 			return ;
 		}
 	}

@@ -13,15 +13,17 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 void motorControl_isr(void)
 {
 	// state
+#ifdef TESTMODE
 	mCtrlRegs.ulProgramTime++;
 
 	if( mCtrlRegs.ulProgramTimeWatch != 0 && mCtrlRegs.ulProgramTime > ( mCtrlRegs.ulProgramTimeWatch + 4000) )
 	{
 		mCtrlRegs.ulTimeOutFlag = 1;
+
 		mCtrlRegs.uart1Regs.txRegs.packet.header = 0x32;
 		mCtrlRegs.uart1Regs.txRegs.packet.packet = 0xff;
 		mCtrlRegs.uart1Regs.txRegs.packet.ctrl_st = board_HSIO5_read_macro();
-		mCtrlRegs.uart1Regs.txRegs.packet.data0 = board_HSIO5_read_macro();
+		mCtrlRegs.uart1Regs.txRegs.packet.data0 = 0xff;
 		mCtrlRegs.uart1Regs.txRegs.packet.data1 = 0xff;
 		mCtrlRegs.uart1Regs.txRegs.packet.data2 = 0xff;
 		mCtrlRegs.uart1Regs.txRegs.packet.data3 = 0xff;
@@ -36,7 +38,7 @@ void motorControl_isr(void)
 		mCtrlRegs.uart3Regs.txUpdate = UART_TX_STATE_IDLE;
 		mCtrlRegs.ulProgramTimeWatch = 0;
 	}
-
+#endif
 
 	motorControl_statusUpdate();									//State Update
 
