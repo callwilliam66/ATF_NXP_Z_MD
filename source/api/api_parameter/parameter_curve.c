@@ -13,7 +13,7 @@ void para_tcurve_vinit(void)
 {
 	float32 fData;
 
-	fData = para_valueGet_macro(PARA_TCURVE_VINIT)/40000;
+	fData = para_valueGet_macro(PARA_TCURVE_VINIT);
 
 	mCtrl_lVinitSet_macro(fData);
 }
@@ -22,7 +22,7 @@ void para_tcurve_vmax(void)
 {
 	float32 fData;
 
-	fData = (float32)para_valueGet_macro(PARA_TCURVE_VMAX)/40000;
+	fData = (float32)para_valueGet_macro(PARA_TCURVE_VMAX);
 
 	mCtrl_fVmaxSet_macro(fData);
 

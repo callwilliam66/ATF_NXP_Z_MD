@@ -100,7 +100,7 @@ void mCtrl_Tcurve_Calc(TCURVE_REGS *tcurveRegs)
 		if(tcurveRegs->ultime < tcurveRegs->ultmid)
 		{
 			tcurveRegs->fAcmd = tcurveRegs->fAacc;
-		}else if(tcurveRegs->ultime < 2*tcurveRegs->ultmid )
+		}else if(tcurveRegs->ultime < 2 * tcurveRegs->ultmid )
 		{
 			tcurveRegs->fAcmd = -tcurveRegs->fAacc;
 		}else

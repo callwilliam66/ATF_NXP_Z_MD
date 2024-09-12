@@ -168,6 +168,20 @@ void mCtrl_uart_tx_dataUpdate(UART_REGS *uartRegs)
 			case UART_PACKET_VERSION_GET:
 				uulData.dword = para_valueGet_macro(PARA_FIRMWARE_VERSION);
 			break;
+#ifdef TESTMODE
+			case 0x02:
+				uulData.dword = mCtrlRegs.tcurveRegs.ulcurveType;
+			break;
+			case 0x04:
+				uulData.dword = (mCtrlRegs.tcurveRegs.ultacc + mCtrlRegs.tcurveRegs.ultdec + mCtrlRegs.tcurveRegs.ultcc);
+			break;
+			case 0x05:
+				uulData.dword = 2 * mCtrlRegs.tcurveRegs.ultmid;
+			break;
+			case 0x06:
+				uulData.dword = 100000 * mCtrlRegs.tcurveRegs.fAacc;
+			break;
+#endif
 			default:
 				if(mCtrl_status_homeFindedGet_macro() == 1)
 				{
