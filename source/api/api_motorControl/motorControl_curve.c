@@ -91,6 +91,8 @@ void mCtrl_Tcurve_Calc(TCURVE_REGS *tcurveRegs)
 			tcurveRegs->ulfirsthome = 1;
 			tcurveRegs->lpcmd = tcurveRegs->ldistance;
 			tcurveRegs->ultcurve_enable = 0;
+			tcurveRegs->flogPcmd = 0.0F;
+			tcurveRegs->flogVinit = 0.0F;
 			return ;
 		}
 	}else
