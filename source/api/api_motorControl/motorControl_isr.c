@@ -210,16 +210,16 @@ void motorControl_isr(void)
 		{
 			if((int32)(mCtrlRegs.ulPcmd - mCtrlRegs.homeLimitRegs.ulPHome) < 0)
 			{
-				if(((int32)(mCtrlRegs.ulPcmd - mCtrlRegs.homeLimitRegs.ulPHome)) < ((int32)mCtrlRegs.homeLimitRegs.ulSoftNegLimit))
+				if(((int32)(mCtrlRegs.ulPcmd - mCtrlRegs.homeLimitRegs.ulPHome)) < ((int32)mCtrlRegs.homeLimitRegs.lSoftNegLimit))
 				{
-					if(((int32)(mCtrlRegs.ulPfbk - mCtrlRegs.homeLimitRegs.ulPHome)) < ((int32)mCtrlRegs.homeLimitRegs.ulSoftNegLimit))
+					if(((int32)(mCtrlRegs.ulPfbk - mCtrlRegs.homeLimitRegs.ulPHome)) < ((int32)mCtrlRegs.homeLimitRegs.lSoftNegLimit))
 					{
 						if(mCtrlRegs.ulPcmd < ulpcmdold)
 							mCtrlRegs.ulPcmd = mCtrlRegs.ulPfbk;
 
 					}else
 					{
-						mCtrlRegs.ulPcmd = mCtrlRegs.homeLimitRegs.ulPHome + mCtrlRegs.homeLimitRegs.ulSoftNegLimit;
+						mCtrlRegs.ulPcmd = mCtrlRegs.homeLimitRegs.ulPHome + mCtrlRegs.homeLimitRegs.lSoftNegLimit;
 					}
 
 					switch(mCtrlRegs.mode)
@@ -238,17 +238,17 @@ void motorControl_isr(void)
 		{
 			if((int32)(mCtrlRegs.ulPcmd - mCtrlRegs.homeLimitRegs.ulPHome) > 0)
 			{
-				if(((int32)(mCtrlRegs.ulPcmd - mCtrlRegs.homeLimitRegs.ulPHome)) > ((int32)mCtrlRegs.homeLimitRegs.ulSoftPosLimit))
+				if(((int32)(mCtrlRegs.ulPcmd - mCtrlRegs.homeLimitRegs.ulPHome)) > ((int32)mCtrlRegs.homeLimitRegs.lSoftPosLimit))
 				{
 
-					if(((int32)(mCtrlRegs.ulPfbk - mCtrlRegs.homeLimitRegs.ulPHome)) > ((int32)mCtrlRegs.homeLimitRegs.ulSoftPosLimit))
+					if(((int32)(mCtrlRegs.ulPfbk - mCtrlRegs.homeLimitRegs.ulPHome)) > ((int32)mCtrlRegs.homeLimitRegs.lSoftPosLimit))
 					{
 						if(mCtrlRegs.ulPcmd > ulpcmdold)
 							mCtrlRegs.ulPcmd = mCtrlRegs.ulPfbk;
 
 					}else
 					{
-						mCtrlRegs.ulPcmd = mCtrlRegs.homeLimitRegs.ulPHome + mCtrlRegs.homeLimitRegs.ulSoftPosLimit;
+						mCtrlRegs.ulPcmd = mCtrlRegs.homeLimitRegs.ulPHome + mCtrlRegs.homeLimitRegs.lSoftPosLimit;
 					}
 
 

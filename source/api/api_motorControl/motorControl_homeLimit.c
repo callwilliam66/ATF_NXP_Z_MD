@@ -94,14 +94,14 @@ void mCtrl_home_cmd(HOME_LIMIT_REGS *homeLimitRegs)
 
 		if(mCtrlRegs.homeLimitRegs.softNegLimitEnable == 1)
 		{
-			if((int32)mCtrlRegs.homeLimitRegs.ulhomePos <(int32)mCtrlRegs.homeLimitRegs.ulSoftNegLimit)
-				lhomePosPcmd  = mCtrlRegs.homeLimitRegs.ulSoftNegLimit;
+			if((int32)mCtrlRegs.homeLimitRegs.ulhomePos <(int32)mCtrlRegs.homeLimitRegs.lSoftNegLimit)
+				lhomePosPcmd  = mCtrlRegs.homeLimitRegs.lSoftNegLimit;
 
 		}
 		if(mCtrlRegs.homeLimitRegs.softPosLimitEnable == 1)
 		{
-			if((int32)mCtrlRegs.homeLimitRegs.ulhomePos >(int32)mCtrlRegs.homeLimitRegs.ulSoftPosLimit)
-				lhomePosPcmd  = mCtrlRegs.homeLimitRegs.ulSoftPosLimit;
+			if((int32)mCtrlRegs.homeLimitRegs.ulhomePos >(int32)mCtrlRegs.homeLimitRegs.lSoftPosLimit)
+				lhomePosPcmd  = mCtrlRegs.homeLimitRegs.lSoftPosLimit;
 		}
 
 		if(mCtrlRegs.tcurveRegs.ultcurve_enable == 0  )

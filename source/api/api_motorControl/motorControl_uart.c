@@ -1318,13 +1318,13 @@ void uartPacketCmd17(uint32 uldata)
 	{
 		if(mCtrlRegs.homeLimitRegs.softNegLimitEnable == 1)
 		{
-			if((int32)uldata <(int32)mCtrlRegs.homeLimitRegs.ulSoftNegLimit)
-				ulABSPCMD  = mCtrlRegs.homeLimitRegs.ulSoftNegLimit;
+			if((int32)uldata <(int32)mCtrlRegs.homeLimitRegs.lSoftNegLimit)
+				ulABSPCMD  = mCtrlRegs.homeLimitRegs.lSoftNegLimit;
 		}
 		if(mCtrlRegs.homeLimitRegs.softPosLimitEnable == 1)
 		{
-			if((int32)uldata >(int32)mCtrlRegs.homeLimitRegs.ulSoftPosLimit)
-				ulABSPCMD  = mCtrlRegs.homeLimitRegs.ulSoftPosLimit;
+			if((int32)uldata >(int32)mCtrlRegs.homeLimitRegs.lSoftPosLimit)
+				ulABSPCMD  = mCtrlRegs.homeLimitRegs.lSoftPosLimit;
 		}
 	}
 
@@ -1343,14 +1343,14 @@ void uartPacketCmd19(uint32 uldata)
 	{
 		if(mCtrlRegs.homeLimitRegs.softNegLimitEnable == 1)
 		{
-			if(((int32)(mCtrlRegs.ulPcmdUart + uldata  - mCtrlRegs.homeLimitRegs.ulPHome)) < ((int32)mCtrlRegs.homeLimitRegs.ulSoftNegLimit))
-				ulINCPCMD  = (uint32) ((int32)mCtrlRegs.homeLimitRegs.ulPHome + mCtrlRegs.homeLimitRegs.ulSoftNegLimit-mCtrlRegs.ulPcmdUart);
+			if(((int32)(mCtrlRegs.ulPcmdUart + uldata  - mCtrlRegs.homeLimitRegs.ulPHome)) < ((int32)mCtrlRegs.homeLimitRegs.lSoftNegLimit))
+				ulINCPCMD  = (uint32) ((int32)mCtrlRegs.homeLimitRegs.ulPHome + mCtrlRegs.homeLimitRegs.lSoftNegLimit-mCtrlRegs.ulPcmdUart);
 
 		}
 		if(mCtrlRegs.homeLimitRegs.softPosLimitEnable == 1)// mCtrlRegs.ulPcmdUart = mCtrlRegs.homeLimitRegs.ulPHome + mCtrlRegs.homeLimitRegs.ulSoftPosLimit
 		{
-			if(((int32)(mCtrlRegs.ulPcmdUart + uldata- mCtrlRegs.homeLimitRegs.ulPHome)) > ((int32)mCtrlRegs.homeLimitRegs.ulSoftPosLimit))
-				ulINCPCMD  = (uint32)((int32) mCtrlRegs.homeLimitRegs.ulPHome + mCtrlRegs.homeLimitRegs.ulSoftPosLimit-mCtrlRegs.ulPcmdUart);
+			if(((int32)(mCtrlRegs.ulPcmdUart + uldata- mCtrlRegs.homeLimitRegs.ulPHome)) > ((int32)mCtrlRegs.homeLimitRegs.lSoftPosLimit))
+				ulINCPCMD  = (uint32)((int32) mCtrlRegs.homeLimitRegs.ulPHome + mCtrlRegs.homeLimitRegs.lSoftPosLimit-mCtrlRegs.ulPcmdUart);
 		}
 	}
 	mCtrl_ulPcmdUartSet_macro(mCtrl_ulPcmdUartGet_macro() + ulINCPCMD );
@@ -1368,13 +1368,13 @@ void uartPacketCmd21(uint32 uldata)
 	{
 		if(mCtrlRegs.homeLimitRegs.softNegLimitEnable == 1)
 		{
-			if((int32)uldata <(int32)mCtrlRegs.homeLimitRegs.ulSoftNegLimit)
-				ulTABSPCMD  = mCtrlRegs.homeLimitRegs.ulSoftNegLimit;
+			if((int32)uldata <(int32)mCtrlRegs.homeLimitRegs.lSoftNegLimit)
+				ulTABSPCMD  = mCtrlRegs.homeLimitRegs.lSoftNegLimit;
 		}
 		if(mCtrlRegs.homeLimitRegs.softPosLimitEnable == 1)
 		{
-			if((int32)uldata >(int32)mCtrlRegs.homeLimitRegs.ulSoftPosLimit)
-				ulTABSPCMD  = mCtrlRegs.homeLimitRegs.ulSoftPosLimit;
+			if((int32)uldata >(int32)mCtrlRegs.homeLimitRegs.lSoftPosLimit)
+				ulTABSPCMD  = mCtrlRegs.homeLimitRegs.lSoftPosLimit;
 		}
 	}
 
@@ -1398,13 +1398,13 @@ void uartPacketCmd23(uint32 uldata)
 	{
 		if(mCtrlRegs.homeLimitRegs.softNegLimitEnable == 1)
 		{
-			if(((int32)(mCtrlRegs.ulPcmdUart + uldata  - mCtrlRegs.homeLimitRegs.ulPHome)) < ((int32)mCtrlRegs.homeLimitRegs.ulSoftNegLimit))
-				ulTINCPCMD  = (uint32) ((int32)mCtrlRegs.homeLimitRegs.ulPHome + mCtrlRegs.homeLimitRegs.ulSoftNegLimit-mCtrlRegs.ulPcmdUart);
+			if(((int32)(mCtrlRegs.ulPcmdUart + uldata  - mCtrlRegs.homeLimitRegs.ulPHome)) < ((int32)mCtrlRegs.homeLimitRegs.lSoftNegLimit))
+				ulTINCPCMD  = (uint32) ((int32)mCtrlRegs.homeLimitRegs.ulPHome + mCtrlRegs.homeLimitRegs.lSoftNegLimit-mCtrlRegs.ulPcmdUart);
 		}
 		if(mCtrlRegs.homeLimitRegs.softPosLimitEnable == 1)// mCtrlRegs.ulPcmdUart = mCtrlRegs.homeLimitRegs.ulPHome + mCtrlRegs.homeLimitRegs.ulSoftPosLimit
 		{
-			if(((int32)(mCtrlRegs.ulPcmdUart + uldata - mCtrlRegs.homeLimitRegs.ulPHome)) > ((int32)mCtrlRegs.homeLimitRegs.ulSoftPosLimit))
-				ulTINCPCMD  = (uint32)((int32) mCtrlRegs.homeLimitRegs.ulPHome + mCtrlRegs.homeLimitRegs.ulSoftPosLimit-mCtrlRegs.ulPcmdUart);
+			if(((int32)(mCtrlRegs.ulPcmdUart + uldata - mCtrlRegs.homeLimitRegs.ulPHome)) > ((int32)mCtrlRegs.homeLimitRegs.lSoftPosLimit))
+				ulTINCPCMD  = (uint32)((int32) mCtrlRegs.homeLimitRegs.ulPHome + mCtrlRegs.homeLimitRegs.lSoftPosLimit-mCtrlRegs.ulPcmdUart);
 		}
 	}
 	mCtrlRegs.tcurveRegs.ulStartPcmd = mCtrl_ulPcmdUartGet_macro();

@@ -231,9 +231,9 @@ extern void mCtrl_homeFindingClear(MOTOR_CONTROL_REGS *mCtrlRegs);
 
 
 #define mCtrl_softPosLimitEnableSet_macro(data)		mCtrlRegs.homeLimitRegs.softPosLimitEnable = data
-#define mCtrl_ulSoftPosLimitSet_macro(data)			mCtrlRegs.homeLimitRegs.ulSoftPosLimit = data
+#define mCtrl_lSoftPosLimitSet_macro(data)			mCtrlRegs.homeLimitRegs.lSoftPosLimit = data
 #define mCtrl_softNegLimitEnableSet_macro(data)		mCtrlRegs.homeLimitRegs.softNegLimitEnable = data
-#define mCtrl_ulSoftNegLimitSet_macro(data)			mCtrlRegs.homeLimitRegs.ulSoftNegLimit = data
+#define mCtrl_lSoftNegLimitSet_macro(data)			mCtrlRegs.homeLimitRegs.lSoftNegLimit = data
 
 //// emg
 #define mCtrl_emg_stateGet_macro() 	mCtrlRegs.emgRegs.ulEmgState

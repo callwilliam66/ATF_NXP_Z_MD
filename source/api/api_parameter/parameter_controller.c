@@ -141,7 +141,7 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
 void para_controllerSoftNegLimit(void)
 {
-	mCtrl_ulSoftNegLimitSet_macro(para_valueGet_macro(PARA_CTRLR_SOFT_NEG_LIMIT));
+	mCtrl_lSoftNegLimitSet_macro(para_valueGet_macro(PARA_CTRLR_SOFT_NEG_LIMIT));
 }
 
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
@@ -161,5 +161,5 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
 void para_controllerSoftPosLimit(void)
 {
-	mCtrl_ulSoftPosLimitSet_macro(para_valueGet_macro(PARA_CTRLR_SOFT_POS_LIMIT));
+	mCtrl_lSoftPosLimitSet_macro(para_valueGet_macro(PARA_CTRLR_SOFT_POS_LIMIT));
 }

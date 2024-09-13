@@ -83,9 +83,9 @@ typedef struct
 	uint32			ulHomeStop;
 
 	uint32		softPosLimitEnable;
-	uint32		ulSoftPosLimit;
+	int32		lSoftPosLimit;
 	uint32		softNegLimitEnable;
-	uint32		ulSoftNegLimit;
+	int32		lSoftNegLimit;
 
 }HOME_LIMIT_REGS;
 
