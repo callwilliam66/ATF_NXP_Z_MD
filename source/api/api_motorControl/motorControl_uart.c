@@ -179,7 +179,16 @@ void mCtrl_uart_tx_dataUpdate(UART_REGS *uartRegs)
 				uulData.dword = 2 * mCtrlRegs.tcurveRegs.ultmid;
 			break;
 			case 0x06:
-				uulData.dword = 100000 * mCtrlRegs.tcurveRegs.fAacc;
+				uulData.dword =  mCtrlRegs.tcurveRegs.ultime;
+			break;
+			case 0x08:
+				uulData.dword =  mCtrlRegs.tcurveRegs.uldistance;
+			break;
+			case 0x0A:
+				uulData.dword =  math_abs_macro(mCtrlRegs.tcurveRegs.lpcmd);
+			break;
+			case 0x0B:
+				uulData.dword =  math_abs_macro(mCtrlRegs.tcurveRegs.fsm);
 			break;
 #endif
 			default:

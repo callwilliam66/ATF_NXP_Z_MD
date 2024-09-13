@@ -24,7 +24,7 @@
 #define FIRMWARE_TYPE	FIRMWARE_TYPE_THREE_PHASE
 
 // firmware update date
-#define UPDATE_DATA	0x20240911
+#define UPDATE_DATA	0x20240913
 // firmware revision
 // **** form 0x0 to 0xf ****//
 // **** 16 revision available in one day ****//
