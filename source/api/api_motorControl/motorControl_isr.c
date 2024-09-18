@@ -203,65 +203,52 @@ void motorControl_isr(void)
 	}
 
 	//software limit protect
+	int32 lMaxLimitValue;	//   Maximum of limit value
+	int32 lMinLimitValue;	//   Minimum of limit value
 
 	if((mCtrlRegs.homeLimitRegs.homeFindMode != home_disable) && ((mCtrlRegs.statusRegs.data.homeFinded == 1) && (mDrv_ulAngleCloseFlagGet_macro() == 1)))
 	{
-		if(mCtrlRegs.homeLimitRegs.softNegLimitEnable == 1)
+		if( mCtrlRegs.homeLimitRegs.lSoftNegLimit > mCtrlRegs.homeLimitRegs.lSoftPosLimit)
 		{
-			if((int32)(mCtrlRegs.ulPcmd - mCtrlRegs.homeLimitRegs.ulPHome) < 0)
-			{
-				if(((int32)(mCtrlRegs.ulPcmd - mCtrlRegs.homeLimitRegs.ulPHome)) < ((int32)mCtrlRegs.homeLimitRegs.lSoftNegLimit))
-				{
-					if(((int32)(mCtrlRegs.ulPfbk - mCtrlRegs.homeLimitRegs.ulPHome)) < ((int32)mCtrlRegs.homeLimitRegs.lSoftNegLimit))
-					{
-						if(mCtrlRegs.ulPcmd < ulpcmdold)
-							mCtrlRegs.ulPcmd = mCtrlRegs.ulPfbk;
-
-					}else
-					{
-						mCtrlRegs.ulPcmd = mCtrlRegs.homeLimitRegs.ulPHome + mCtrlRegs.homeLimitRegs.lSoftNegLimit;
-					}
-
-					switch(mCtrlRegs.mode)
-					{
-						case CTRLR_MODE_UART	: mCtrlRegs.ulPcmdUart  = mCtrlRegs.ulPcmd;	break;
-
-						default					: mCtrlRegs.ulPcmdUart  = mCtrlRegs.ulPcmd;	break;
-					}
-
-				}
-			}
+			lMaxLimitValue = mCtrlRegs.homeLimitRegs.lSoftNegLimit;
+			lMinLimitValue = mCtrlRegs.homeLimitRegs.lSoftPosLimit;
+		}else
+		{
+			lMaxLimitValue = mCtrlRegs.homeLimitRegs.lSoftPosLimit;
+			lMinLimitValue = mCtrlRegs.homeLimitRegs.lSoftNegLimit;
 		}
-
 
 		if(mCtrlRegs.homeLimitRegs.softPosLimitEnable == 1)
 		{
-			if((int32)(mCtrlRegs.ulPcmd - mCtrlRegs.homeLimitRegs.ulPHome) > 0)
+			if(((int32)(mCtrlRegs.ulPcmd - mCtrlRegs.homeLimitRegs.ulPHome)) < lMinLimitValue)
 			{
-				if(((int32)(mCtrlRegs.ulPcmd - mCtrlRegs.homeLimitRegs.ulPHome)) > ((int32)mCtrlRegs.homeLimitRegs.lSoftPosLimit))
+				if(((int32)(mCtrlRegs.ulPfbk - mCtrlRegs.homeLimitRegs.ulPHome)) < lMinLimitValue)
 				{
+					if(mCtrlRegs.ulPcmd < ulpcmdold)
+						mCtrlRegs.ulPcmd = mCtrlRegs.ulPfbk;
 
-					if(((int32)(mCtrlRegs.ulPfbk - mCtrlRegs.homeLimitRegs.ulPHome)) > ((int32)mCtrlRegs.homeLimitRegs.lSoftPosLimit))
-					{
-						if(mCtrlRegs.ulPcmd > ulpcmdold)
-							mCtrlRegs.ulPcmd = mCtrlRegs.ulPfbk;
-
-					}else
-					{
-						mCtrlRegs.ulPcmd = mCtrlRegs.homeLimitRegs.ulPHome + mCtrlRegs.homeLimitRegs.lSoftPosLimit;
-					}
-
-
-					//mCtrlRegs.ulPcmdUart = mCtrlRegs.ulPcmd;
-
-					switch(mCtrlRegs.mode)
-					{
-						case CTRLR_MODE_UART	: mCtrlRegs.ulPcmdUart  = mCtrlRegs.ulPcmd;	break;
-
-						default					: mCtrlRegs.ulPcmdUart  = mCtrlRegs.ulPcmd;	break;
-					}
-
+				}else
+				{
+					mCtrlRegs.ulPcmd = mCtrlRegs.homeLimitRegs.ulPHome + lMinLimitValue;
 				}
+
+				mCtrlRegs.ulPcmdUart  = mCtrlRegs.ulPcmd;
+
+			}
+
+			if(((int32)(mCtrlRegs.ulPcmd - mCtrlRegs.homeLimitRegs.ulPHome)) > lMaxLimitValue)
+			{
+				if(((int32)(mCtrlRegs.ulPfbk - mCtrlRegs.homeLimitRegs.ulPHome)) > lMaxLimitValue)
+				{
+					if(mCtrlRegs.ulPcmd > ulpcmdold)
+						mCtrlRegs.ulPcmd = mCtrlRegs.ulPfbk;
+
+				}else
+				{
+					mCtrlRegs.ulPcmd = mCtrlRegs.homeLimitRegs.ulPHome + lMaxLimitValue;
+				}
+
+				mCtrlRegs.ulPcmdUart = mCtrlRegs.ulPcmd;
 			}
 		}
 	}
