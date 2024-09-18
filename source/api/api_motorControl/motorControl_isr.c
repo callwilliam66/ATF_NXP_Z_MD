@@ -50,7 +50,6 @@ void motorControl_isr(void)
 	mCtrl_fpga_uart_isr(&mCtrlRegs.uart2Regs);
 	mCtrl_inner_uart_isr(&mCtrlRegs.uart3Regs);
 #else
-	mCtrl_uart_isr(&mCtrlRegs.uart1Regs);
 	mCtrl_uart_isr(&mCtrlRegs.uart2Regs);
 	mCtrl_inner_uart_isr(&mCtrlRegs.uart3Regs);
 #endif
@@ -208,15 +207,9 @@ void motorControl_isr(void)
 
 	if((mCtrlRegs.homeLimitRegs.homeFindMode != home_disable) && ((mCtrlRegs.statusRegs.data.homeFinded == 1) && (mDrv_ulAngleCloseFlagGet_macro() == 1)))
 	{
-		if( mCtrlRegs.homeLimitRegs.lSoftNegLimit > mCtrlRegs.homeLimitRegs.lSoftPosLimit)
-		{
-			lMaxLimitValue = mCtrlRegs.homeLimitRegs.lSoftNegLimit;
-			lMinLimitValue = mCtrlRegs.homeLimitRegs.lSoftPosLimit;
-		}else
-		{
-			lMaxLimitValue = mCtrlRegs.homeLimitRegs.lSoftPosLimit;
-			lMinLimitValue = mCtrlRegs.homeLimitRegs.lSoftNegLimit;
-		}
+
+		lMaxLimitValue = mCtrlRegs.homeLimitRegs.lSoftPosLimit;
+		lMinLimitValue = mCtrlRegs.homeLimitRegs.lSoftNegLimit;
 
 		if(mCtrlRegs.homeLimitRegs.softPosLimitEnable == 1)
 		{
