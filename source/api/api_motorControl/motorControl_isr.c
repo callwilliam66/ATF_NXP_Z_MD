@@ -5,7 +5,6 @@
 ////*****************************************////
 
 #include "motorControl.h"
-static uint32 ulpcmdold;
 
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
 __RAMFUNC(RAM_FUNC_BLOCK)
@@ -99,13 +98,7 @@ void motorControl_isr(void)
 		motorControl_advCtrl_commandRenew(para_valueGet_macro(PARA_ADVCTRL1_ENABLE), para_valueGet_macro(PARA_ADVCTRL1_PARA0), para_valueGet_macro(PARA_ADVCTRL1_PARA1), &mCtrlRegs);
 
 		mCtrlRegs.ulPcmd = mCtrlRegs.ulPcmdUart;
-		/*switch(mCtrlRegs.mode)
-		{
-			case CTRLR_MODE_UART	: mCtrlRegs.ulPcmd = mCtrlRegs.ulPcmdUart;	break;
-			case CTRLR_MODE_SPI		: mCtrlRegs.ulPcmd = mCtrlRegs.ulPcmdSpi;	break;
-			default					: mCtrlRegs.ulPcmd = mCtrlRegs.ulPcmdUart;	break;
-		}
-		*/
+
 		if((mCtrlRegs.cmdRegs.data.homeFind == 1) && (mCtrlRegs.homeLimitRegs.homeFindMode != home_disable))
 		{
 			mCtrlRegs.homeLimitRegs.ulHomeStop = 0;
@@ -128,14 +121,13 @@ void motorControl_isr(void)
 			mCtrl_findhome(&mCtrlRegs);
 		}
 	}
+
 	if(mCtrlRegs.tcurveRegs.ultcurve_enable == 1)
 	{
-
 		mCtrl_Tcurve_Calc(&mCtrlRegs.tcurveRegs);
 		mCtrl_ulPcmdUartSet_macro(mCtrlRegs.tcurveRegs.ulStartPcmd+mCtrlRegs.tcurveRegs.lpcmd);
 		mCtrlRegs.ulPcmd = mCtrlRegs.ulPcmdUart;
 	}
-
 
 	//limit_protected
 	if((mCtrlRegs.commandReceiveEnableFlag == 1) && (mCtrlRegs.homeLimitRegs.limitPosEnable == POSITIVE_LIMIT_ENABLE) && (mCtrlRegs.homeLimitRegs.limitPosRegs.data.dataNew == 1))
@@ -153,7 +145,6 @@ void motorControl_isr(void)
 			posPosErr = (int32)mCtrlRegs.ulPcmd - mCtrlRegs.ulPfbk;
 		}
 
-
 		if(posPosErr > 0)
 		{
 
@@ -161,12 +152,7 @@ void motorControl_isr(void)
 			mCtrlRegs.ulPcmdUart = mCtrlRegs.ulPcmd;
 			mCtrlRegs.tcurveRegs.ultcurve_enable = 0;
 			mCtrl_Tcurve_Clear(&mCtrlRegs.tcurveRegs);
-			/*switch(mCtrlRegs.mode)
-			{
-				case CTRLR_MODE_UART	: mCtrlRegs.ulPcmdUart  = mCtrlRegs.ulPcmd;	break;
-				case CTRLR_MODE_SPI		: mCtrlRegs.ulPcmdSpi   = mCtrlRegs.ulPcmd;	break;
-				default					: mCtrlRegs.ulPcmdUart  = mCtrlRegs.ulPcmd;	break;
-			}*/
+
 		}
 	}
 
@@ -192,12 +178,6 @@ void motorControl_isr(void)
 			mCtrlRegs.tcurveRegs.ultcurve_enable = 0;
 			mCtrl_Tcurve_Clear(&mCtrlRegs.tcurveRegs);
 
-			/*switch(mCtrlRegs.mode)
-			{
-				case CTRLR_MODE_UART	: mCtrlRegs.ulPcmdUart  = mCtrlRegs.ulPcmd;	break;
-				case CTRLR_MODE_SPI		: mCtrlRegs.ulPcmdSpi   = mCtrlRegs.ulPcmd;	break;
-				default					: mCtrlRegs.ulPcmdUart  = mCtrlRegs.ulPcmd;	break;
-			}*/
 		}
 	}
 
@@ -206,6 +186,7 @@ void motorControl_isr(void)
 	int32 lMinLimitValue;	//   Minimum of limit value
 	int32 lCmdPos_Home;
 	int32 lFbkPos_Home;
+
 	if((mCtrlRegs.homeLimitRegs.homeFindMode != home_disable) && ((mCtrlRegs.statusRegs.data.homeFinded == 1) && (mDrv_ulAngleCloseFlagGet_macro() == 1)))
 	{
 
@@ -222,22 +203,21 @@ void motorControl_isr(void)
 				if( lFbkPos_Home > lMaxLimitValue)
 				{
 					if( lCmdPos_Home > lFbkPos_Home)
-						mCtrlRegs.ulPcmd = mCtrlRegs.emgRegs.ulPcmdOut;
+						mCtrlRegs.ulPcmd = mCtrlRegs.ulPfbk;
 
 				}else if( lFbkPos_Home < lMinLimitValue )
 				{
 					if( lCmdPos_Home < lFbkPos_Home)
-						mCtrlRegs.ulPcmd = mCtrlRegs.emgRegs.ulPcmdOut;
+						mCtrlRegs.ulPcmd = mCtrlRegs.ulPfbk;
 
 				}
 
-				mCtrlRegs.ulPcmdUart = mCtrlRegs.ulPcmd;
 			}
 
+			mCtrlRegs.ulPcmdUart = mCtrlRegs.ulPcmd;
 		}
 	}
 
-	ulpcmdold = mCtrlRegs.ulPcmd;
 
 	// emg msd
 	mCtrlRegs.emgRegs.ulPcmdIn = mCtrlRegs.ulPcmd;
