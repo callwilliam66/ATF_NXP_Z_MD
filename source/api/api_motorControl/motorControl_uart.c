@@ -1314,6 +1314,42 @@ void uartPacketCmd17(uint32 uldata)
 {
 	uint32 ulABSPCMD = uldata;
 
+#ifndef TESTMODE
+
+	int32 lMaxLimitValue;
+	int32 lMinLimitValue;
+	int32 lCmdPos_Home;
+	int32 lFbkPos_Home;
+
+	if((mCtrlRegs.homeLimitRegs.homeFindMode != home_disable) && ((mCtrlRegs.statusRegs.data.homeFinded == 1) && (mDrv_ulAngleCloseFlagGet_macro() == 1)))
+	{
+
+		lMaxLimitValue = mCtrlRegs.homeLimitRegs.lSoftPosLimit;
+		lMinLimitValue = mCtrlRegs.homeLimitRegs.lSoftNegLimit;
+		lCmdPos_Home = (int32) ulABSPCMD;
+		lFbkPos_Home = (int32)(mCtrlRegs.ulPfbk - mCtrlRegs.homeLimitRegs.ulPHome);
+
+		if(mCtrlRegs.homeLimitRegs.softPosLimitEnable == 1)
+		{
+
+			if( lFbkPos_Home > lMaxLimitValue)
+			{
+				if( lCmdPos_Home > lFbkPos_Home || lCmdPos_Home < lMinLimitValue)
+					return;
+			}else if( lFbkPos_Home < lMinLimitValue )
+			{
+				if( lCmdPos_Home < lFbkPos_Home || lCmdPos_Home > lMaxLimitValue)
+					return;
+			}else
+			{
+				if( lCmdPos_Home < lMinLimitValue || lCmdPos_Home > lMaxLimitValue)
+					return;
+			}
+
+		}
+	}
+#endif
+
 	mCtrl_ulPcmdUartSet_macro(mCtrl_ulPHomeGet_macro() + ulABSPCMD);
 }
 void uartPacketCmd18(uint32 uldata)
@@ -1322,8 +1358,44 @@ void uartPacketCmd18(uint32 uldata)
 }
 void uartPacketCmd19(uint32 uldata)
 {
-
 	uint32 ulINCPCMD = uldata;
+
+#ifndef TESTMODE
+
+	int32 lMaxLimitValue;
+	int32 lMinLimitValue;
+	int32 lCmdPos_Home;
+	int32 lFbkPos_Home;
+
+	if((mCtrlRegs.homeLimitRegs.homeFindMode != home_disable) && ((mCtrlRegs.statusRegs.data.homeFinded == 1) && (mDrv_ulAngleCloseFlagGet_macro() == 1)))
+	{
+
+		lMaxLimitValue = mCtrlRegs.homeLimitRegs.lSoftPosLimit;
+		lMinLimitValue = mCtrlRegs.homeLimitRegs.lSoftNegLimit;
+		lCmdPos_Home = (int32) mCtrl_ulPcmdUartGet_macro() + ulINCPCMD - mCtrlRegs.homeLimitRegs.ulPHome;
+		lFbkPos_Home = (int32)(mCtrlRegs.ulPfbk - mCtrlRegs.homeLimitRegs.ulPHome);
+
+		if(mCtrlRegs.homeLimitRegs.softPosLimitEnable == 1)
+		{
+
+			if( lFbkPos_Home > lMaxLimitValue)
+			{
+				if( lCmdPos_Home > lFbkPos_Home || lCmdPos_Home < lMinLimitValue)
+					return;
+			}else if( lFbkPos_Home < lMinLimitValue )
+			{
+				if( lCmdPos_Home < lFbkPos_Home || lCmdPos_Home > lMaxLimitValue)
+					return;
+			}else
+			{
+				if( lCmdPos_Home < lMinLimitValue || lCmdPos_Home > lMaxLimitValue)
+					return;
+			}
+
+		}
+	}
+
+#endif
 
 	mCtrl_ulPcmdUartSet_macro(mCtrl_ulPcmdUartGet_macro() + ulINCPCMD );
 }
@@ -1335,6 +1407,41 @@ void uartPacketCmd21(uint32 uldata)
 {
 
 	uint32 ulTABSPCMD = uldata;
+
+#ifndef TESTMODE
+
+	int32 lMaxLimitValue;
+	int32 lMinLimitValue;
+	int32 lCmdPos_Home;
+	int32 lFbkPos_Home;
+	if((mCtrlRegs.homeLimitRegs.homeFindMode != home_disable) && ((mCtrlRegs.statusRegs.data.homeFinded == 1) && (mDrv_ulAngleCloseFlagGet_macro() == 1)))
+	{
+
+		lMaxLimitValue = mCtrlRegs.homeLimitRegs.lSoftPosLimit;
+		lMinLimitValue = mCtrlRegs.homeLimitRegs.lSoftNegLimit;
+		lCmdPos_Home = (int32) ulTABSPCMD;
+		lFbkPos_Home = (int32)(mCtrlRegs.ulPfbk - mCtrlRegs.homeLimitRegs.ulPHome);
+
+		if(mCtrlRegs.homeLimitRegs.softPosLimitEnable == 1)
+		{
+
+			if( lFbkPos_Home > lMaxLimitValue)
+			{
+				if( lCmdPos_Home > lFbkPos_Home || lCmdPos_Home < lMinLimitValue)
+					return;
+			}else if( lFbkPos_Home < lMinLimitValue )
+			{
+				if( lCmdPos_Home < lFbkPos_Home || lCmdPos_Home > lMaxLimitValue)
+					return;
+			}else
+			{
+				if( lCmdPos_Home < lMinLimitValue || lCmdPos_Home > lMaxLimitValue)
+					return;
+			}
+
+		}
+	}
+#endif
 
 	mCtrlRegs.tcurveRegs.ulStartPcmd = mCtrl_ulPcmdUartGet_macro();
 
@@ -1352,11 +1459,46 @@ void uartPacketCmd23(uint32 uldata)
 
 	uint32 ulTINCPCMD = uldata;
 
+#ifndef TESTMODE
+	int32 lMaxLimitValue;
+	int32 lMinLimitValue;
+	int32 lCmdPos_Home;
+	int32 lFbkPos_Home;
+
+	if((mCtrlRegs.homeLimitRegs.homeFindMode != home_disable) && ((mCtrlRegs.statusRegs.data.homeFinded == 1) && (mDrv_ulAngleCloseFlagGet_macro() == 1)))
+	{
+
+		lMaxLimitValue = mCtrlRegs.homeLimitRegs.lSoftPosLimit;
+		lMinLimitValue = mCtrlRegs.homeLimitRegs.lSoftNegLimit;
+		lCmdPos_Home = (int32) mCtrl_ulPcmdUartGet_macro() + ulTINCPCMD - mCtrlRegs.homeLimitRegs.ulPHome;
+		lFbkPos_Home = (int32)(mCtrlRegs.ulPfbk - mCtrlRegs.homeLimitRegs.ulPHome);
+
+		if(mCtrlRegs.homeLimitRegs.softPosLimitEnable == 1)
+		{
+
+			if( lFbkPos_Home > lMaxLimitValue)
+			{
+				if( lCmdPos_Home > lFbkPos_Home || lCmdPos_Home < lMinLimitValue)
+					return;
+			}else if( lFbkPos_Home < lMinLimitValue )
+			{
+				if( lCmdPos_Home < lFbkPos_Home || lCmdPos_Home > lMaxLimitValue)
+					return;
+			}else
+			{
+				if( lCmdPos_Home < lMinLimitValue || lCmdPos_Home > lMaxLimitValue)
+					return;
+			}
+
+		}
+	}
+
+#endif
 	mCtrlRegs.tcurveRegs.ulStartPcmd = mCtrl_ulPcmdUartGet_macro();
 
 	mCtrl_Tcurve_parameterUpdate(&mCtrlRegs.tcurveRegs);
 	mCtrl_Tcurve_Clear(&mCtrlRegs.tcurveRegs);
-	mCtrl_Tcurve_Setting(&mCtrlRegs.tcurveRegs,ulTINCPCMD);
+	mCtrl_Tcurve_Setting(&mCtrlRegs.tcurveRegs, ulTINCPCMD);
 
 }
 void uartPacketCmd24(uint32 uldata)

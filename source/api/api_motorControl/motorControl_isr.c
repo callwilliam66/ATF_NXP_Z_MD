@@ -181,43 +181,6 @@ void motorControl_isr(void)
 		}
 	}
 
-	//software limit protect
-	int32 lMaxLimitValue;	//   Maximum of limit value
-	int32 lMinLimitValue;	//   Minimum of limit value
-	int32 lCmdPos_Home;
-	int32 lFbkPos_Home;
-
-	if((mCtrlRegs.homeLimitRegs.homeFindMode != home_disable) && ((mCtrlRegs.statusRegs.data.homeFinded == 1) && (mDrv_ulAngleCloseFlagGet_macro() == 1)))
-	{
-
-		lMaxLimitValue = mCtrlRegs.homeLimitRegs.lSoftPosLimit;
-		lMinLimitValue = mCtrlRegs.homeLimitRegs.lSoftNegLimit;
-		lCmdPos_Home = (int32)(mCtrlRegs.ulPcmd - mCtrlRegs.homeLimitRegs.ulPHome);
-		lFbkPos_Home = (int32)(mCtrlRegs.ulPfbk - mCtrlRegs.homeLimitRegs.ulPHome);
-
-		if(mCtrlRegs.homeLimitRegs.softPosLimitEnable == 1)
-		{
-
-			if( lCmdPos_Home > lMaxLimitValue || lCmdPos_Home < lMinLimitValue)
-			{
-				if( lFbkPos_Home > lMaxLimitValue)
-				{
-					if( lCmdPos_Home > lFbkPos_Home)
-						mCtrlRegs.ulPcmd = mCtrlRegs.ulPfbk;
-
-				}else if( lFbkPos_Home < lMinLimitValue )
-				{
-					if( lCmdPos_Home < lFbkPos_Home)
-						mCtrlRegs.ulPcmd = mCtrlRegs.ulPfbk;
-
-				}
-
-			}
-
-			mCtrlRegs.ulPcmdUart = mCtrlRegs.ulPcmd;
-		}
-	}
-
 
 	// emg msd
 	mCtrlRegs.emgRegs.ulPcmdIn = mCtrlRegs.ulPcmd;
