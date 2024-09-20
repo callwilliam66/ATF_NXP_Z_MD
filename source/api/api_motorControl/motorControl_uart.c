@@ -1314,8 +1314,6 @@ void uartPacketCmd17(uint32 uldata)
 {
 	uint32 ulABSPCMD = uldata;
 
-#ifndef TESTMODE
-
 	int32 lMaxLimitValue;
 	int32 lMinLimitValue;
 	int32 lCmdPos_Home;
@@ -1342,13 +1340,18 @@ void uartPacketCmd17(uint32 uldata)
 					return;
 			}else
 			{
-				if( lCmdPos_Home < lMinLimitValue || lCmdPos_Home > lMaxLimitValue)
-					return;
+				if( lCmdPos_Home < lMinLimitValue)
+				{
+					ulABSPCMD = lMinLimitValue;
+				}else if(lCmdPos_Home > lMaxLimitValue)
+				{
+					ulABSPCMD = lMaxLimitValue;
+				}
 			}
 
 		}
 	}
-#endif
+
 
 	mCtrl_ulPcmdUartSet_macro(mCtrl_ulPHomeGet_macro() + ulABSPCMD);
 }
@@ -1359,8 +1362,6 @@ void uartPacketCmd18(uint32 uldata)
 void uartPacketCmd19(uint32 uldata)
 {
 	uint32 ulINCPCMD = uldata;
-
-#ifndef TESTMODE
 
 	int32 lMaxLimitValue;
 	int32 lMinLimitValue;
@@ -1388,14 +1389,19 @@ void uartPacketCmd19(uint32 uldata)
 					return;
 			}else
 			{
-				if( lCmdPos_Home < lMinLimitValue || lCmdPos_Home > lMaxLimitValue)
-					return;
+				if( lCmdPos_Home < lMinLimitValue)
+				{
+					ulINCPCMD  = mCtrlRegs.homeLimitRegs.ulPHome + lMinLimitValue - mCtrl_ulPcmdUartGet_macro();
+				}else if(lCmdPos_Home > lMaxLimitValue)
+				{
+					ulINCPCMD  = mCtrlRegs.homeLimitRegs.ulPHome + lMaxLimitValue - mCtrl_ulPcmdUartGet_macro();
+				}
 			}
 
 		}
 	}
 
-#endif
+
 
 	mCtrl_ulPcmdUartSet_macro(mCtrl_ulPcmdUartGet_macro() + ulINCPCMD );
 }
@@ -1408,7 +1414,6 @@ void uartPacketCmd21(uint32 uldata)
 
 	uint32 ulTABSPCMD = uldata;
 
-#ifndef TESTMODE
 
 	int32 lMaxLimitValue;
 	int32 lMinLimitValue;
@@ -1435,13 +1440,18 @@ void uartPacketCmd21(uint32 uldata)
 					return;
 			}else
 			{
-				if( lCmdPos_Home < lMinLimitValue || lCmdPos_Home > lMaxLimitValue)
-					return;
+				if( lCmdPos_Home < lMinLimitValue)
+				{
+					ulTABSPCMD = lMinLimitValue;
+				}else if(lCmdPos_Home > lMaxLimitValue)
+				{
+					ulTABSPCMD = lMaxLimitValue;
+				}
 			}
 
 		}
 	}
-#endif
+
 
 	mCtrlRegs.tcurveRegs.ulStartPcmd = mCtrl_ulPcmdUartGet_macro();
 
@@ -1459,7 +1469,7 @@ void uartPacketCmd23(uint32 uldata)
 
 	uint32 ulTINCPCMD = uldata;
 
-#ifndef TESTMODE
+
 	int32 lMaxLimitValue;
 	int32 lMinLimitValue;
 	int32 lCmdPos_Home;
@@ -1486,14 +1496,18 @@ void uartPacketCmd23(uint32 uldata)
 					return;
 			}else
 			{
-				if( lCmdPos_Home < lMinLimitValue || lCmdPos_Home > lMaxLimitValue)
-					return;
+				if( lCmdPos_Home < lMinLimitValue)
+				{
+					ulTINCPCMD = mCtrlRegs.homeLimitRegs.ulPHome + lMinLimitValue - mCtrl_ulPcmdUartGet_macro();
+				}else if(lCmdPos_Home > lMaxLimitValue)
+				{
+					ulTINCPCMD = mCtrlRegs.homeLimitRegs.ulPHome + lMaxLimitValue - mCtrl_ulPcmdUartGet_macro();
+				}
 			}
 
 		}
 	}
 
-#endif
 	mCtrlRegs.tcurveRegs.ulStartPcmd = mCtrl_ulPcmdUartGet_macro();
 
 	mCtrl_Tcurve_parameterUpdate(&mCtrlRegs.tcurveRegs);
