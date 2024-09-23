@@ -186,6 +186,10 @@ extern void board_dac_dataUpdate(uint32 ulDacChannel,uint32 ulData);
 #define board_HSIO3_on_macro()   GPIO_PortSet(BOARD_INITPINS_HSIO3_GPIO,BOARD_INITPINS_HSIO3_GPIO_PIN_MASK)
 #define board_HSIO3_off_macro()  GPIO_PortClear(BOARD_INITPINS_HSIO3_GPIO,BOARD_INITPINS_HSIO3_GPIO_PIN_MASK )
 
+
+#define board_HSIO5_on_macro()   GPIO_PortSet(BOARD_INITPINS_HSIO5_GPIO,BOARD_INITPINS_HSIO5_GPIO_PIN_MASK)
+#define board_HSIO5_off_macro()  GPIO_PortClear(BOARD_INITPINS_HSIO5_GPIO,BOARD_INITPINS_HSIO5_GPIO_PIN_MASK)
+
 //// ENCODER
 #define board_encoder_angle_read_macro() ENC_GetHoldPositionValue(ENC1_PERIPHERAL)
 #define board_encoder_index_happened_read_macro() (((ENC_GetStatusFlags(ENC1_PERIPHERAL) & kENC_INDEXPulseFlag) == kENC_INDEXPulseFlag) ? true : false)
