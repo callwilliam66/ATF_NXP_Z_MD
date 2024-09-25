@@ -29,10 +29,10 @@ int main(void)
     lib_init();
     api_init();
 
-    board_HSIO5_on_macro();
+    board_HSIO2_on_macro();
 
     uint32 startcnt;
-    for(startcnt = 0;startcnt<240000000;startcnt++);
+    for(startcnt = 0; startcnt < 240000000; startcnt++);
 
     board_led_r_off_macro();
 
@@ -60,7 +60,7 @@ int main(void)
 	//// power counter start
 	device_pwm_start();
 
-	board_HSIO5_off_macro();
+	board_HSIO2_off_macro();
 	/// enable uart isr
 	EnableIRQ(LPUART1_SERIAL_RX_TX_IRQN);
 	EnableIRQ(LPUART3_SERIAL_RX_TX_IRQN);

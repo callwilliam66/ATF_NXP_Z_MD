@@ -444,8 +444,7 @@
                   <pin peripheral="GPIO2" signal="gpio_io, 26" pin_num="B13" pin_signal="GPIO_B1_10">
                      <pin_features>
                         <pin_feature name="identifier" value="HSIO5"/>
-                        <pin_feature name="direction" value="OUTPUT"/>
-                        <pin_feature name="gpio_init_state" value="true"/>
+                        <pin_feature name="direction" value="INPUT"/>
                         <pin_feature name="software_input_on" value="Disable"/>
                         <pin_feature name="hysteresis_enable" value="Disable"/>
                         <pin_feature name="pull_up_down_config" value="Pull_Up_47K_Ohm"/>

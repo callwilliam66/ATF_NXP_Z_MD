@@ -180,8 +180,8 @@ BOARD_InitPins:
   - {pin_num: B12, peripheral: GPIO2, signal: 'gpio_io, 23', pin_signal: GPIO_B1_07, identifier: HSIO1, direction: OUTPUT, gpio_init_state: 'false'}
   - {pin_num: A12, peripheral: GPIO2, signal: 'gpio_io, 24', pin_signal: GPIO_B1_08, identifier: HSIO2, direction: OUTPUT}
   - {pin_num: A13, peripheral: GPIO2, signal: 'gpio_io, 25', pin_signal: GPIO_B1_09, identifier: HSIO4, direction: INPUT}
-  - {pin_num: B13, peripheral: GPIO2, signal: 'gpio_io, 26', pin_signal: GPIO_B1_10, identifier: HSIO5, direction: OUTPUT, gpio_init_state: 'true', software_input_on: Disable,
-    hysteresis_enable: Disable, pull_up_down_config: Pull_Up_47K_Ohm, pull_keeper_select: Keeper}
+  - {pin_num: B13, peripheral: GPIO2, signal: 'gpio_io, 26', pin_signal: GPIO_B1_10, identifier: HSIO5, direction: INPUT, software_input_on: Disable, hysteresis_enable: Disable,
+    pull_up_down_config: Pull_Up_47K_Ohm, pull_keeper_select: Keeper}
   - {pin_num: E14, peripheral: JTAG, signal: TMS, pin_signal: GPIO_AD_B0_06}
   - {pin_num: F12, peripheral: JTAG, signal: TCK, pin_signal: GPIO_AD_B0_07}
   - {pin_num: F13, peripheral: JTAG, signal: MOD, pin_signal: GPIO_AD_B0_08}
@@ -269,8 +269,8 @@ void BOARD_InitPins(void) {
 
   /* GPIO configuration of HSIO5 on GPIO_B1_10 (pin B13) */
   gpio_pin_config_t HSIO5_config = {
-      .direction = kGPIO_DigitalOutput,
-      .outputLogic = 1U,
+      .direction = kGPIO_DigitalInput,
+      .outputLogic = 0U,
       .interruptMode = kGPIO_NoIntmode
   };
   /* Initialize GPIO functionality on GPIO_B1_10 (pin B13) */
