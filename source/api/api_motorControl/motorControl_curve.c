@@ -161,4 +161,3 @@ void mCtrl_Tcurve_Clear(TCURVE_REGS *tcurveRegs)
 	tcurveRegs->fPcmd = 0.0;
 	tcurveRegs->fAcmd = 0.0;
 }
-

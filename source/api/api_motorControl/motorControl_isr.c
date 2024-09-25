@@ -118,6 +118,11 @@ void motorControl_isr(void)
 	{
 		if((mDrv_ulAngleCloseFlagGet_macro() == 1) && (mDrvRegs.startUpRegs.ulFirstCloseloopflag == 1))
 		{
+			mCtrlRegs.tcurveRegs.flogPcmd = 0.0;
+			mCtrlRegs.tcurveRegs.flogVinit = 0.0;
+			mCtrlRegs.tcurveRegs.fVinit = mCtrlRegs.tcurveRegs.flogVinit;
+			mCtrlRegs.tcurveRegs.fPcmd = mCtrlRegs.tcurveRegs.flogPcmd;
+			mCtrl_Tcurve_Clear(&mCtrlRegs.tcurveRegs);
 			mCtrl_findhome(&mCtrlRegs);
 		}
 	}
