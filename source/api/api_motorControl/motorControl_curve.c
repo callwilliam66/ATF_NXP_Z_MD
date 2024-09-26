@@ -150,7 +150,6 @@ void mCtrl_Tcurve_Check(TCURVE_REGS *tcurveRegs)
 
 }
 
-
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
 __RAMFUNC(RAM_FUNC_BLOCK)
 #endif

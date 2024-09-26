@@ -13,14 +13,7 @@
 extern const PARAMETER paraDefault[MAX_PARAMETER];
 
 extern void para_updateByMode(PARA_MODE paraMode);
-extern void para_updateMode_currentTest(void);
-extern void para_updateMode_currentResponseTest(void);
-extern void para_updateMode_angleTest(void);
-extern void para_updateMode_speedLoopTest(void);
-extern void para_updateMode_positionLoopTest(void);
-extern void para_updateMode_autoFocusSystemDefault(void);
-extern void para_updateMode_nose_wheelDefault(void);
-extern void para_updateMode_pulseDirDefault(void);
+
 
 extern void para_blank(void);
 extern void para_readOnly(void);

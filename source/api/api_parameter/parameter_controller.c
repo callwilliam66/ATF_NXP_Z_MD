@@ -42,7 +42,7 @@ void para_controllerHomeSpeed(void)
 {
 	float32 fData;
 
-	fData = (float32)para_valueGet_macro(PARA_CTRLR_HOME_SPEED)  / ((float32)mDrv_ulCtrlBaseFreqGet_macro());
+	fData = (float32) para_valueGet_macro(PARA_CTRLR_HOME_SPEED)  / ((float32)mDrv_ulCtrlBaseFreqGet_macro());
 
 	mCtrl_fHomeFindSpeedSet_macro(fData);
 }

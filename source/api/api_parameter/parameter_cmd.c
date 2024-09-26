@@ -28,6 +28,14 @@ void para_vCmdPara(void)
 
 	mDrv_fVCmdParaSet_macro(fData);
 
+	if( para_valueGet_macro(PARA_V_CMD) <= mCtrlRegs.homeLimitRegs.fHomeFindSpeed * mDrv_ulCtrlBaseFreqGet_macro())
+	{
+		mCtrlRegs.homeLimitRegs.fHomeFindSpeed = (float32) para_valueGet_macro(PARA_V_CMD) / ((float32)mDrv_ulCtrlBaseFreqGet_macro());
+	}else
+	{
+		mCtrlRegs.homeLimitRegs.fHomeFindSpeed = (float32) para_valueGet_macro(PARA_CTRLR_HOME_SPEED) / ((float32)mDrv_ulCtrlBaseFreqGet_macro());
+	}
+
 	if(fData < 0)
 	{
 		fDataAbs = -fData;

@@ -26,6 +26,7 @@ void mCtrl_findhome(MOTOR_CONTROL_REGS *mCtrlRegs)
 		mCtrlRegs->homeLimitRegs.homeFindFailed = 0;
 		mCtrlRegs->homeLimitRegs.homeFinding = 1;
 	}
+
 	mCtrlRegs->statusRegs.data.homeFinding =mCtrlRegs->homeLimitRegs.homeFinding;
 	mCtrlRegs->statusRegs.data.homeFinded = mCtrlRegs->homeLimitRegs.homeFinded;
 	mCtrlRegs->statusRegs.data.homeFindFailed = mCtrlRegs->homeLimitRegs.homeFindFailed;
