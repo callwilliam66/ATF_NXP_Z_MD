@@ -61,6 +61,7 @@ int main(void)
 	device_pwm_start();
 
 	board_HSIO2_on_macro();
+
 	/// enable uart isr
 	EnableIRQ(LPUART1_SERIAL_RX_TX_IRQN);
 	EnableIRQ(LPUART3_SERIAL_RX_TX_IRQN);
