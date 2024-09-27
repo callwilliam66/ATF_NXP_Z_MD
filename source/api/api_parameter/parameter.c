@@ -36,9 +36,13 @@ int32 para_valueGet(uint32 ulPara)
 {
 	if(ulPara >= MAX_PARAMETER) return 0;
 
+	if(ulPara == 60) return (int32) mPara_ulEncoderMaxPulseGet_macro() * mDrvRegs.fVCmdPara * mPara_fSpeedMaxGet_macro() / 60;
+
 	if(ulPara == 90) return mDrvRegs.uledmode;
 	if(ulPara == 91) return mDrvRegs.uledlevelmax;
 	if(ulPara == 92) return mDataRegs.ulDutyLed;
+
+	if(ulPara == 311) return mCtrlRegs.homeLimitRegs.fHomeFindSpeed * mDrvRegs.ulCtrlBaseFreq;
 
 	if(ulPara == 330) return mCtrlRegs.homeLimitRegs.softNegLimitEnable;
 	if(ulPara == 331) return mCtrlRegs.homeLimitRegs.lSoftNegLimit;

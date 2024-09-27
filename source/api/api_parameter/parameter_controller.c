@@ -45,7 +45,7 @@ void para_controllerHomeSpeed(void)
 
 	fData = (float32)  para_valueGet_macro(PARA_CTRLR_HOME_SPEED)  / ((float32)mDrv_ulCtrlBaseFreqGet_macro());
 
-	if( para_valueGet_macro(PARA_V_CMD) < para_valueGet_macro( PARA_CTRLR_HOME_SPEED) )
+	if( para_valueGet_macro(PARA_V_CMD) < para_valueGet_macro(PARA_CTRLR_HOME_SPEED))
 	{
 		return;
 	}
