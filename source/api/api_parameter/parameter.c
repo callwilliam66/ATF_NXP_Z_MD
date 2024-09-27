@@ -39,10 +39,12 @@ int32 para_valueGet(uint32 ulPara)
 	if(ulPara == 90) return mDrvRegs.uledmode;
 	if(ulPara == 91) return mDrvRegs.uledlevelmax;
 	if(ulPara == 92) return mDataRegs.ulDutyLed;
+
 	if(ulPara == 330) return mCtrlRegs.homeLimitRegs.softNegLimitEnable;
 	if(ulPara == 331) return mCtrlRegs.homeLimitRegs.lSoftNegLimit;
 	if(ulPara == 332) return mCtrlRegs.homeLimitRegs.softPosLimitEnable;
 	if(ulPara == 333) return mCtrlRegs.homeLimitRegs.lSoftPosLimit;
+
 	if(ulPara == 22)  return (uint32) 60 * 100000 / mParaRegs.motor.fSpeedMax;
 
 	return paraRegs.para[ulPara].lValue;

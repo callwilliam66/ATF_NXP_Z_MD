@@ -24,17 +24,14 @@ void para_vCmdPara(void)
 	float32 fData;
 	float32 fDataAbs;
 
-	fData = para_valueGet_macro(PARA_V_CMD) / ((float32)mPara_ulEncoderMaxPulseGet_macro()) * 60.0F / mPara_fSpeedMaxGet_macro();
+	fData = para_valueGet_macro(PARA_V_CMD) / ( (float32) mPara_ulEncoderMaxPulseGet_macro() ) * 60.0F / mPara_fSpeedMaxGet_macro();
+
+	if( para_valueGet_macro(PARA_V_CMD) <= para_valueGet_macro(PARA_CTRLR_HOME_SPEED) )
+	{
+		return;
+	}
 
 	mDrv_fVCmdParaSet_macro(fData);
-
-	if( para_valueGet_macro(PARA_V_CMD) <= mCtrlRegs.homeLimitRegs.fHomeFindSpeed * mDrv_ulCtrlBaseFreqGet_macro())
-	{
-		mCtrlRegs.homeLimitRegs.fHomeFindSpeed = (float32) para_valueGet_macro(PARA_V_CMD) / ((float32)mDrv_ulCtrlBaseFreqGet_macro());
-	}else
-	{
-		mCtrlRegs.homeLimitRegs.fHomeFindSpeed = (float32) para_valueGet_macro(PARA_CTRLR_HOME_SPEED) / ((float32)mDrv_ulCtrlBaseFreqGet_macro());
-	}
 
 	if(fData < 0)
 	{
