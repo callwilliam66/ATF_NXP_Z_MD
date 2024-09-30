@@ -18,6 +18,10 @@ void para_pCmdPara(void)
 	mDrv_ulPCmdParaSet_macro(ulData);
 }
 
+
+#if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
+__RAMFUNC(RAM_FUNC_BLOCK)
+#endif
 // pulse/s
 void para_vCmdPara(void)
 {
@@ -25,11 +29,6 @@ void para_vCmdPara(void)
 	float32 fDataAbs;
 
 	fData = para_valueGet_macro(PARA_V_CMD) / ( (float32) mPara_ulEncoderMaxPulseGet_macro() ) * 60.0F / mPara_fSpeedMaxGet_macro();
-
-	if( para_valueGet_macro(PARA_V_CMD) <= para_valueGet_macro(PARA_CTRLR_HOME_SPEED) )
-	{
-		return;
-	}
 
 	mDrv_fVCmdParaSet_macro(fData);
 
@@ -47,6 +46,7 @@ void para_vCmdPara(void)
 
 	mDrv_P_p_fMaxSet_macro(mDrv_fPLoopMaxVGet_macro());
 	mDrv_P_p_fMinSet_macro(mDrv_fPLoopMinVGet_macro());
+
 }
 
 // 1000 -> 10.0 => range 0.1 ~ 100

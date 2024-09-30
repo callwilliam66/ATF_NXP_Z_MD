@@ -18,17 +18,10 @@ const char paraName_limitNegEna[]			= "limitNegEnable";
 const char paraName_positionKp[]			= "positionKp";
 const char paraName_positionKd[]			= "poistionKd";
 const char paraName_positionCoefficient[]	= "positionCoefficient";
-const char paraName_speedindex[]		    = "speedindex";
+
 const char paraName_speedKp[]				= "speedKp";
 const char paraName_speedKi[]				= "speedKi";
-const char paraName_speedKp1[]				= "speedKp1";
-const char paraName_speedKi1[]				= "speedKi1";
-const char paraName_speedKp2[]				= "speedKp2";
-const char paraName_speedKi2[]				= "speedKi2";
-const char paraName_speedKp3[]				= "speedKp3";
-const char paraName_speedKi3[]				= "speedKi3";
-const char paraName_speedKp4[]				= "speedKp4";
-const char paraName_speedKi4[]				= "speedKi4";
+
 const char paraName_speedKf[]				= "speedKf";
 const char paraName_speedRKf[]				= "speedRKf";
 
@@ -36,7 +29,9 @@ const char paraName_currentKp[]	    		= "currentKp";
 const char paraName_currentKi[]	   			= "currentKi";
 const char paraName_currentBw[]	    		= "currentBw";
 const char paraName_currentTc[]	   			= "currentTc";
+
 const char paraName_posCmdPara[]			= "posCmdPara";
+
 const char paraName_spdCmdPara[]			= "spdCmdPara";
 const char paraName_spdCmdStep[]			= "spdCmdStep";
 const char paraName_speedAcc[]				= "speedAcc";

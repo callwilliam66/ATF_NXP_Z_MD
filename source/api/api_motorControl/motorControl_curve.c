@@ -18,6 +18,28 @@ void mCtrl_Tcurve_Setting(TCURVE_REGS *tcurveRegs,int32 lpcmd)
 	float32 fVinit = math_abs_macro(tcurveRegs->fVinit);
 	float32 fVend = 0;
 
+	float32 fData;
+	float32 fDataAbs;
+
+	fData = para_valueGet_macro(PARA_TCURVE_VMAX) / ( (float32) mPara_ulEncoderMaxPulseGet_macro() ) * 60.0F / mPara_fSpeedMaxGet_macro();
+
+	mDrv_fVCmdParaSet_macro(fData);
+
+	if(fData < 0)
+	{
+		fDataAbs = -fData;
+	}
+	else
+	{
+		fDataAbs = fData;
+	}
+
+	mDrv_fPLoopMaxVSet_macro(fDataAbs);
+	mDrv_fPLoopMinVSet_macro(-fDataAbs);
+
+	mDrv_P_p_fMaxSet_macro(mDrv_fPLoopMaxVGet_macro());
+	mDrv_P_p_fMinSet_macro(mDrv_fPLoopMinVGet_macro());
+
 	tcurveRegs->ldistance = lpcmd;
 	tcurveRegs->uldistance = math_abs_macro(tcurveRegs->ldistance);
 
@@ -96,6 +118,28 @@ void mCtrl_Tcurve_Calc(TCURVE_REGS *tcurveRegs)
 			tcurveRegs->lpcmd = tcurveRegs->ldistance;
 			tcurveRegs->ultcurve_enable = 0;
 
+			float32 fData;
+			float32 fDataAbs;
+
+			fData = para_valueGet_macro(PARA_V_CMD) / ( (float32) mPara_ulEncoderMaxPulseGet_macro() ) * 60.0F / mPara_fSpeedMaxGet_macro();
+
+			mDrv_fVCmdParaSet_macro(fData);
+
+			if(fData < 0)
+			{
+				fDataAbs = -fData;
+			}
+			else
+			{
+				fDataAbs = fData;
+			}
+
+			mDrv_fPLoopMaxVSet_macro(fDataAbs);
+			mDrv_fPLoopMinVSet_macro(-fDataAbs);
+
+			mDrv_P_p_fMaxSet_macro(mDrv_fPLoopMaxVGet_macro());
+			mDrv_P_p_fMinSet_macro(mDrv_fPLoopMinVGet_macro());
+
 			return ;
 		}
 	}else
@@ -111,6 +155,28 @@ void mCtrl_Tcurve_Calc(TCURVE_REGS *tcurveRegs)
 			tcurveRegs->ulfirsthome = 1;
 			tcurveRegs->lpcmd = tcurveRegs->ldistance;
 			tcurveRegs->ultcurve_enable = 0;
+
+			float32 fData;
+			float32 fDataAbs;
+
+			fData = para_valueGet_macro(PARA_V_CMD) / ( (float32) mPara_ulEncoderMaxPulseGet_macro() ) * 60.0F / mPara_fSpeedMaxGet_macro();
+
+			mDrv_fVCmdParaSet_macro(fData);
+
+			if(fData < 0)
+			{
+				fDataAbs = -fData;
+			}
+			else
+			{
+				fDataAbs = fData;
+			}
+
+			mDrv_fPLoopMaxVSet_macro(fDataAbs);
+			mDrv_fPLoopMinVSet_macro(-fDataAbs);
+
+			mDrv_P_p_fMaxSet_macro(mDrv_fPLoopMaxVGet_macro());
+			mDrv_P_p_fMinSet_macro(mDrv_fPLoopMinVGet_macro());
 
 			return ;
 		}

@@ -41,22 +41,6 @@ void para_pCoefficient(void)
 
 }
 
-
-
-#if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
-__RAMFUNC(RAM_FUNC_BLOCK)
-#endif
-// 10
-void para_vindex(void)
-{
-	uint32 ulData;
-
-	ulData = para_valueGet_macro(PARA_V_INDEX);
-
-	mDrv_V_pi_ulindexSet_macro(ulData);
-}
-
-
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
 __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
@@ -73,61 +57,6 @@ void para_vKp(void)
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
 __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
-// 100 -> 1.0 => range 0.01 ~ 100
-void para_vKp1(void)
-{
-	float32 fData;
-
-	fData = para_valueGet_macro(PARA_V_KP1) / 100.0F;
-
-	mDrv_V_pi_fKp1Set_macro(fData);
-}
-
-#if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
-__RAMFUNC(RAM_FUNC_BLOCK)
-#endif
-// 100 -> 1.0 => range 0.01 ~ 100
-void para_vKp2(void)
-{
-	float32 fData;
-
-	fData = para_valueGet_macro(PARA_V_KP2) / 100.0F;
-
-	mDrv_V_pi_fKp2Set_macro(fData);
-}
-
-#if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
-__RAMFUNC(RAM_FUNC_BLOCK)
-#endif
-// 100 -> 1.0 => range 0.01 ~ 100
-void para_vKp3(void)
-{
-	float32 fData;
-
-	fData = para_valueGet_macro(PARA_V_KP3) / 100.0F;
-
-	mDrv_V_pi_fKp3Set_macro(fData);
-}
-
-#if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
-__RAMFUNC(RAM_FUNC_BLOCK)
-#endif
-// 100 -> 1.0 => range 0.01 ~ 100
-void para_vKp4(void)
-{
-	float32 fData;
-
-	fData = para_valueGet_macro(PARA_V_KP4) / 100.0F;
-
-	mDrv_V_pi_fKp4Set_macro(fData);
-}
-
-
-
-
-#if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
-__RAMFUNC(RAM_FUNC_BLOCK)
-#endif
 // 100000 -> 1.0 => range 0.00001 ~ 10
 void para_vKi(void)
 {
@@ -137,60 +66,6 @@ void para_vKi(void)
 
 	mDrv_V_pi_fKiSet_macro(fData);
 }
-
-
-#if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
-__RAMFUNC(RAM_FUNC_BLOCK)
-#endif
-// 100000 -> 1.0 => range 0.00001 ~ 10
-void para_vKi1(void)
-{
-	float32 fData;
-
-	fData = para_valueGet_macro(PARA_V_KI1) / 100000.0F;
-
-	mDrv_V_pi_fKi1Set_macro(fData);
-}
-
-#if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
-__RAMFUNC(RAM_FUNC_BLOCK)
-#endif
-// 100000 -> 1.0 => range 0.00001 ~ 10
-void para_vKi2(void)
-{
-	float32 fData;
-
-	fData = para_valueGet_macro(PARA_V_KI2) / 100000.0F;
-
-	mDrv_V_pi_fKi2Set_macro(fData);
-}
-
-#if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
-__RAMFUNC(RAM_FUNC_BLOCK)
-#endif
-// 100000 -> 1.0 => range 0.00001 ~ 10
-void para_vKi3(void)
-{
-	float32 fData;
-
-	fData = para_valueGet_macro(PARA_V_KI3) / 100000.0F;
-
-	mDrv_V_pi_fKi3Set_macro(fData);
-}
-
-#if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
-__RAMFUNC(RAM_FUNC_BLOCK)
-#endif
-// 100000 -> 1.0 => range 0.00001 ~ 10
-void para_vKi4(void)
-{
-	float32 fData;
-
-	fData = para_valueGet_macro(PARA_V_KI4) / 100000.0F;
-
-	mDrv_V_pi_fKi4Set_macro(fData);
-}
-
 
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
 __RAMFUNC(RAM_FUNC_BLOCK)

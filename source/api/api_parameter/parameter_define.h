@@ -70,22 +70,10 @@ typedef enum
 #define PARA_P_KD						21  // 0x0000_0015
 #define PARA_P_COEFF					22  // 0x0000_0016
 
-
-
-#define PARA_V_KP1						27  // 0x0000_001B
-#define PARA_V_KI1						28  // 0x0000_001C
-
-#define PARA_V_INDEX					29  // 0x0000_001D
 #define PARA_V_KP						30  // 0x0000_001E
 #define PARA_V_KI						31  // 0x0000_001F
 #define PARA_V_KF						32  // 0x0000_0020
 #define PARA_V_RKF						33  // 0x0000_0021
-#define PARA_V_KP2						34  // 0x0000_0022
-#define PARA_V_KI2						35  // 0x0000_0023
-#define PARA_V_KP3						36  // 0x0000_0024
-#define PARA_V_KI3						37  // 0x0000_0025
-#define PARA_V_KP4						38  // 0x0000_0026
-#define PARA_V_KI4                      39  // 0x0000_0027
 
 #define PARA_I_KP						40  // 0x0000_0028
 #define PARA_I_KI						41  // 0x0000_0029
@@ -94,10 +82,12 @@ typedef enum
 
 #define PARA_P_CMD						50  // 0x0000_0032
 
+
 #define PARA_V_CMD						60  // 0x0000_003C
-#define PARA_V_STEP						61  // 0x0000_003D
-#define PARA_V_ACC						62  // 0x0000_003E
-#define PARA_V_DEC						63  // 0x0000_003F
+
+#define PARA_V_STEP						62  // 0x0000_003E
+#define PARA_V_ACC						63  // 0x0000_003F
+#define PARA_V_DEC						64  // 0x0000_0040
 
 #define PARA_IQ_CMD						70  // 0x0000_0046
 #define PARA_IQ_STEP					71  // 0x0000_0047
@@ -114,7 +104,6 @@ typedef enum
 #define PARA_LED_MODE			    	90	// 0x0000_005A
 #define PARA_LED_LEVELMAX				91	// 0x0000_005B
 #define PARA_LED_LEVEL					92	// 0x0000_005C
-
 
 #define PARA_TCURVE_VINIT				100	// 0x0000_0064
 #define PARA_TCURVE_VEND				101	// 0x0000_0065
@@ -199,8 +188,6 @@ typedef enum
 
 #define PARA_DOUT0	       		    	410 // 0x0000_019A
 
-
-
 #define PARA_FLASH_KEY					499 // 0x0000_01F3
 #define PARA_SETTING_PARAMODE			500 // 0x0000_01F4
 #define PARA_SETTING_PRINTINFO			508 // 0x0000_01FC
@@ -222,18 +209,9 @@ typedef enum
 #define PARA_P_KP_DEFAULT                       {	30,			100000,		0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_positionKp,				para_pKp}
 #define PARA_P_KD_DEFAULT                       {	0,			100000,		0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_positionKd,				para_pKd}
 #define PARA_P_COEFF_DEFAULT					{	0,			100000,		0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_positionCoefficient,	para_pCoefficient}
-#define PARA_V_INDEX_DEFAULT                    {	0,		    10,		    0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_speedindex,			para_vindex}
+
 #define PARA_V_KP_DEFAULT                       {	330,		10000,		0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_speedKp,			para_vKp}
 #define PARA_V_KI_DEFAULT                       {	350,		1000000,	0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_speedKi,			para_vKi}
-#define PARA_V_KP1_DEFAULT                      {	330,		10000,		0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_speedKp1,			para_vKp1}
-#define PARA_V_KI1_DEFAULT                      {	350,		1000000,	0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_speedKi1,			para_vKi1}
-#define PARA_V_KP2_DEFAULT                      {	330,		10000,		0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_speedKp2,			para_vKp2}
-#define PARA_V_KI2_DEFAULT                      {	350,		1000000,	0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_speedKi2,			para_vKi2}
-#define PARA_V_KP3_DEFAULT                      {	330,		10000,		0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_speedKp3,			para_vKp3}
-#define PARA_V_KI3_DEFAULT                      {	350,		1000000,	0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_speedKi3,			para_vKi3}
-#define PARA_V_KP4_DEFAULT                      {	330,		10000,		0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_speedKp4,			para_vKp4}
-#define PARA_V_KI4_DEFAULT                      {	350,		1000000,	0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_speedKi4,			para_vKi4}
-
 
 #define PARA_V_KF_DEFAULT                       {	0,			1000000,	0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_speedKf,				para_vKf}
 #define PARA_V_RKF_DEFAULT                      {	0,			1000000,	0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,(char*)paraName_speedRKf,			para_vRKf}
@@ -243,10 +221,12 @@ typedef enum
 #define PARA_I_BW_DEFAULT                       {	10,			0,			0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_currentBw,				para_iBw}
 #define PARA_I_TC_DEFAULT                       {	10,			0,			0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_currentTc,				para_iTc}
 #define PARA_P_CMD_DEFAULT                      {	0,			0xFFFFFFFF,	0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_posCmdPara,				para_pCmdPara}
+
 #define PARA_V_CMD_DEFAULT                      {	983040,		2147483647,-2147483648,	paraType_wr,			para_servo_on_unlocked,	paraSign_signed,	para_change_immediately,	(char*)paraName_spdCmdPara,				para_vCmdPara}
 #define PARA_V_STEP_DEFAULT                     {	0,			1000,		0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_spdCmdStep,				para_vCmdStep}
 #define PARA_V_ACC_DEFAULT					    {	0,			1000,		0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_speedAcc,				para_vCmdAcc}
 #define PARA_V_DEC_DEFAULT                      {	0,			1000,		0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_speedDec,				para_vCmdDec}
+
 #define PARA_IQ_CMD_DEFAULT                     {	8000,		10000,		-10000,		paraType_wr,			para_servo_on_unlocked,	paraSign_signed,	para_change_immediately,	(char*)paraName_curIqCmdPara,			para_iqCmdPara}
 #define PARA_IQ_STEP_DEFAULT                    {	0,			100,		0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_curIqCmdStep,			para_iqCmdStep}
 #define PARA_IQ_THRESHOID_DEFAULT				{	400,		10000,		0,			paraType_wr,			para_servo_on_locked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_iqthreshold,			para_iqthreshold}
@@ -375,17 +355,17 @@ typedef enum
 #define PR_027_DEFAULT	PARA_BLANK_DEFAULT
 #define PR_028_DEFAULT	PARA_BLANK_DEFAULT
 
-#define PR_029_DEFAULT	PARA_V_INDEX_DEFAULT
+#define PR_029_DEFAULT	PARA_BLANK_DEFAULT
 #define PR_030_DEFAULT	PARA_V_KP_DEFAULT
 #define PR_031_DEFAULT	PARA_V_KI_DEFAULT
 #define PR_032_DEFAULT	PARA_V_KF_DEFAULT
 #define PR_033_DEFAULT	PARA_V_RKF_DEFAULT
-#define PR_034_DEFAULT	PARA_V_KP2_DEFAULT
-#define PR_035_DEFAULT	PARA_V_KI2_DEFAULT
-#define PR_036_DEFAULT	PARA_V_KP3_DEFAULT
-#define PR_037_DEFAULT	PARA_V_KI3_DEFAULT
-#define PR_038_DEFAULT	PARA_V_KP4_DEFAULT
-#define PR_039_DEFAULT	PARA_V_KI4_DEFAULT
+#define PR_034_DEFAULT	PARA_BLANK_DEFAULT
+#define PR_035_DEFAULT	PARA_BLANK_DEFAULT
+#define PR_036_DEFAULT	PARA_BLANK_DEFAULT
+#define PR_037_DEFAULT	PARA_BLANK_DEFAULT
+#define PR_038_DEFAULT	PARA_BLANK_DEFAULT
+#define PR_039_DEFAULT	PARA_BLANK_DEFAULT
 
 #define PR_040_DEFAULT	PARA_I_KP_DEFAULT
 #define PR_041_DEFAULT	PARA_I_KI_DEFAULT
@@ -408,10 +388,10 @@ typedef enum
 #define PR_058_DEFAULT	PARA_BLANK_DEFAULT
 #define PR_059_DEFAULT	PARA_BLANK_DEFAULT
 #define PR_060_DEFAULT	PARA_V_CMD_DEFAULT
-#define PR_061_DEFAULT	PARA_V_STEP_DEFAULT
-#define PR_062_DEFAULT	PARA_V_ACC_DEFAULT
-#define PR_063_DEFAULT	PARA_V_DEC_DEFAULT
-#define PR_064_DEFAULT	PARA_BLANK_DEFAULT
+#define PR_061_DEFAULT	PARA_BLANK_DEFAULT
+#define PR_062_DEFAULT	PARA_V_STEP_DEFAULT
+#define PR_063_DEFAULT	PARA_V_ACC_DEFAULT
+#define PR_064_DEFAULT	PARA_V_DEC_DEFAULT
 #define PR_065_DEFAULT	PARA_BLANK_DEFAULT
 #define PR_066_DEFAULT	PARA_BLANK_DEFAULT
 #define PR_067_DEFAULT	PARA_BLANK_DEFAULT

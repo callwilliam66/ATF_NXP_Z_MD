@@ -17,7 +17,30 @@ void mCtrl_findhome(MOTOR_CONTROL_REGS *mCtrlRegs)
 		return;
 	}
 
+	float32 fData;
+	float32 fDataAbs;
+
+	fData = para_valueGet_macro(PARA_CTRLR_HOME_SPEED) / ( (float32) mPara_ulEncoderMaxPulseGet_macro() ) * 60.0F / mPara_fSpeedMaxGet_macro();
+
+	mDrv_fVCmdParaSet_macro(fData);
+
+	if(fData < 0)
+	{
+		fDataAbs = -fData;
+	}
+	else
+	{
+		fDataAbs = fData;
+	}
+
+	mDrv_fPLoopMaxVSet_macro(fDataAbs);
+	mDrv_fPLoopMinVSet_macro(-fDataAbs);
+
+	mDrv_P_p_fMaxSet_macro(mDrv_fPLoopMaxVGet_macro());
+	mDrv_P_p_fMinSet_macro(mDrv_fPLoopMinVGet_macro());
+
 	mCtrl_home(&mCtrlRegs->homeLimitRegs);
+
 	if( (mCtrlRegs->statusRegs.data.servoState == 1) && (mCtrlRegs->statusRegs.data.homeFinding == 0) && (mCtrlRegs->cmdRegs.data.homeFind == 1) && (mCtrlRegs->statusRegs.data.homeFinded == 0))		//(mCtrlRegs->statusRegs.data.servoState == 1) &&
 	{
 		mCtrlRegs->homeLimitRegs.ulHomeStop = 0;
@@ -101,7 +124,7 @@ void mCtrl_home_cmd(HOME_LIMIT_REGS *homeLimitRegs)
 		}
 		if(mCtrlRegs.homeLimitRegs.softPosLimitEnable == 1)
 		{
-			if((int32)mCtrlRegs.homeLimitRegs.ulhomePos >(int32)mCtrlRegs.homeLimitRegs.lSoftPosLimit)
+			if((int32)mCtrlRegs.homeLimitRegs.ulhomePos > (int32)mCtrlRegs.homeLimitRegs.lSoftPosLimit)
 				lhomePosPcmd  = mCtrlRegs.homeLimitRegs.lSoftPosLimit;
 		}
 
@@ -109,8 +132,9 @@ void mCtrl_home_cmd(HOME_LIMIT_REGS *homeLimitRegs)
 		{
 			mCtrlRegs.tcurveRegs.ulStartPcmd = mCtrl_ulPcmdUartGet_macro();
 
-			mCtrl_Tcurve_Setting(&mCtrlRegs.tcurveRegs,lhomePosPcmd);
+			mCtrl_Tcurve_Setting(&mCtrlRegs.tcurveRegs, lhomePosPcmd);
 		}
+
 	}
 
 	if(homeLimitRegs->ulHomeFindAlarm == 1)

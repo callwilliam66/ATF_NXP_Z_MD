@@ -123,6 +123,7 @@ void motorControl_isr(void)
 			mCtrlRegs.tcurveRegs.fVinit = mCtrlRegs.tcurveRegs.flogVinit;
 			mCtrlRegs.tcurveRegs.fPcmd = mCtrlRegs.tcurveRegs.flogPcmd;
 			mCtrl_Tcurve_Clear(&mCtrlRegs.tcurveRegs);
+
 			mCtrl_findhome(&mCtrlRegs);
 		}
 	}

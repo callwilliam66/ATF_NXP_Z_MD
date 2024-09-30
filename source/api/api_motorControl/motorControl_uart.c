@@ -170,16 +170,16 @@ void mCtrl_uart_tx_dataUpdate(UART_REGS *uartRegs)
 			break;
 #ifdef TESTMODE
 			case 0x02:
-				uulData.dword = mCtrlRegs.tcurveRegs.ulcurveType;
+				uulData.dword = 2;
 			break;
 			case 0x04:
-				uulData.dword = (mCtrlRegs.tcurveRegs.ultacc + mCtrlRegs.tcurveRegs.ultdec + mCtrlRegs.tcurveRegs.ultcc);
+				uulData.dword = 1000000 * mDrvRegs.fPLoopMaxV;
 			break;
 			case 0x05:
-				uulData.dword = 2 * mCtrlRegs.tcurveRegs.ultmid;
+				uulData.dword = 1000000 * mDrvRegs.P_pRegs.fMax;
 			break;
 			case 0x06:
-				uulData.dword =  mCtrlRegs.tcurveRegs.ultime;
+				uulData.dword =  -1000000 * mDrvRegs.P_pRegs.fMin;
 			break;
 			case 0x08:
 				uulData.dword =  mCtrlRegs.tcurveRegs.uldistance;
@@ -1400,8 +1400,6 @@ void uartPacketCmd19(uint32 uldata)
 
 		}
 	}
-
-
 
 	mCtrl_ulPcmdUartSet_macro(mCtrl_ulPcmdUartGet_macro() + ulINCPCMD );
 }

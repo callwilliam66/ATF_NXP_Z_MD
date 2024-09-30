@@ -36,17 +36,9 @@ extern void para_pKp(void);
 extern void para_pKd(void);
 extern void para_pCoefficient(void);
 
-extern void para_vindex(void);
+
 extern void para_vKp(void);
 extern void para_vKi(void);
-extern void para_vKp1(void);
-extern void para_vKi1(void);
-extern void para_vKp2(void);
-extern void para_vKi2(void);
-extern void para_vKp3(void);
-extern void para_vKi3(void);
-extern void para_vKp4(void);
-extern void para_vKi4(void);
 
 extern void para_vKf(void);
 extern void para_vRKf(void);
@@ -56,6 +48,8 @@ extern void para_iKi(void);
 extern void para_iBw(void);
 extern void para_iTc(void);
 extern void para_pCmdPara(void);
+
+
 
 extern void para_vCmdPara(void);
 extern void para_vCmdStep(void);

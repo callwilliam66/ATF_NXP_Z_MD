@@ -142,32 +142,27 @@ typedef struct
 
 typedef struct
 {
-	uint32  ulindex;
 	float32 fTc;
 	float32 fBw;
 	float32 fRef;
 	float32 fFbk;
 	float32 fErr;
+
 	float32 fKp;
-	float32 fKp1;
-	float32 fKp2;
-	float32 fKp3;
-	float32 fKp4;
+
 	float32 fKf;
 	float32 fRKf;
+
 	float32 fUp;
 	float32 fUf;
 	float32 fURf;
 	float32 fInt;
+
 	float32 fKi;
-	float32 fKi1;
-	float32 fKi2;
-	float32 fKi3;
-	float32 fKi4;
 	float32 fUi;
+
 	float32 fMax;
 	float32 fMin;
-
 
 	//Input
 	float32 x[2];
@@ -885,25 +880,6 @@ extern void mDrv_servo_on_DI_update(uint32 data);
 #define mDrv_V_pi_ulindexGet_macro()  		   mDrvRegs.V_piRegs.ulindex
 #define mDrv_V_pi_ulindexSet_macro(data)  	   mDrvRegs.V_piRegs.ulindex = data
 
-#define mDrv_V_pi_fKp1Get_macro()              mDrvRegs.V_piRegs.fKp1
-#define mDrv_V_pi_fKp1Set_macro(data) 		   mDrvRegs.V_piRegs.fKp1 = data
-#define mDrv_V_pi_fKi1Get_macro()              mDrvRegs.V_piRegs.fKi1
-#define mDrv_V_pi_fKi1Set_macro(data) 		   mDrvRegs.V_piRegs.fKi1 = data
-
-#define mDrv_V_pi_fKp2Get_macro()              mDrvRegs.V_piRegs.fKp2
-#define mDrv_V_pi_fKp2Set_macro(data) 		   mDrvRegs.V_piRegs.fKp2 = data
-#define mDrv_V_pi_fKi2Get_macro()              mDrvRegs.V_piRegs.fKi2
-#define mDrv_V_pi_fKi2Set_macro(data) 		   mDrvRegs.V_piRegs.fKi2 = data
-
-#define mDrv_V_pi_fKp3Get_macro()              mDrvRegs.V_piRegs.fKp3
-#define mDrv_V_pi_fKp3Set_macro(data) 		   mDrvRegs.V_piRegs.fKp3 = data
-#define mDrv_V_pi_fKi3Get_macro()              mDrvRegs.V_piRegs.fKi3
-#define mDrv_V_pi_fKi3Set_macro(data) 		   mDrvRegs.V_piRegs.fKi3 = data
-
-#define mDrv_V_pi_fKp4Get_macro()              mDrvRegs.V_piRegs.fKp4
-#define mDrv_V_pi_fKp4Set_macro(data) 		   mDrvRegs.V_piRegs.fKp4 = data
-#define mDrv_V_pi_fKi4Get_macro()              mDrvRegs.V_piRegs.fKi4
-#define mDrv_V_pi_fKi4Set_macro(data) 		   mDrvRegs.V_piRegs.fKi4 = data
 
 #define mDrv_V_pi_fRefGet_macro()              mDrvRegs.V_piRegs.fRef
 #define mDrv_V_pi_fFbkGet_macro()              mDrvRegs.V_piRegs.fFbk
