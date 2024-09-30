@@ -28,7 +28,7 @@
 // firmware revision
 // **** form 0x0 to 0xf ****//
 // **** 16 revision available in one day ****//
-#define REVISION	0x01
+#define REVISION	0x02
 
 // firmware version information
 // **** bit 7     driver type         ****//
