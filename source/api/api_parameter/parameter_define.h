@@ -250,7 +250,7 @@ typedef enum
 
 #define PARA_CTRLR_MODE_DEFAULT                 {	0,			10,			0,			paraType_wr,			para_servo_on_locked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_ctrlrMode,				para_controllerMode}
 #define PARA_CTRLR_HOME_MODE_DEFAULT            {	2,			5,			0,			paraType_wr,			para_servo_on_locked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_homeMode,				para_controllerHomeMode}
-#define PARA_CTRLR_HOME_SPEED_DEFAULT           {	327680,		2147483647,	0,			paraType_wr,			para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_homeSpeed,				para_controllerHomeSpeed}
+#define PARA_CTRLR_HOME_SPEED_DEFAULT           {	327680,		2147483647,	0,			paraType_wr,			para_servo_on_locked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_homeSpeed,				para_controllerHomeSpeed}
 #define PARA_CTRLR_HOME_POS_DEFAULT				{	390000,		2147483647,	-2147483648,	paraType_wr,		para_servo_on_unlocked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_homePos,				para_controllerHomePos}
 #define PARA_CTRLR_IN_POSITION_RANGE_DEFAULT    {	16,			10000,		0,			paraType_wr,			para_servo_on_locked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_inPosRange,				para_controllerInPositionRange}
 #define PARA_CTRLR_ZERO_SPEED_RANGE_DEFAULT     {	2200,		10000,		0,			paraType_wr,			para_servo_on_locked,	paraSign_unsigned,	para_change_immediately,	(char*)paraName_zeroSpdRange,			para_controllerZeroSpeedRange}
