@@ -19,17 +19,13 @@ void mCtrl_findhome(MOTOR_CONTROL_REGS *mCtrlRegs)
 
 	float32 fData;
 	float32 fDataAbs;
-	if( para_valueGet_macro(PARA_V_CMD) < para_valueGet_macro(PARA_CTRLR_HOME_SPEED))
-	{
-		fData = (float32) para_valueGet_macro(PARA_V_CMD)  / ((float32)mDrv_ulCtrlBaseFreqGet_macro());
 
-		mCtrlRegs->homeLimitRegs.fHomeFindSpeed = fData;
-	}else
-	{
+	if( para_valueGet_macro(PARA_V_CMD) < para_valueGet_macro(PARA_CTRLR_HOME_SPEED))
+		fData = (float32) para_valueGet_macro(PARA_V_CMD)  / ((float32)mDrv_ulCtrlBaseFreqGet_macro());
+	else
 		fData = (float32) para_valueGet_macro(PARA_CTRLR_HOME_SPEED)   / ((float32)mDrv_ulCtrlBaseFreqGet_macro());
 
-		mCtrlRegs->homeLimitRegs.fHomeFindSpeed = fData;
-	}
+	mCtrlRegs->homeLimitRegs.fHomeFindSpeed = fData;
 
 	fData = para_valueGet_macro(PARA_CTRLR_HOME_SPEED) / ( (float32) mPara_ulEncoderMaxPulseGet_macro() ) * 60.0F / mPara_fSpeedMaxGet_macro();
 
