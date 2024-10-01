@@ -90,7 +90,7 @@ void mCtrl_uart_tx_dataUpdate(UART_REGS *uartRegs)
 		uuint8 uucState;
 		uartRegs->txRegs.packet.header = UART_HEADER_DATA;
 
-		uartRegs->txRegs.packet.packet = uartRegs->RxPacket[uartRegs->txpwmCnt%2];
+		uartRegs->txRegs.packet.packet = uartRegs->RxPacket[uartRegs->txpwmCnt % 2];
 
 		uucState.bit.bit0 = board_HSIO5_read_macro();
 
@@ -119,11 +119,7 @@ void mCtrl_uart_tx_dataUpdate(UART_REGS *uartRegs)
 			uucState.bit.bit5 = 0;
 			uucState.bit.bit6 = 0;
 		}
-		/*if(uucState.bit.bit5 == 1)
-			board_HSIO1_on_macro();
-		else
-			board_HSIO1_off_macro();
-		*/
+
 		uucState.bit.bit7 = mCtrl_status_alarmGet_macro() || mCtrl_status_warningGet_macro();
 		uuint32 uulData;
 

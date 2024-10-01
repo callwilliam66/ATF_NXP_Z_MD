@@ -63,8 +63,12 @@ int main(void)
 	board_HSIO2_on_macro();
 
 	/// enable uart isr
+
 	EnableIRQ(LPUART1_SERIAL_RX_TX_IRQN);
 	EnableIRQ(LPUART3_SERIAL_RX_TX_IRQN);
+#ifndef TESTMODE
+	EnableIRQ(LPUART4_SERIAL_RX_TX_IRQN);
+#endif
 
 
     while(1)

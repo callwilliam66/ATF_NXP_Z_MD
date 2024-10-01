@@ -186,7 +186,7 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 		{
 			mCtrlRegs.uart2Regs.rxisrCnt++;
 			u8rxisrtempdata = device_uart_module_rxReadByte_macro(LPUART3_PERIPHERAL);
-			Queue_Push(&mCtrlRegs.uart2Regs.Rx_Data_Queue,u8rxisrtempdata);
+			Queue_Push(&mCtrlRegs.uart2Regs.Rx_Data_Queue, u8rxisrtempdata);
 		}
 
 	}else if( (kLPUART_TxDataRegEmptyFlag ) & LPUART_GetStatusFlags(LPUART3_PERIPHERAL))
@@ -199,9 +199,8 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 
 		if(mCtrlRegs.uart2Regs.txCnt == 0)
 		{
-			if( mCtrlRegs.uart2Regs.XcmdPendStatus == 0)
-				mCtrlRegs.uart2Regs.txpwmCnt++;
 
+			mCtrlRegs.uart2Regs.txpwmCnt++;
 			mCtrlRegs.uart2Regs.txCnt = UART_TX_PACKET_LENGTH;
 			mCtrlRegs.uart2Regs.txState = UART_TX_STATE_IDLE;
 			LPUART_DisableInterrupts(LPUART3, kLPUART_TxDataRegEmptyInterruptEnable);
