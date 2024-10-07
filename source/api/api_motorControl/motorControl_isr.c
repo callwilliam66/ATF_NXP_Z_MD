@@ -12,6 +12,31 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 void motorControl_isr(void)
 {
 	// state
+
+	mCtrlRegs.ulProgramTime++;
+	if( mCtrlRegs.uart2Regs.rxcmdCnt != mCtrlRegs.uart2Regs.txpwmCnt)
+	{
+		if(mCtrlRegs.uart2Regs.rxcmdCnt > mCtrlRegs.uart2Regs.txpwmCnt)
+		{
+			board_led_g_off_macro();
+			board_led_r_on_macro();
+		}else
+		{
+			board_led_g_on_macro();
+			board_led_r_off_macro();
+		}
+
+
+	}else
+	{
+
+		board_led_g_on_macro();
+		board_led_r_on_macro();
+
+	}
+
+
+
 #ifdef TESTMODE
 	mCtrlRegs.ulProgramTime++;
 
@@ -49,6 +74,7 @@ void motorControl_isr(void)
 	mCtrl_fpga_uart_isr(&mCtrlRegs.uart2Regs);
 	mCtrl_inner_uart_isr(&mCtrlRegs.uart3Regs);
 #else
+	mCtrl_uart_isr(&mCtrlRegs.uart1Regs);
 	mCtrl_uart_isr(&mCtrlRegs.uart2Regs);
 	mCtrl_inner_uart_isr(&mCtrlRegs.uart3Regs);
 #endif
@@ -118,12 +144,7 @@ void motorControl_isr(void)
 	{
 		if((mDrv_ulAngleCloseFlagGet_macro() == 1) && (mDrvRegs.startUpRegs.ulFirstCloseloopflag == 1))
 		{
-			mCtrlRegs.tcurveRegs.flogPcmd = 0.0;
-			mCtrlRegs.tcurveRegs.flogVinit = 0.0;
-			mCtrlRegs.tcurveRegs.fVinit = mCtrlRegs.tcurveRegs.flogVinit;
-			mCtrlRegs.tcurveRegs.fPcmd = mCtrlRegs.tcurveRegs.flogPcmd;
-			mCtrl_Tcurve_Clear(&mCtrlRegs.tcurveRegs);
-
+			mCtrl_Tcurve_Init(&mCtrlRegs.tcurveRegs);
 			mCtrl_findhome(&mCtrlRegs);
 		}
 	}

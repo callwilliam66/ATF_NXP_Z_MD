@@ -213,9 +213,40 @@ void mCtrl_Tcurve_parameterUpdate(TCURVE_REGS *tcurveRegs)
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
 __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
-void mCtrl_Tcurve_Check(TCURVE_REGS *tcurveRegs)
+void mCtrl_Tcurve_Init(TCURVE_REGS *tcurveRegs)
 {
 
+	tcurveRegs->ultmid = 0;
+	tcurveRegs->ultcc = 0;
+	tcurveRegs->ultime = 0;
+
+	tcurveRegs->fVinit = 0.0F;
+	tcurveRegs->lVinit = 0.0F;
+
+	tcurveRegs->fVend = 0.0F;
+	tcurveRegs->fAacc = 0.0F;
+	tcurveRegs->fAdec = 0.0F;
+
+	tcurveRegs->ldistance = 0;
+	tcurveRegs->uldistance = 0;
+
+	tcurveRegs->lpcmd = 0;
+	tcurveRegs->fAcmd = 0.0F;
+	tcurveRegs->fVcmd = 0.0F;
+	tcurveRegs->fPcmd = 0.0F;
+
+
+	tcurveRegs->fsqrtNum = 0.0F;
+	tcurveRegs->fsm = 0.0F;
+
+	tcurveRegs->ulStartPcmd = 0;
+	tcurveRegs->ulcurveType = 0;
+	tcurveRegs->ultcurve_enable = 0;
+
+	tcurveRegs->ulfirsthome = 0;
+
+	tcurveRegs->flogVinit = 0.0F;
+	tcurveRegs->flogPcmd = 0.0F;
 }
 
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)

@@ -80,7 +80,7 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
 void mCtrl_uart_tx_dataUpdate(UART_REGS *uartRegs)
 {
-	if(uartRegs->txpwmCnt == uartRegs->rxcmdCnt  || uartRegs->txpwmCnt != uartRegs->tx_expect_Cnt)
+	if(uartRegs->txpwmCnt >= uartRegs->rxcmdCnt  || uartRegs->txpwmCnt != uartRegs->tx_expect_Cnt)
 	{
 		return;
 	}

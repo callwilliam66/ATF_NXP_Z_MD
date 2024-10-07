@@ -59,7 +59,7 @@ typedef struct
 extern void mCtrl_Tcurve_Setting(TCURVE_REGS *tcurveRegs,int32 lpcmd);
 extern void mCtrl_Tcurve_Calc(TCURVE_REGS *tcurveRegs);
 extern void mCtrl_Tcurve_Clear(TCURVE_REGS *tcurveRegs);
-extern void mCtrl_Tcurve_Check(TCURVE_REGS *tcurveRegs);
+extern void mCtrl_Tcurve_Init(TCURVE_REGS *tcurveRegs);
 extern void mCtrl_Tcurve_parameterUpdate(TCURVE_REGS *tcurveRegs);
 
 #endif /* API_API_MOTORCONTROL_MOTORCONTROL_CURVE_H_ */
