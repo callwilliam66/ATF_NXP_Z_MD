@@ -852,12 +852,12 @@ instance:
   - interruptsCfg:
     - interrupts: 'kLPUART_RxDataRegFullInterruptEnable kLPUART_IdleLineInterruptEnable'
     - interrupt_vectors:
-      - enable_rx_tx_irq: 'true'
+      - enable_rx_tx_irq: 'false'
       - interrupt_rx_tx:
         - IRQn: 'LPUART1_IRQn'
         - enable_interrrupt: 'noInit'
         - enable_priority: 'true'
-        - priority: '1'
+        - priority: '3'
         - enable_custom_name: 'false'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
@@ -882,10 +882,6 @@ const lpuart_config_t LPUART1_config = {
 static void LPUART1_init(void) {
   LPUART_Init(LPUART1_PERIPHERAL, &LPUART1_config, LPUART1_CLOCK_SOURCE);
   LPUART_EnableInterrupts(LPUART1_PERIPHERAL, kLPUART_RxDataRegFullInterruptEnable | kLPUART_IdleLineInterruptEnable);
-  /* Interrupt vector LPUART1_IRQn priority settings in the NVIC. */
-  NVIC_SetPriority(LPUART1_SERIAL_RX_TX_IRQN, LPUART1_SERIAL_RX_TX_IRQ_PRIORITY);
-  /* Interrupt LPUART1_IRQn request in the NVIC is not initialized (disabled by default). */
-  /* It can be enabled later by EnableIRQ(LPUART1_SERIAL_RX_TX_IRQN);  function call. */
 }
 
 /***********************************************************************************************************************
@@ -1361,8 +1357,6 @@ instance:
       - 14: []
       - 15: []
       - 16: []
-      - 17: []
-      - 18: []
     - interrupts: []
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
@@ -1789,12 +1783,12 @@ instance:
   - interruptsCfg:
     - interrupts: 'kLPUART_RxDataRegFullInterruptEnable kLPUART_IdleLineInterruptEnable'
     - interrupt_vectors:
-      - enable_rx_tx_irq: 'true'
+      - enable_rx_tx_irq: 'false'
       - interrupt_rx_tx:
         - IRQn: 'LPUART4_IRQn'
         - enable_interrrupt: 'noInit'
         - enable_priority: 'true'
-        - priority: '1'
+        - priority: '2'
         - enable_custom_name: 'false'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
@@ -1819,10 +1813,6 @@ const lpuart_config_t LPUART4_config = {
 static void LPUART4_init(void) {
   LPUART_Init(LPUART4_PERIPHERAL, &LPUART4_config, LPUART4_CLOCK_SOURCE);
   LPUART_EnableInterrupts(LPUART4_PERIPHERAL, kLPUART_RxDataRegFullInterruptEnable | kLPUART_IdleLineInterruptEnable);
-  /* Interrupt vector LPUART4_IRQn priority settings in the NVIC. */
-  NVIC_SetPriority(LPUART4_SERIAL_RX_TX_IRQN, LPUART4_SERIAL_RX_TX_IRQ_PRIORITY);
-  /* Interrupt LPUART4_IRQn request in the NVIC is not initialized (disabled by default). */
-  /* It can be enabled later by EnableIRQ(LPUART4_SERIAL_RX_TX_IRQN);  function call. */
 }
 
 /***********************************************************************************************************************

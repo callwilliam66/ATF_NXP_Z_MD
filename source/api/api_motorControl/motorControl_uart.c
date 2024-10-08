@@ -80,7 +80,7 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
 void mCtrl_uart_tx_dataUpdate(UART_REGS *uartRegs)
 {
-	if(uartRegs->txpwmCnt >= uartRegs->rxcmdCnt  || uartRegs->txpwmCnt != uartRegs->tx_expect_Cnt)
+	if(uartRegs->txpwmCnt >= uartRegs->rxcmdCnt  || uartRegs->txpwmCnt != uartRegs->tx_expect_Cnt || uartRegs->txState == UART_TX_STATE_BUSY)
 	{
 		return;
 	}
@@ -191,11 +191,13 @@ void mCtrl_uart_tx_dataUpdate(UART_REGS *uartRegs)
 				if(mCtrl_status_homeFindedGet_macro() == 1)
 				{
 					uulData.dword = mCtrl_ulPfbkGet_macro() - mCtrl_ulPHomeGet_macro();
+
 				}
 				else
 				{
 					uulData.dword =	mCtrl_ulPfbkGet_macro();
 				}
+
 			break;
 		}
 
@@ -210,6 +212,14 @@ void mCtrl_uart_tx_dataUpdate(UART_REGS *uartRegs)
 	mCtrl_uart_firmwareUpdate_tx(uartRegs);
 
 	uartRegs->tx_expect_Cnt++;
+
+	if(uartRegs->rxcmdCnt < uartRegs->tx_expect_Cnt)
+	{
+		board_led_g_on_macro();
+		board_led_r_on_macro();
+		return;
+	}
+
 
 	LPUART_EnableInterrupts(uartRegs->module,kLPUART_TxDataRegEmptyInterruptEnable);
 

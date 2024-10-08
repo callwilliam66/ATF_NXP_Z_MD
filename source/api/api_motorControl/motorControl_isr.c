@@ -14,27 +14,6 @@ void motorControl_isr(void)
 	// state
 
 	mCtrlRegs.ulProgramTime++;
-	if( mCtrlRegs.uart2Regs.rxcmdCnt != mCtrlRegs.uart2Regs.txpwmCnt)
-	{
-		if(mCtrlRegs.uart2Regs.rxcmdCnt > mCtrlRegs.uart2Regs.txpwmCnt)
-		{
-			board_led_g_off_macro();
-			board_led_r_on_macro();
-		}else
-		{
-			board_led_g_on_macro();
-			board_led_r_off_macro();
-		}
-
-
-	}else
-	{
-
-		board_led_g_on_macro();
-		board_led_r_on_macro();
-
-	}
-
 
 
 #ifdef TESTMODE
@@ -74,9 +53,9 @@ void motorControl_isr(void)
 	mCtrl_fpga_uart_isr(&mCtrlRegs.uart2Regs);
 	mCtrl_inner_uart_isr(&mCtrlRegs.uart3Regs);
 #else
-	mCtrl_uart_isr(&mCtrlRegs.uart1Regs);
+	//mCtrl_uart_isr(&mCtrlRegs.uart1Regs);
 	mCtrl_uart_isr(&mCtrlRegs.uart2Regs);
-	mCtrl_inner_uart_isr(&mCtrlRegs.uart3Regs);
+	//mCtrl_inner_uart_isr(&mCtrlRegs.uart3Regs);
 #endif
 	// servo on control
 	if((mCtrlRegs.uart1Regs.firmwareUpdateFlag == 1) || (mCtrlRegs.uart2Regs.firmwareUpdateFlag == 1)|| (mCtrlRegs.uart3Regs.firmwareUpdateFlag == 1))

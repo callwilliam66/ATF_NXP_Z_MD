@@ -115,10 +115,11 @@ void LPUART1_SERIAL_RX_TX_IRQHANDLER(void) {
 
 		if(mCtrlRegs.uart1Regs.txCnt == 0)
 		{
-			mCtrlRegs.uart1Regs.txpwmCnt++;
+			LPUART_DisableInterrupts(LPUART1,kLPUART_TxDataRegEmptyInterruptEnable);
+
 			mCtrlRegs.uart1Regs.txCnt = UART_TX_PACKET_LENGTH;
 			mCtrlRegs.uart1Regs.txState = UART_TX_STATE_IDLE;
-			LPUART_DisableInterrupts(LPUART1,kLPUART_TxDataRegEmptyInterruptEnable);
+			mCtrlRegs.uart1Regs.txpwmCnt++;
 		}
 	}
 #endif
@@ -191,19 +192,21 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 
 	}else if( (kLPUART_TxDataRegEmptyFlag ) & LPUART_GetStatusFlags(LPUART3_PERIPHERAL))
 	{
+
 		mCtrlRegs.uart2Regs.txState = UART_TX_STATE_BUSY;
 
 		device_uart_module_txWriteByte_macro(LPUART3_PERIPHERAL, mCtrlRegs.uart2Regs.txRegs.data[UART_TX_PACKET_LENGTH - mCtrlRegs.uart2Regs.txCnt]);
 
 		mCtrlRegs.uart2Regs.txCnt--;
+		mCtrlRegs.uldebug_temp_cont++;
 
 		if(mCtrlRegs.uart2Regs.txCnt == 0)
 		{
+			LPUART_DisableInterrupts(LPUART3, kLPUART_TxDataRegEmptyInterruptEnable);
 
 			mCtrlRegs.uart2Regs.txpwmCnt++;
 			mCtrlRegs.uart2Regs.txCnt = UART_TX_PACKET_LENGTH;
 			mCtrlRegs.uart2Regs.txState = UART_TX_STATE_IDLE;
-			LPUART_DisableInterrupts(LPUART3, kLPUART_TxDataRegEmptyInterruptEnable);
 		}
 	}
 #endif

@@ -1547,12 +1547,12 @@
                            </selected>
                         </set>
                         <struct name="interrupt_vectors">
-                           <setting name="enable_rx_tx_irq" value="true"/>
+                           <setting name="enable_rx_tx_irq" value="false"/>
                            <struct name="interrupt_rx_tx">
                               <setting name="IRQn" value="LPUART1_IRQn"/>
                               <setting name="enable_interrrupt" value="noInit"/>
                               <setting name="enable_priority" value="true"/>
-                              <setting name="priority" value="1"/>
+                              <setting name="priority" value="3"/>
                               <setting name="enable_custom_name" value="false"/>
                            </struct>
                         </struct>
@@ -1925,8 +1925,6 @@
                            <struct name="14"/>
                            <struct name="15"/>
                            <struct name="16"/>
-                           <struct name="17"/>
-                           <struct name="18"/>
                         </array>
                         <array name="interrupts"/>
                      </config_set>
@@ -2236,12 +2234,12 @@
                            </selected>
                         </set>
                         <struct name="interrupt_vectors">
-                           <setting name="enable_rx_tx_irq" value="true"/>
+                           <setting name="enable_rx_tx_irq" value="false"/>
                            <struct name="interrupt_rx_tx">
                               <setting name="IRQn" value="LPUART4_IRQn"/>
                               <setting name="enable_interrrupt" value="noInit"/>
                               <setting name="enable_priority" value="true"/>
-                              <setting name="priority" value="1"/>
+                              <setting name="priority" value="2"/>
                               <setting name="enable_custom_name" value="false"/>
                            </struct>
                         </struct>

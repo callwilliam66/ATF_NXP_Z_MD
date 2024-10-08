@@ -119,7 +119,7 @@ enum ADC_ETC_trigger_config_trigger_group_names
 /* LPUART1 interrupt vector ID (number). */
 #define LPUART1_SERIAL_RX_TX_IRQN LPUART1_IRQn
 /* LPUART1 interrupt vector priority. */
-#define LPUART1_SERIAL_RX_TX_IRQ_PRIORITY 1
+#define LPUART1_SERIAL_RX_TX_IRQ_PRIORITY 3
 /* LPUART1 interrupt handler identifier. */
 #define LPUART1_SERIAL_RX_TX_IRQHANDLER LPUART1_IRQHandler
 /* Definition of peripheral ID */
@@ -231,7 +231,7 @@ enum ADC_ETC_trigger_config_trigger_group_names
 /* LPUART4 interrupt vector ID (number). */
 #define LPUART4_SERIAL_RX_TX_IRQN LPUART4_IRQn
 /* LPUART4 interrupt vector priority. */
-#define LPUART4_SERIAL_RX_TX_IRQ_PRIORITY 1
+#define LPUART4_SERIAL_RX_TX_IRQ_PRIORITY 2
 /* LPUART4 interrupt handler identifier. */
 #define LPUART4_SERIAL_RX_TX_IRQHANDLER LPUART4_IRQHandler
 /* Definition of peripheral ID */

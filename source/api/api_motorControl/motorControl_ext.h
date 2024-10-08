@@ -135,6 +135,7 @@ typedef struct
 	uint32 			commandReceiveEnableFlag;
 	uint32 			ulfirmwareflashkey;
 
+	uint32   		uldebug_temp_cont;
 }MOTOR_CONTROL_REGS;
 
 extern MOTOR_CONTROL_REGS mCtrlRegs;
