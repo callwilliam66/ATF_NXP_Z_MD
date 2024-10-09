@@ -203,7 +203,6 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 		if(mCtrlRegs.uart2Regs.txCnt == 0)
 		{
 			LPUART_DisableInterrupts(LPUART3, kLPUART_TxDataRegEmptyInterruptEnable);
-
 			mCtrlRegs.uart2Regs.txpwmCnt++;
 			mCtrlRegs.uart2Regs.txCnt = UART_TX_PACKET_LENGTH;
 			mCtrlRegs.uart2Regs.txState = UART_TX_STATE_IDLE;

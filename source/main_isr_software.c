@@ -58,9 +58,7 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 void software6_isr(void)
 {
 
-#ifdef DEBUGMODE
-	return;
-#endif
+
 	if((mCtrlRegs.uart2Regs.module->STAT & 0X80000) == 0X80000)
 	{
 	//	board_led_g_on_macro();

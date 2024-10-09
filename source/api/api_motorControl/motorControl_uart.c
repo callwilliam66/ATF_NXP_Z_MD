@@ -213,14 +213,6 @@ void mCtrl_uart_tx_dataUpdate(UART_REGS *uartRegs)
 
 	uartRegs->tx_expect_Cnt++;
 
-	if(uartRegs->rxcmdCnt < uartRegs->tx_expect_Cnt)
-	{
-		board_led_g_on_macro();
-		board_led_r_on_macro();
-		return;
-	}
-
-
 	LPUART_EnableInterrupts(uartRegs->module,kLPUART_TxDataRegEmptyInterruptEnable);
 
 }
