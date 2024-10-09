@@ -64,12 +64,11 @@ int main(void)
 
 	/// enable uart isr
 
-	//EnableIRQ(LPUART1_SERIAL_RX_TX_IRQN);
+	EnableIRQ(LPUART1_SERIAL_RX_TX_IRQN);
 	EnableIRQ(LPUART3_SERIAL_RX_TX_IRQN);
 #ifndef TESTMODE
-	//EnableIRQ(LPUART4_SERIAL_RX_TX_IRQN);
+	EnableIRQ(LPUART4_SERIAL_RX_TX_IRQN);
 #endif
-
 
     while(1)
     {
