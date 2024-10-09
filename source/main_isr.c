@@ -50,7 +50,7 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 void LPUART1_SERIAL_RX_TX_IRQHANDLER(void) {
 
 	uint8 u8rxisrtempdata;
-#ifdef TESTMODE
+#if  TESTMODE == UART_TEST_MODE
 	if ((kLPUART_RxDataRegFullFlag) & LPUART_GetStatusFlags(LPUART1_PERIPHERAL))
 	{
 		mCtrlRegs.uart1Regs.rxisrCnt++;
@@ -134,7 +134,7 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 
 	uint8 u8rxisrtempdata;
 
-#ifdef TESTMODE
+#if  TESTMODE == UART_TEST_MODE
 
 	if ((kLPUART_RxDataRegFullFlag) & LPUART_GetStatusFlags(LPUART3_PERIPHERAL))
 	{

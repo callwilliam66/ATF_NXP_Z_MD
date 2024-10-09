@@ -57,12 +57,12 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
 void software6_isr(void)
 {
-
+#if  TESTMODE == NORMAL_MODE
 
 	if((mCtrlRegs.uart2Regs.module->STAT & 0X80000) == 0X80000)
 	{
-	//	board_led_g_on_macro();
-	//	board_led_r_on_macro();
+		board_led_g_on_macro();
+		board_led_r_on_macro();
 		return;
 	}
 
@@ -101,7 +101,10 @@ void software6_isr(void)
 		board_led_r_off_macro();
 
 	}
-
+#elif TESTMODE  == UART_TEST_MODE
+	board_led_g_toggle_macro();
+	board_led_r_toggle_macro();
+#endif
 }
 
 // interrupt - software7

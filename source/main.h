@@ -16,6 +16,12 @@
 
 #include "main_isr.h"
 
+
+#define  NORMAL_MODE        0
+#define  UART_TEST_MODE		1
+
+#define TESTMODE    UART_TEST_MODE
+
 // drive type
 // **** form 0x0 to 0xf ****//
 #define FIRMWARE_TYPE_THREE_PHASE	0x0

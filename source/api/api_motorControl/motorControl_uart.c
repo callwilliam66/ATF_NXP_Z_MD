@@ -164,7 +164,7 @@ void mCtrl_uart_tx_dataUpdate(UART_REGS *uartRegs)
 			case UART_PACKET_VERSION_GET:
 				uulData.dword = para_valueGet_macro(PARA_FIRMWARE_VERSION);
 			break;
-#ifdef TESTMODE
+#if  TESTMODE == UART_TEST_MODE
 			case 0x02:
 				uulData.dword = 2;
 			break;
@@ -386,7 +386,7 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
 void mCtrl_inner_uart_tx_dataUpdate(UART_REGS *uartRegs)
 {
-#ifdef TESTMODE
+#if  TESTMODE == UART_TEST_MODE
 	//if( mCtrlRegs.uart1Regs.txState == UART_TX_STATE_BUSY)	return;
 
 	if(uartRegs->txUpdate == UART_TX_STATE_IDLE)				return;
@@ -465,7 +465,7 @@ void mCtrl_inner_uart_rx(UART_REGS *uartRegs)
 	int32 queue_size;
 	int32 local_read_cnt;
 
-#ifdef TESTMODE
+#if  TESTMODE == UART_TEST_MODE
 
 	queue_size = Queue_GetSize(&uartRegs->Rx_Data_Queue);
 
@@ -564,7 +564,7 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
 void mCtrl_fpga_uart_tx_dataUpdate(UART_REGS *uartRegs)
 {
-#ifdef TESTMODE
+#if  TESTMODE == UART_TEST_MODE
 	if(uartRegs->txpwmCnt == uartRegs->rxcmdCnt  || uartRegs->txpwmCnt != uartRegs->tx_expect_Cnt ||  uartRegs->firmwareReceiveFlag == 1)
 	{
 		return;
@@ -830,7 +830,7 @@ void mCtrl_fpga_uart_rx(UART_REGS *uartRegs)
 	int32 local_read_cnt;
 	static uint32 ulreset_cnt = 0;
 
-#ifdef TESTMODE
+#if  TESTMODE == UART_TEST_MODE
 
 	if(uartRegs->ulrestflag == 2)
 	{
@@ -1152,7 +1152,7 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
 void mCtrl_fpga_uart_rx_dataUpdate(UART_REGS *uartRegs)
 {
-#ifdef TESTMODE
+#if  TESTMODE == UART_TEST_MODE
 	if(uartRegs->rxUpdate == UART_RX_DATA_IDLE) return; // check rx process finish
 
 	uuint8 uucCtrl;

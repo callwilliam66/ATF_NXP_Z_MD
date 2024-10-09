@@ -15,8 +15,7 @@ void motorControl_isr(void)
 
 	mCtrlRegs.ulProgramTime++;
 
-#ifdef TESTMODE
-	mCtrlRegs.ulProgramTime++;
+#if TESTMODE == UART_TEST_MODE
 
 	if( mCtrlRegs.ulProgramTimeWatch != 0 && mCtrlRegs.ulProgramTime > ( mCtrlRegs.ulProgramTimeWatch + 4000) )
 	{
@@ -47,12 +46,12 @@ void motorControl_isr(void)
 	mCtrl_homeLimitDataUpdate(&mCtrlRegs.homeLimitRegs);			//Limit Update
 
 	// controller process
-#ifdef TESTMODE
-	mCtrl_uart_isr(&mCtrlRegs.uart1Regs);
-	mCtrl_fpga_uart_isr(&mCtrlRegs.uart2Regs);
+#if TESTMODE == UART_TEST_MODE
+	//mCtrl_uart_isr(&mCtrlRegs.uart1Regs);
+	mCtrl_fpga_uart_isr(&mCtrlRegs.uart1Regs);
 	mCtrl_inner_uart_isr(&mCtrlRegs.uart3Regs);
 #else
-	mCtrl_uart_isr(&mCtrlRegs.uart1Regs);
+	//mCtrl_uart_isr(&mCtrlRegs.uart1Regs);
 	mCtrl_uart_isr(&mCtrlRegs.uart2Regs);
 	mCtrl_inner_uart_isr(&mCtrlRegs.uart3Regs);
 #endif
