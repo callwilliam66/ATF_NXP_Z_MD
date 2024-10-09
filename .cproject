@@ -402,10 +402,10 @@
 							<tool id="com.crt.advproject.gcc.exe.debug.78427668" name="MCU C Compiler" superClass="com.crt.advproject.gcc.exe.debug">
 								<option id="com.crt.advproject.gcc.hdrlib.1342940771" name="Library headers" superClass="com.crt.advproject.gcc.hdrlib" useByScannerDiscovery="false"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.c.compiler.option.preprocessor.def.symbols.1893621183" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="TESTMODE"/>
 									<listOptionValue builtIn="false" value="HOMEMODE"/>
 									<listOptionValue builtIn="false" value="__REDLIB__"/>
 									<listOptionValue builtIn="false" value="XIP_EXTERNAL_FLASH=1"/>
-									<listOptionValue builtIn="false" value="DEBUGMODE"/>
 									<listOptionValue builtIn="false" value="XIP_BOOT_HEADER_ENABLE=1"/>
 									<listOptionValue builtIn="false" value="CPU_MIMXRT1064DVL6A"/>
 									<listOptionValue builtIn="false" value="CPU_MIMXRT1064DVL6A_cm7"/>
