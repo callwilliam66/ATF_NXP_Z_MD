@@ -16,7 +16,9 @@ void mCtrl_findhome(MOTOR_CONTROL_REGS *mCtrlRegs)
 		mCtrlRegs->statusRegs.data.homeFinded = 1;
 		return;
 	}
-#ifdef HOMEMODE
+
+#if HOMEMODE == HOMEMODE_ENABLE
+
 	float32 fData;
 	float32 fDataAbs;
 
@@ -46,6 +48,7 @@ void mCtrl_findhome(MOTOR_CONTROL_REGS *mCtrlRegs)
 	mDrv_P_p_fMaxSet_macro(mDrv_fPLoopMaxVGet_macro());
 	mDrv_P_p_fMinSet_macro(mDrv_fPLoopMinVGet_macro());
 #endif
+
 	mCtrl_home(&mCtrlRegs->homeLimitRegs);
 
 	if( (mCtrlRegs->statusRegs.data.servoState == 1) && (mCtrlRegs->statusRegs.data.homeFinding == 0) && (mCtrlRegs->cmdRegs.data.homeFind == 1) && (mCtrlRegs->statusRegs.data.homeFinded == 0))		//(mCtrlRegs->statusRegs.data.servoState == 1) &&

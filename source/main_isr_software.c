@@ -101,10 +101,12 @@ void software6_isr(void)
 		board_led_r_off_macro();
 
 	}
+
 #elif TESTMODE  == UART_TEST_MODE
 	board_led_g_toggle_macro();
 	board_led_r_toggle_macro();
 #endif
+
 }
 
 // interrupt - software7

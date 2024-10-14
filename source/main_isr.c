@@ -138,9 +138,9 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 
 	if ((kLPUART_RxDataRegFullFlag) & LPUART_GetStatusFlags(LPUART3_PERIPHERAL))
 	{
-		mCtrlRegs.uart1Regs.rxisrCnt++;
+		mCtrlRegs.uart2Regs.rxisrCnt++;
 		u8rxisrtempdata = device_uart_module_rxReadByte_macro(LPUART3_PERIPHERAL);
-		Queue_Push(&mCtrlRegs.uart1Regs.Rx_Data_Queue, u8rxisrtempdata);
+		Queue_Push(&mCtrlRegs.uart2Regs.Rx_Data_Queue, u8rxisrtempdata);
 
 	}else if((kLPUART_IdleLineFlag ) & LPUART_GetStatusFlags(LPUART3_PERIPHERAL))
 	{
@@ -148,26 +148,26 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 
 		if(device_uart_module_rxFifoEmpty_macro(LPUART3_PERIPHERAL) == 0)
 		{
-			mCtrlRegs.uart1Regs.rxisrCnt++;
+			mCtrlRegs.uart2Regs.rxisrCnt++;
 			u8rxisrtempdata = device_uart_module_rxReadByte_macro(LPUART3_PERIPHERAL);
-			Queue_Push(&mCtrlRegs.uart1Regs.Rx_Data_Queue,u8rxisrtempdata);
+			Queue_Push(&mCtrlRegs.uart2Regs.Rx_Data_Queue,u8rxisrtempdata);
 		}
 
 	}else if( (kLPUART_TxDataRegEmptyFlag ) & LPUART_GetStatusFlags(LPUART3_PERIPHERAL))
 	{
-		mCtrlRegs.uart1Regs.txState = UART_TX_STATE_BUSY;
+		mCtrlRegs.uart2Regs.txState = UART_TX_STATE_BUSY;
 
-		device_uart_module_txWriteByte_macro(LPUART3_PERIPHERAL, mCtrlRegs.uart1Regs.txRegs.data[UART_TX_PACKET_LENGTH - mCtrlRegs.uart1Regs.txCnt]);
+		device_uart_module_txWriteByte_macro(LPUART3_PERIPHERAL, mCtrlRegs.uart2Regs.txRegs.data[UART_TX_PACKET_LENGTH - mCtrlRegs.uart2Regs.txCnt]);
 
-		mCtrlRegs.uart1Regs.txCnt--;
+		mCtrlRegs.uart2Regs.txCnt--;
 
-		if(mCtrlRegs.uart1Regs.txCnt == 0)
+		if(mCtrlRegs.uart2Regs.txCnt == 0)
 		{
-			if( mCtrlRegs.uart1Regs.XcmdPendStatus == 0)
-				mCtrlRegs.uart1Regs.txpwmCnt++;
+			if( mCtrlRegs.uart2Regs.XcmdPendStatus == 0)
+				mCtrlRegs.uart2Regs.txpwmCnt++;
 
-			mCtrlRegs.uart1Regs.txCnt = UART_TX_PACKET_LENGTH;
-			mCtrlRegs.uart1Regs.txState = UART_TX_STATE_IDLE;
+			mCtrlRegs.uart2Regs.txCnt = UART_TX_PACKET_LENGTH;
+			mCtrlRegs.uart2Regs.txState = UART_TX_STATE_IDLE;
 			LPUART_DisableInterrupts(LPUART3, kLPUART_TxDataRegEmptyInterruptEnable);
 		}
 	}

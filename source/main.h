@@ -16,6 +16,11 @@
 
 #include "main_isr.h"
 
+#define  HOMEMODE_DISABLE 			0
+#define  HOMEMODE_ENABLE            1
+
+#define  HOMEMODE					HOMEMODE_ENABLE
+
 
 #define  NORMAL_MODE        0
 #define  UART_TEST_MODE		1
@@ -30,7 +35,7 @@
 #define FIRMWARE_TYPE	FIRMWARE_TYPE_THREE_PHASE
 
 // firmware update date
-#define UPDATE_DATA	0x20241009
+#define UPDATE_DATA	0x20241014
 // firmware revision
 // **** form 0x0 to 0xf ****//
 // **** 16 revision available in one day ****//

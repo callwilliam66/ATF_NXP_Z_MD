@@ -18,7 +18,7 @@ void mCtrl_Tcurve_Setting(TCURVE_REGS *tcurveRegs,int32 lpcmd)
 	float32 fVinit = math_abs_macro(tcurveRegs->fVinit);
 	float32 fVend = 0;
 
-#ifdef HOMEMODE
+#if	HOMEMODE == HOMEMODE_ENABLE
 	float32 fData;
 	float32 fDataAbs;
 
@@ -119,7 +119,7 @@ void mCtrl_Tcurve_Calc(TCURVE_REGS *tcurveRegs)
 			tcurveRegs->ulfirsthome = 1;
 			tcurveRegs->lpcmd = tcurveRegs->ldistance;
 			tcurveRegs->ultcurve_enable = 0;
-#ifdef HOMEMODE
+#if  HOMEMODE == HOMEMODE_ENABLE
 			float32 fData;
 			float32 fDataAbs;
 
@@ -157,7 +157,7 @@ void mCtrl_Tcurve_Calc(TCURVE_REGS *tcurveRegs)
 			tcurveRegs->ulfirsthome = 1;
 			tcurveRegs->lpcmd = tcurveRegs->ldistance;
 			tcurveRegs->ultcurve_enable = 0;
-#ifdef HOMEMODE
+#if HOMEMODE == HOMEMODE_ENABLE
 			float32 fData;
 			float32 fDataAbs;
 

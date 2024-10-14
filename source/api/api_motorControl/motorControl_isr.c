@@ -48,7 +48,7 @@ void motorControl_isr(void)
 	// controller process
 #if TESTMODE == UART_TEST_MODE
 	//mCtrl_uart_isr(&mCtrlRegs.uart1Regs);
-	mCtrl_fpga_uart_isr(&mCtrlRegs.uart1Regs);
+	mCtrl_fpga_uart_isr(&mCtrlRegs.uart2Regs);
 	mCtrl_inner_uart_isr(&mCtrlRegs.uart3Regs);
 #else
 	//mCtrl_uart_isr(&mCtrlRegs.uart1Regs);

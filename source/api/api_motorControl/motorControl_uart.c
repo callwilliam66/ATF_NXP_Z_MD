@@ -41,7 +41,7 @@ void mCtrl_uart_isr(UART_REGS *uartRegs)
 	mCtrl_uart_rx(uartRegs);
 	mCtrl_uart_rx_dataUpdate(uartRegs);
 	mCtrl_uart_tx_dataUpdate(uartRegs);
-	mCtrl_uart_tx(uartRegs);
+	//mCtrl_uart_tx(uartRegs);
 }
 
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
@@ -213,7 +213,7 @@ void mCtrl_uart_tx_dataUpdate(UART_REGS *uartRegs)
 
 	uartRegs->tx_expect_Cnt++;
 
-	LPUART_EnableInterrupts(uartRegs->module,kLPUART_TxDataRegEmptyInterruptEnable);
+	LPUART_EnableInterrupts(uartRegs->module, kLPUART_TxDataRegEmptyInterruptEnable);
 
 }
 
@@ -341,7 +341,6 @@ void mCtrl_uart_rx_dataUpdate(UART_REGS *uartRegs)
 
 	uuint8 uucCtrl;
 	uucCtrl.uchar = uartRegs->rxRegs.packet.ctrl_st;
-
 
 	uartRegs->rxCheckFail = UART_RX_CHECK_PASS;
 
@@ -565,7 +564,7 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 void mCtrl_fpga_uart_tx_dataUpdate(UART_REGS *uartRegs)
 {
 #if  TESTMODE == UART_TEST_MODE
-	if(uartRegs->txpwmCnt == uartRegs->rxcmdCnt  || uartRegs->txpwmCnt != uartRegs->tx_expect_Cnt ||  uartRegs->firmwareReceiveFlag == 1)
+	if(uartRegs->txpwmCnt >= uartRegs->rxcmdCnt  || uartRegs->txpwmCnt != uartRegs->tx_expect_Cnt || uartRegs->txState == UART_TX_STATE_BUSY)
 	{
 		return;
 	}
@@ -673,7 +672,7 @@ void mCtrl_fpga_uart_tx_dataUpdate(UART_REGS *uartRegs)
 
 	uartRegs->tx_expect_Cnt++;
 
-	if( uartRegs->firmwareUpdateState.bit.bit7 == 1 )
+	/*if( uartRegs->firmwareUpdateState.bit.bit7 == 1 )
 	{
 		LPUART_DisableInterrupts(uartRegs->module, kLPUART_RxDataRegFullInterruptEnable);
 		LPUART_DisableInterrupts(uartRegs->module, kLPUART_IdleLineInterruptEnable);
@@ -681,7 +680,7 @@ void mCtrl_fpga_uart_tx_dataUpdate(UART_REGS *uartRegs)
 		uartRegs->firmwareReceiveFlag = 1;
 		uartRegs->rxCnt = 0;
 
-	}
+	}*/
 
 	LPUART_EnableInterrupts(uartRegs->module, kLPUART_TxDataRegEmptyInterruptEnable);
 
@@ -941,8 +940,6 @@ void mCtrl_fpga_uart_rx(UART_REGS *uartRegs)
 	uartRegs->rxdataReg_L |= ((uint32) uartRegs->rxRegs.data[5] << 8);
 	uartRegs->rxdataReg_L |= ((uint32) uartRegs->rxRegs.data[6]);
 
-	uartRegs->XcmdPendStatus = 0;
-
 	if(uartRegs->packetMode == UART_PACKET_MODE2_NOSE)
 	{
 		static uint32 XcmdUpdateFlag;
@@ -981,6 +978,8 @@ void mCtrl_fpga_uart_rx(UART_REGS *uartRegs)
 		return;
 
 	}
+
+	uartRegs->XcmdPendStatus = 0;
 
 	uartRegs->RxPacket[uartRegs->rxcmdCnt % 2] = (uartRegs->rxdataReg_H & 0x00ff0000) >> 16;
 
