@@ -16,16 +16,21 @@
 
 #include "main_isr.h"
 
+//HOMEMODE
 #define  HOMEMODE_DISABLE 			0
 #define  HOMEMODE_ENABLE            1
-
 #define  HOMEMODE					HOMEMODE_ENABLE
 
+//TESTMODE
+#define  NORMAL_MODE        		0
+#define  UART_TEST_MODE				1
+#define  TESTMODE    				UART_TEST_MODE
 
-#define  NORMAL_MODE        0
-#define  UART_TEST_MODE		1
+//UARTXMODE
+#define  X_NONE        				0
+#define  X_AXIS						1
+#define  UART_X_MODE                X_AXIS
 
-#define TESTMODE    UART_TEST_MODE
 
 // drive type
 // **** form 0x0 to 0xf ****//

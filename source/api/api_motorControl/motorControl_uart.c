@@ -61,7 +61,9 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 void mCtrl_inner_uart_isr(UART_REGS *uartRegs)
 {
 	mCtrl_inner_uart_rx(uartRegs);
+
 	//mCtrl_inner_uart_rx_dataUpdate(uartRegs);
+
 	mCtrl_inner_uart_tx_dataUpdate(uartRegs);
 
 }
@@ -385,40 +387,9 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
 void mCtrl_inner_uart_tx_dataUpdate(UART_REGS *uartRegs)
 {
-#if  TESTMODE == UART_TEST_MODE
-	//if( mCtrlRegs.uart1Regs.txState == UART_TX_STATE_BUSY)	return;
+#if  UART_X_MODE == X_AXIS
 
 	if(uartRegs->txUpdate == UART_TX_STATE_IDLE)				return;
-
-	static uint32 TxXcmdUpdateFlag;
-
-	if( TxXcmdUpdateFlag == 0)
-	{
-		mCtrlRegs.uart1Regs.txRegs.packet.header = 0x32;
-		mCtrlRegs.uart1Regs.txRegs.packet.packet = uartRegs->rxRegs.packet.packet;
-		mCtrlRegs.uart1Regs.txRegs.packet.ctrl_st = uartRegs->rxRegs.packet.ctrl_st;
-		mCtrlRegs.uart1Regs.txRegs.packet.data0 = uartRegs->rxRegs.packet.data0;
-		mCtrlRegs.uart1Regs.txRegs.packet.data1 = uartRegs->rxRegs.packet.data1;
-		mCtrlRegs.uart1Regs.txRegs.packet.data2 = uartRegs->rxRegs.packet.data2;
-		mCtrlRegs.uart1Regs.txRegs.packet.data3 = uartRegs->rxRegs.packet.data3;
-		mCtrlRegs.uart1Regs.txRegs.packet.data4 = 0x0D;
-		mCtrlRegs.uart1Regs.txRegs.packet.data5 = 0x0A;
-
-		TxXcmdUpdateFlag = 1;
-	}
-	mCtrlRegs.ulProgramTimeWatch = 0;
-	mCtrlRegs.uart1Regs.txState = UART_TX_STATE_BUSY;
-
-	LPUART_EnableInterrupts(LPUART1, kLPUART_TxDataRegEmptyInterruptEnable);
-	EnableIRQ(LPUART1_SERIAL_RX_TX_IRQN);
-
-	TxXcmdUpdateFlag = 0;
-
-	uartRegs->txUpdate = UART_TX_STATE_IDLE;
-#else
-	//if( mCtrlRegs.uart1Regs.txState == UART_TX_STATE_BUSY)	return;
-
-	if(uartRegs->txUpdate == UART_TX_STATE_IDLE)		return;
 
 	static uint32 TxXcmdUpdateFlag;
 
@@ -436,7 +407,7 @@ void mCtrl_inner_uart_tx_dataUpdate(UART_REGS *uartRegs)
 
 		TxXcmdUpdateFlag = 1;
 	}
-
+	mCtrlRegs.ulProgramTimeWatch = 0;
 	mCtrlRegs.uart2Regs.txState = UART_TX_STATE_BUSY;
 
 	LPUART_EnableInterrupts(LPUART3, kLPUART_TxDataRegEmptyInterruptEnable);
@@ -445,6 +416,7 @@ void mCtrl_inner_uart_tx_dataUpdate(UART_REGS *uartRegs)
 	TxXcmdUpdateFlag = 0;
 
 	uartRegs->txUpdate = UART_TX_STATE_IDLE;
+
 #endif
 }
 
@@ -464,7 +436,7 @@ void mCtrl_inner_uart_rx(UART_REGS *uartRegs)
 	int32 queue_size;
 	int32 local_read_cnt;
 
-#if  TESTMODE == UART_TEST_MODE
+#if  UART_X_MODE == X_AXIS
 
 	queue_size = Queue_GetSize(&uartRegs->Rx_Data_Queue);
 
@@ -510,51 +482,7 @@ void mCtrl_inner_uart_rx(UART_REGS *uartRegs)
 	uartRegs->rxCnt = 0;
 
 	DisableIRQ(LPUART4_SERIAL_RX_TX_IRQN);
-#else
 
-	queue_size = Queue_GetSize(&uartRegs->Rx_Data_Queue);
-
-	if(queue_size == 0 || uartRegs->global_read_cnt == uartRegs->rxisrCnt)	return;
-
-	while( queue_size > 0 && uartRegs->rxCnt < UART_TX_REDUCE_PACKET_LENGTH  )
-	{
-		uartRegs->rxRegs.data[uartRegs->rxCnt] = Queue_Pop(&uartRegs->Rx_Data_Queue);
-
-		uartRegs->global_read_cnt++;
-
-		local_read_cnt++;
-
-		if(uartRegs->rxCnt == 0)
-		{
-			if(uartRegs->rxRegs.data[uartRegs->rxCnt] == UART_REDUCE_HEADER_DATA)
-			{
-				uartRegs->packetMode = UART_PACKET_MODE1_7BITS;
-			}
-			else
-			{
-				return;
-			}
-		}
-
-		uartRegs->rxCnt++;
-
-		if(uartRegs->rxCnt >= UART_TX_REDUCE_PACKET_LENGTH || local_read_cnt >= 4 || uartRegs->global_read_cnt == uartRegs->rxisrCnt)
-		{
-			break;
-		}
-
-	}
-
-	if(uartRegs->rxCnt < UART_TX_REDUCE_PACKET_LENGTH)
-	{
-		return;
-	}
-
-	uartRegs->txUpdate= UART_TX_DATA_UPDATE;
-	// clear rx counter
-	uartRegs->rxCnt = 0;
-
-	DisableIRQ(LPUART4_SERIAL_RX_TX_IRQN);
 #endif
 }
 
@@ -563,7 +491,7 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
 void mCtrl_fpga_uart_tx_dataUpdate(UART_REGS *uartRegs)
 {
-#if  TESTMODE == UART_TEST_MODE
+#if  UART_X_MODE == X_AXIS
 	if(uartRegs->txpwmCnt >= uartRegs->rxcmdCnt  || uartRegs->txpwmCnt != uartRegs->tx_expect_Cnt || uartRegs->txState == UART_TX_STATE_BUSY)
 	{
 		return;
@@ -683,133 +611,10 @@ void mCtrl_fpga_uart_tx_dataUpdate(UART_REGS *uartRegs)
 	}*/
 
 	LPUART_EnableInterrupts(uartRegs->module, kLPUART_TxDataRegEmptyInterruptEnable);
-
 #else
-	if(uartRegs->txpwmCnt == uartRegs->rxcmdCnt  || uartRegs->txpwmCnt != uartRegs->tx_expect_Cnt ||  uartRegs->firmwareReceiveFlag == 1)
-	{
-		return;
-	}
-
-	if(uartRegs->firmwareUpdateFlag == 0)
-	{
-		uuint8 uucState;
-		uartRegs->txRegs.packet.header = UART_HEADER_DATA;
-
-		uartRegs->txRegs.packet.packet = uartRegs->RxPacket[uartRegs->txpwmCnt%2];
-
-		uucState.bit.bit0 = board_HSIO5_read_macro();
-
-		if(mDrvRegs.startUpRegs.ulFirstCloseloopflag == 1)
-			uucState.bit.bit1 = mCtrl_status_servoStateGet_macro();
-		else
-			uucState.bit.bit1 = 0;
-
-		uucState.bit.bit2 = mCtrl_homelimitbit0Get_macro();
-		uucState.bit.bit3 = mCtrl_status_homeFindedGet_macro();
-		uucState.bit.bit4 = mCtrl_homelimitbit1Get_macro();
-
-		if(mCtrlRegs.tcurveRegs.ultcurve_enable == 0)
-		{
-			if(mCtrlRegs.tcurveRegs.ulfirsthome == 0)
-			{
-				uucState.bit.bit5 = 0;
-				uucState.bit.bit6 = mCtrl_status_zeroSpeedGet_macro();
-			}else
-			{
-				uucState.bit.bit5 = mCtrl_status_inPositioGet_macro();
-				uucState.bit.bit6 = mCtrl_status_zeroSpeedGet_macro();
-			}
-		}else
-		{
-			uucState.bit.bit5 = 0;
-			uucState.bit.bit6 = 0;
-		}
-		/*if(uucState.bit.bit5 == 1)
-			board_HSIO1_on_macro();
-		else
-			board_HSIO1_off_macro();
-		*/
-		uucState.bit.bit7 = mCtrl_status_alarmGet_macro() || mCtrl_status_warningGet_macro();
-		uuint32 uulData;
-
-		uartRegs->txRegs.packet.ctrl_st = uucState.uchar;
-
-		switch(uartRegs->txRegs.packet.packet)
-		{
-			case UART_PACKET_PARA_CH0_SET:
-			case UART_PACKET_PARA_CH0_GET:
-				uulData.dword = mCtrl_para_D0ChGet_macro();
-			break;
-			case UART_PACKET_PARA_CH0_DATA_SET:
-			case UART_PACKET_PARA_CH0_DATA_GET:
-				uulData.dword = para_valueGet(mCtrl_para_D0ChGet_macro());
-			break;
-			case UART_PACKET_PARA_CH1_SET:
-			case UART_PACKET_PARA_CH1_GET:
-				uulData.dword = mCtrl_para_D1ChGet_macro();
-			break;
-			case UART_PACKET_PARA_CH1_DATA_SET:
-			case UART_PACKET_PARA_CH1_DATA_GET:
-				uulData.dword = para_valueGet(mCtrl_para_D1ChGet_macro());
-			break;
-			case UART_PACKET_ALARM_SET:
-			case UART_PACKET_ALARM_GET:
-				uulData.dword = mDrv_mDrvAlarmGet_macro();
-			break;
-
-			case UART_PACKET_PCMD_ABS_SET:
-			case UART_PACKET_PCMD_INC_SET:
-			case UART_PACKET_INC_TCURVE_SET:
-			case UART_PACKET_ABS_TCURVE_SET:
-				if(mCtrl_status_homeFindedGet_macro() == 1)
-				{
-					uulData.dword = mCtrl_ulPcmdGet_macro() - mCtrl_ulPHomeGet_macro();
-				}
-				else
-				{
-					uulData.dword =	0;
-				}
-			break;
-			case UART_PACKET_VERSION_GET:
-				uulData.dword = para_valueGet_macro(PARA_FIRMWARE_VERSION);
-			break;
-			default:
-				if(mCtrl_status_homeFindedGet_macro() == 1)
-				{
-					uulData.dword = mCtrl_ulPfbkGet_macro() - mCtrl_ulPHomeGet_macro();
-				}
-				else
-				{
-					uulData.dword =	0;
-				}
-			break;
-		}
-
-		uartRegs->txRegs.packet.data0 = uulData.byte.byte3;
-		uartRegs->txRegs.packet.data1 = uulData.byte.byte2;
-		uartRegs->txRegs.packet.data2 = uulData.byte.byte1;
-		uartRegs->txRegs.packet.data3 = uulData.byte.byte0;
-		uartRegs->txRegs.packet.data4 = uartRegs->rxRegs.packet.data4;
-		uartRegs->txRegs.packet.data5 = uartRegs->rxRegs.packet.data5;
-	}
-
-	mCtrl_uart_firmwareUpdate_tx(uartRegs);
-
-	uartRegs->tx_expect_Cnt++;
-
-	if( uartRegs->firmwareUpdateState.bit.bit7 == 1 )
-	{
-		LPUART_DisableInterrupts(uartRegs->module, kLPUART_RxDataRegFullInterruptEnable);
-		LPUART_DisableInterrupts(uartRegs->module, kLPUART_IdleLineInterruptEnable);
-
-		uartRegs->firmwareReceiveFlag = 1;
-		uartRegs->rxCnt = 0;
-
-	}
-
-	LPUART_EnableInterrupts(uartRegs->module, kLPUART_TxDataRegEmptyInterruptEnable);
 
 #endif
+
 }
 
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
@@ -828,8 +633,7 @@ void mCtrl_fpga_uart_rx(UART_REGS *uartRegs)
 	int32 queue_size;
 	int32 local_read_cnt;
 	static uint32 ulreset_cnt = 0;
-
-#if  TESTMODE == UART_TEST_MODE
+#if  UART_X_MODE == X_AXIS
 
 	if(uartRegs->ulrestflag == 2)
 	{
@@ -868,7 +672,7 @@ void mCtrl_fpga_uart_rx(UART_REGS *uartRegs)
 
 			uartRegs->rxCnt++;
 
-			if(uartRegs->rxCnt == UART_TX_PACKET_LENGTH || local_read_cnt >= 4 || uartRegs->global_read_cnt == uartRegs->rxisrCnt)
+			if(uartRegs->rxCnt == UART_TX_PACKET_LENGTH || local_read_cnt > 3 || uartRegs->global_read_cnt == uartRegs->rxisrCnt)
 			{
 				break;
 			}
@@ -965,7 +769,7 @@ void mCtrl_fpga_uart_rx(UART_REGS *uartRegs)
 			uartRegs->rxCnt = 0;
 			XcmdUpdateFlag = 0;
 
-			LPUART_EnableInterrupts(LPUART4,kLPUART_TxDataRegEmptyInterruptEnable);
+			LPUART_EnableInterrupts(LPUART4, kLPUART_TxDataRegEmptyInterruptEnable);
 
 		}
 
@@ -986,164 +790,8 @@ void mCtrl_fpga_uart_rx(UART_REGS *uartRegs)
 	uartRegs->rxCnt = 0;
 	// clear rx counter
 	uartRegs->rxUpdate = UART_RX_DATA_UPDATE;
-
-#else
-
-	if(uartRegs->ulrestflag == 2)
-	{
-		ulreset_cnt++;
-		if(ulreset_cnt > 10 )
-			NVIC_SystemReset();
-	}
-
-	if(uartRegs->firmwareReceiveFlag == 0)
-	{
-		queue_size = Queue_GetSize(&uartRegs->Rx_Data_Queue);
-
-		if(queue_size == 0 || uartRegs->global_read_cnt == uartRegs->rxisrCnt)	return;
-
-		while( queue_size > 0)
-		{
-			uartRegs->rxRegs.data[uartRegs->rxCnt] = Queue_Pop(&uartRegs->Rx_Data_Queue);
-			uartRegs->global_read_cnt++;
-			local_read_cnt++;
-
-			if(uartRegs->rxCnt == 0)
-			{
-				if(uartRegs->rxRegs.data[uartRegs->rxCnt] == UART_HEADER_DATA)
-				{
-					uartRegs->packetMode = UART_PACKET_MODE0_9BITS;
-				}
-				else if(uartRegs->rxRegs.data[uartRegs->rxCnt] == UART_NOSEWHEEL_HEADER_DATA )
-				{
-					uartRegs->packetMode = UART_PACKET_MODE2_NOSE;
-				}
-				else
-				{
-					return;
-				}
-			}
-
-			uartRegs->rxCnt++;
-
-			if(uartRegs->rxCnt == UART_TX_PACKET_LENGTH || local_read_cnt >= 4 || uartRegs->global_read_cnt == uartRegs->rxisrCnt)
-			{
-				break;
-			}
-
-		}
-	}
-	else
-	{
-		while(device_uart_module_rxFifoEmpty_macro(uartRegs->module) == 0)
-		{
-			*programIndex = device_uart_module_rxReadByte_macro(uartRegs->module);
-
-			checkSum += *programIndex;
-
-			uartRegs->rxCnt++;
-
-			if(uartRegs->rxCnt >= uartRegs->firmwareUpdateLength)
-			{
-				uartRegs->rxCnt = 0;
-
-				uartRegs->txUpdate = UART_TX_DATA_UPDATE;
-				uartRegs->rxCheckFail = UART_RX_CHECK_PASS;
-				uartRegs->rxUpdate = UART_RX_DATA_UPDATE;
-				uartRegs->rxState = UART_RX_STATE_BUSY;
-
-				uartRegs->tx_expect_Cnt = uartRegs->txpwmCnt;
-				uartRegs->firmwareReceiveFlag = 0;
-				uartRegs->firmwareRxDoneFlag = 1;
-
-				LPUART_EnableInterrupts(uartRegs->module, kLPUART_RxDataRegFullInterruptEnable);
-				LPUART_EnableInterrupts(uartRegs->module, kLPUART_IdleLineInterruptEnable);
-			}else
-			{
-				programIndex++;
-				if(uartRegs->rxCnt % uartRegs->firmwareUpdatePacketLength  == 0)
-				{
-					uartRegs->txUpdate = UART_TX_DATA_UPDATE;
-					uartRegs->rxCheckFail = UART_RX_CHECK_PASS;
-					uartRegs->rxUpdate = UART_RX_DATA_UPDATE;
-					uartRegs->rxState = UART_RX_STATE_BUSY;
-
-					mCtrl_uart_firmwareUpdate_tx(uartRegs);
-					LPUART_EnableInterrupts(uartRegs->module, kLPUART_TxDataRegEmptyInterruptEnable);
-					return;
-				}
-
-				//if(device_uart_module_rxFifoEmpty_macro(uartRegs->module)!=0)
-					//return;
-
-			}
-
-		}
-		return;
-	}
-
-	if(uartRegs->rxCnt < UART_TX_PACKET_LENGTH)
-	{
-		return;
-	}
-
-
-	uartRegs->rxdataReg_H = 0;
-	uartRegs->rxdataReg_H |= ((uint32) uartRegs->rxRegs.data[1] << 16);
-	uartRegs->rxdataReg_H |= ((uint32) uartRegs->rxRegs.data[2] << 8);
-	uartRegs->rxdataReg_H |= ((uint32) uartRegs->rxRegs.data[3]);
-
-	uartRegs->rxdataReg_L = 0;
-	uartRegs->rxdataReg_L |= ((uint32) uartRegs->rxRegs.data[4] << 16);
-	uartRegs->rxdataReg_L |= ((uint32) uartRegs->rxRegs.data[5] << 8);
-	uartRegs->rxdataReg_L |= ((uint32) uartRegs->rxRegs.data[6]);
-
-	uartRegs->XcmdPendStatus = 0;
-
-	if(uartRegs->packetMode == UART_PACKET_MODE2_NOSE)
-	{
-		static uint32 XcmdUpdateFlag;
-
-		if(XcmdUpdateFlag  == 0)
-		{
-			mCtrlRegs.uart3Regs.txRegs.packet.packet = (uartRegs->rxdataReg_H & 0x00ff0000) >> 16;
-			mCtrlRegs.uart3Regs.txRegs.packet.ctrl_st = (uartRegs->rxdataReg_H & 0x0000ff00) >> 8;
-			mCtrlRegs.uart3Regs.txRegs.packet.data0 = (uartRegs->rxdataReg_H & 0x000000ff);
-			mCtrlRegs.uart3Regs.txRegs.packet.data1 = (uartRegs->rxdataReg_L & 0x00ff0000) >> 16;
-			mCtrlRegs.uart3Regs.txRegs.packet.data2 = (uartRegs->rxdataReg_L & 0x0000ff00) >> 8;
-			mCtrlRegs.uart3Regs.txRegs.packet.data3 = (uartRegs->rxdataReg_L & 0x000000ff);
-			mCtrlRegs.uart3Regs.txRegs.packet.header = 0x51;
-			XcmdUpdateFlag = 1;
-		}
-
-		if( mCtrlRegs.uart3Regs.txState == UART_TX_STATE_IDLE)
-		{
-
-			mCtrlRegs.uart3Regs.txState = UART_TX_STATE_BUSY;
-
-			mCtrlRegs.uart3Regs.txCnt = UART_TX_REDUCE_PACKET_LENGTH;
-			uartRegs->rxCnt = 0;
-			XcmdUpdateFlag = 0;
-
-			LPUART_EnableInterrupts(LPUART4,kLPUART_TxDataRegEmptyInterruptEnable);
-
-		}
-
-		uartRegs->XcmdPendStatus = 1;
-
-		EnableIRQ(LPUART4_SERIAL_RX_TX_IRQN);
-
-		return;
-
-	}
-
-	uartRegs->RxPacket[uartRegs->rxcmdCnt % 2] = (uartRegs->rxdataReg_H & 0x00ff0000) >> 16;
-
-	uartRegs->rxCnt = 0;
-	// clear rx counter
-
-	uartRegs->rxUpdate = UART_RX_DATA_UPDATE;
 #endif
+
 }
 
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
@@ -1151,7 +799,8 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
 void mCtrl_fpga_uart_rx_dataUpdate(UART_REGS *uartRegs)
 {
-#if  TESTMODE == UART_TEST_MODE
+
+#if  UART_X_MODE == X_AXIS
 	if(uartRegs->rxUpdate == UART_RX_DATA_IDLE) return; // check rx process finish
 
 	uuint8 uucCtrl;
@@ -1193,49 +842,9 @@ void mCtrl_fpga_uart_rx_dataUpdate(UART_REGS *uartRegs)
 
 	uartRegs->rxcmdCnt++;
 	uartRegs->rxUpdate = UART_RX_DATA_IDLE;
-#else
-	if(uartRegs->rxUpdate == UART_RX_DATA_IDLE) return; // check rx process finish
 
-	uuint8 uucCtrl;
-
-	uucCtrl.uchar = uartRegs->rxRegs.packet.ctrl_st;
-
-	uartRegs->rxCheckFail = UART_RX_CHECK_PASS;
-
-	if(uartRegs->firmwareUpdateFlag == 0)
-	{
-		if(uartRegs->rxRegs.packet.packet != 0x03)
-		{
-			mCtrl_cmd_servoOnSet_macro(uucCtrl.bit.bit1);
-			mCtrl_cmd_homeSet_macro(uucCtrl.bit.bit3);
-			mCtrl_cmd_homeFindSet_macro(uucCtrl.bit.bit2);
-			mCtrl_cmd_alarm_clrSet_macro(uucCtrl.bit.bit7);
-			mCtrl_cmd_emgSet_macro(uucCtrl.bit.bit4);
-		}
-
-		if(mCtrl_cmd_alarm_clrGet_macro() == 1)
-		{
-			mCtrlRegs.homeLimitRegs.ulHomeFindAlarm = 0;
-			mCtrlRegs.homeLimitRegs.ulLimitHomeSignalErr = 0;
-
-			mDrv_mDrvAlarmClearFlagSet_macro(true);
-		}
-
-		uuint32 uulData;
-		uulData.byte.byte0 = uartRegs->rxRegs.packet.data3;
-		uulData.byte.byte1 = uartRegs->rxRegs.packet.data2;
-		uulData.byte.byte2 = uartRegs->rxRegs.packet.data1;
-		uulData.byte.byte3 = uartRegs->rxRegs.packet.data0;
-
-		mCtrlRegs.uartRxCmd[uartRegs->rxRegs.packet.packet](uulData.dword);
-
-	}
-
-	mCtrl_uart_firmwareUpdate_rx(uartRegs);
-
-	uartRegs->rxcmdCnt++;
-	uartRegs->rxUpdate = UART_RX_DATA_IDLE;
 #endif
+
 }
 
 
@@ -1409,11 +1018,11 @@ void uartPacketCmd21(uint32 uldata)
 
 	uint32 ulTABSPCMD = uldata;
 
-
 	int32 lMaxLimitValue;
 	int32 lMinLimitValue;
 	int32 lCmdPos_Home;
 	int32 lFbkPos_Home;
+
 	if((mCtrlRegs.homeLimitRegs.homeFindMode != home_disable) && ((mCtrlRegs.statusRegs.data.homeFinded == 1) && (mDrv_ulAngleCloseFlagGet_macro() == 1)))
 	{
 
@@ -1463,7 +1072,6 @@ void uartPacketCmd23(uint32 uldata)
 {
 
 	uint32 ulTINCPCMD = uldata;
-
 
 	int32 lMaxLimitValue;
 	int32 lMinLimitValue;

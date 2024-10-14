@@ -21,20 +21,20 @@ void motorControl_isr(void)
 	{
 		mCtrlRegs.ulTimeOutFlag = 1;
 
-		mCtrlRegs.uart1Regs.txRegs.packet.header = 0x32;
-		mCtrlRegs.uart1Regs.txRegs.packet.packet = 0xff;
-		mCtrlRegs.uart1Regs.txRegs.packet.ctrl_st = board_HSIO5_read_macro();
-		mCtrlRegs.uart1Regs.txRegs.packet.data0 = 0xff;
-		mCtrlRegs.uart1Regs.txRegs.packet.data1 = 0xff;
-		mCtrlRegs.uart1Regs.txRegs.packet.data2 = 0xff;
-		mCtrlRegs.uart1Regs.txRegs.packet.data3 = 0xff;
-		mCtrlRegs.uart1Regs.txRegs.packet.data4 = 0x0D;
-		mCtrlRegs.uart1Regs.txRegs.packet.data5 = 0x0A;
+		mCtrlRegs.uart2Regs.txRegs.packet.header = 0x32;
+		mCtrlRegs.uart2Regs.txRegs.packet.packet = 0xff;
+		mCtrlRegs.uart2Regs.txRegs.packet.ctrl_st = board_HSIO5_read_macro();
+		mCtrlRegs.uart2Regs.txRegs.packet.data0 = 0xff;
+		mCtrlRegs.uart2Regs.txRegs.packet.data1 = 0xff;
+		mCtrlRegs.uart2Regs.txRegs.packet.data2 = 0xff;
+		mCtrlRegs.uart2Regs.txRegs.packet.data3 = 0xff;
+		mCtrlRegs.uart2Regs.txRegs.packet.data4 = 0x0D;
+		mCtrlRegs.uart2Regs.txRegs.packet.data5 = 0x0A;
 
-		mCtrlRegs.uart1Regs.txState = UART_TX_STATE_BUSY;
+		mCtrlRegs.uart2Regs.txState = UART_TX_STATE_BUSY;
 
-		LPUART_EnableInterrupts(LPUART1, kLPUART_TxDataRegEmptyInterruptEnable);
-		EnableIRQ(LPUART1_SERIAL_RX_TX_IRQN);
+		LPUART_EnableInterrupts(LPUART3, kLPUART_TxDataRegEmptyInterruptEnable);
+		EnableIRQ(LPUART3_SERIAL_RX_TX_IRQN);
 
 		mCtrlRegs.uart3Regs.txUpdate = UART_TX_STATE_IDLE;
 		mCtrlRegs.ulProgramTimeWatch = 0;

@@ -245,7 +245,7 @@ void LPUART4_SERIAL_RX_TX_IRQHANDLER(void) {
 		if(mCtrlRegs.uart3Regs.txCnt == 0)
 		{
 			mCtrlRegs.uart3Regs.txState = UART_TX_STATE_IDLE;
-			LPUART_DisableInterrupts(LPUART4,kLPUART_TxDataRegEmptyInterruptEnable);
+			LPUART_DisableInterrupts(LPUART4, kLPUART_TxDataRegEmptyInterruptEnable);
 
 		}
 	}
