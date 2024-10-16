@@ -389,7 +389,7 @@ void mCtrl_inner_uart_tx_dataUpdate(UART_REGS *uartRegs)
 {
 #if  UART_X_MODE == X_AXIS
 
-	if(uartRegs->txUpdate == UART_TX_STATE_IDLE)				return;
+	if(uartRegs->txUpdate == UART_TX_STATE_IDLE	|| mCtrlRegs.uart2Regs.txState == UART_TX_STATE_BUSY)				return;
 
 	static uint32 TxXcmdUpdateFlag;
 

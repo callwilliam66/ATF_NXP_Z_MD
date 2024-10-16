@@ -103,8 +103,26 @@ void software6_isr(void)
 	}
 
 #elif TESTMODE  == UART_TEST_MODE
-	board_led_g_toggle_macro();
-	board_led_r_toggle_macro();
+
+
+	// LED_G
+	if(mCtrl_uart_firmwareUpdateFlagGet_macro() == 1 || mCtrl_emg_stateGet_macro() == 1)
+	{
+		board_led_g_off_macro();
+		board_led_r_off_macro();
+	}
+	else if(mDrv_servoStateGet_macro() == SERVO_STATE_ON)
+	{
+		board_led_g_on_macro();
+		board_led_r_on_macro();
+	}
+	else if(mDrv_servoStateGet_macro() == SERVO_STATE_OFF)
+	{
+		board_led_g_toggle_macro();
+		board_led_r_toggle_macro();
+	}
+
+
 #endif
 
 }
