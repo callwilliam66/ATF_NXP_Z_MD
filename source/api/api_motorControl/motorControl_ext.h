@@ -94,29 +94,12 @@ typedef struct
 
 	void (*uartRxCmd[256])(uint32);
 
-	uint32         	ulNWINRX_cnt;
-	uint32         	ulNWRX_cnt;
-	uint32         	ulUNWRX_cnt;
-	uint32         	ulNWTX_cnt;
-	uint32         	ulZATX_cnt;
-	uint32         	ulNW_cnt;
-	uint32         	ulZA_cnt;
-	uint32  		ulZA_packet;		//z-axis-buffer
-	uint32          ulZA_packet1;
-	uint32  		ulZATX_packet;		//z-axis-buffer
-	uint32          ulZA_ctrl_st;		//z-axis-buffer
+	/*TESTCOUNT*/
+	uint32          Testtxcntwatch;
+	uint32          Testtxcntdiff;
+	uint32          Testtxcnt;
 
-	uint32          ulZA_data0;			//z-axis-buffer
-	uint32          ulZA_data1;			//z-axis-buffer
-	uint32          ulZA_data2;			//z-axis-buffer
-	uint32          ulZA_data3;			//z-axis-buffer
-
-	int32       	lZAcmd_FPGA;		//Z-Axis-cmd comes from user
-	int32       	lZAcmd_FPGA_old;	//old_Z-Axis-cmd comes from user
-	int32           lNWcmd_FPGA;		//nose-wheel-cmd comes from user
-	int32           lNWcmd_FPGA_old;	//old_nose-wheel-cmd comes from user
-	int32           lNWcmd_BOARD;		//nose-wheel-cmd comes from inner-board
-
+	/*TESTCOUNT*/
 
 	HOME_LIMIT_REGS homeLimitRegs;
 	EMG_REGS		emgRegs;
@@ -135,7 +118,6 @@ typedef struct
 	uint32 			commandReceiveEnableFlag;
 	uint32 			ulfirmwareflashkey;
 
-	uint32   		uldebug_temp_cont;
 }MOTOR_CONTROL_REGS;
 
 extern MOTOR_CONTROL_REGS mCtrlRegs;

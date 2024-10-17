@@ -133,7 +133,7 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 
 	uint8 u8rxisrtempdata;
-
+	static uint32 test2;
 #if  TESTMODE == UART_TEST_MODE
 
 	if ((kLPUART_RxDataRegFullFlag) & LPUART_GetStatusFlags(LPUART3_PERIPHERAL))
@@ -158,6 +158,17 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 		mCtrlRegs.uart2Regs.txState = UART_TX_STATE_BUSY;
 
 		device_uart_module_txWriteByte_macro(LPUART3_PERIPHERAL, mCtrlRegs.uart2Regs.txRegs.data[UART_TX_PACKET_LENGTH - mCtrlRegs.uart2Regs.txCnt]);
+/*		if(mCtrlRegs.uart2Regs.txCnt == 9 )
+		{
+			if(mCtrlRegs.uart2Regs.txRegs.data[UART_TX_PACKET_LENGTH - mCtrlRegs.uart2Regs.txCnt] == 49)
+			{
+				mCtrlRegs.uart2Regs.ulZaxisTxcnt++;
+			}else if(mCtrlRegs.uart2Regs.txRegs.data[UART_TX_PACKET_LENGTH - mCtrlRegs.uart2Regs.txCnt] == 50)
+			{
+				mCtrlRegs.uart2Regs.ulXaxisTxcnt++;
+			}
+		}
+*/
 
 		mCtrlRegs.uart2Regs.txCnt--;
 
@@ -166,16 +177,28 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 			if( mCtrlRegs.uart2Regs.XcmdPendStatus == 0)
 			{
 				mCtrlRegs.uart2Regs.txpwmCnt++;
-			}else
-			{
-
 			}
 
+			mCtrlRegs.Testtxcnt = mCtrlRegs.uart2Regs.rxisrCnt;
+			mCtrlRegs.Testtxcntdiff = mCtrlRegs.Testtxcnt - mCtrlRegs.Testtxcntwatch;
 
+			if(test2 > 1 )
+			{
+				board_led_g_on_macro();
+				board_led_r_on_macro();
+			}
+
+			if(mCtrlRegs.Testtxcntdiff != 9 )
+			{
+				board_led_g_on_macro();
+				board_led_r_on_macro();
+			}
+			mCtrlRegs.Testtxcntwatch = mCtrlRegs.Testtxcnt;
 
 			mCtrlRegs.uart2Regs.txCnt = UART_TX_PACKET_LENGTH;
 			mCtrlRegs.uart2Regs.txState = UART_TX_STATE_IDLE;
 			LPUART_DisableInterrupts(LPUART3, kLPUART_TxDataRegEmptyInterruptEnable);
+			test2++;
 		}
 	}
 #else
@@ -205,7 +228,6 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 		device_uart_module_txWriteByte_macro(LPUART3_PERIPHERAL, mCtrlRegs.uart2Regs.txRegs.data[UART_TX_PACKET_LENGTH - mCtrlRegs.uart2Regs.txCnt]);
 
 		mCtrlRegs.uart2Regs.txCnt--;
-		mCtrlRegs.uldebug_temp_cont++;
 
 		if(mCtrlRegs.uart2Regs.txCnt == 0)
 		{

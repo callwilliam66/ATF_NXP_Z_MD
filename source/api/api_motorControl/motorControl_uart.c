@@ -779,9 +779,12 @@ void mCtrl_fpga_uart_rx(UART_REGS *uartRegs)
 
 		mCtrlRegs.ulProgramTimeWatch = mCtrlRegs.ulProgramTime;
 
+		uartRegs->ulXaxisRxcnt++;
+
 		return;
 
 	}
+	uartRegs->ulZaxisRxcnt++;
 
 	uartRegs->XcmdPendStatus = 0;
 

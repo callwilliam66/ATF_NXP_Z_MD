@@ -104,7 +104,7 @@ void software6_isr(void)
 
 #elif TESTMODE  == UART_TEST_MODE
 
-
+	return;
 	// LED_G
 	if(mCtrl_uart_firmwareUpdateFlagGet_macro() == 1 || mCtrl_emg_stateGet_macro() == 1)
 	{
