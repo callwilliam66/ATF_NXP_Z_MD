@@ -234,6 +234,7 @@ void mCtrl_uart_rx(UART_REGS *uartRegs)
 {
 	int32 queue_size;
 	int32 local_read_cnt;
+
 	if(uartRegs->firmwareReceiveFlag == 0)
 	{
 		queue_size = Queue_GetSize(&uartRegs->Rx_Data_Queue);

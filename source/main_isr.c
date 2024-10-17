@@ -7,6 +7,12 @@
 #include "main.h"
 
 
+uint32  test2 = 0;
+
+uint32  testrxcnt;
+uint32  testrxcnt_diff;
+uint32  testrxcntwatch;
+
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
 __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
@@ -133,14 +139,25 @@ __RAMFUNC(RAM_FUNC_BLOCK)
 void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 
 	uint8 u8rxisrtempdata;
-	static uint32 test2;
+
 #if  TESTMODE == UART_TEST_MODE
 
 	if ((kLPUART_RxDataRegFullFlag) & LPUART_GetStatusFlags(LPUART3_PERIPHERAL))
 	{
 		mCtrlRegs.uart2Regs.rxisrCnt++;
 		u8rxisrtempdata = device_uart_module_rxReadByte_macro(LPUART3_PERIPHERAL);
+
 		Queue_Push(&mCtrlRegs.uart2Regs.Rx_Data_Queue, u8rxisrtempdata);
+
+		if( u8rxisrtempdata == 50)
+		{
+			testrxcnt = mCtrlRegs.uart2Regs.rxisrCnt;
+			testrxcnt_diff = testrxcnt - testrxcntwatch;
+			if( testrxcnt_diff < 9  )
+				test2++;
+			testrxcntwatch = testrxcnt;
+		}
+
 
 	}else if((kLPUART_IdleLineFlag ) & LPUART_GetStatusFlags(LPUART3_PERIPHERAL))
 	{
@@ -158,7 +175,8 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 		mCtrlRegs.uart2Regs.txState = UART_TX_STATE_BUSY;
 
 		device_uart_module_txWriteByte_macro(LPUART3_PERIPHERAL, mCtrlRegs.uart2Regs.txRegs.data[UART_TX_PACKET_LENGTH - mCtrlRegs.uart2Regs.txCnt]);
-/*		if(mCtrlRegs.uart2Regs.txCnt == 9 )
+
+		/*		if(mCtrlRegs.uart2Regs.txCnt == 9 )
 		{
 			if(mCtrlRegs.uart2Regs.txRegs.data[UART_TX_PACKET_LENGTH - mCtrlRegs.uart2Regs.txCnt] == 49)
 			{
@@ -182,23 +200,18 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 			mCtrlRegs.Testtxcnt = mCtrlRegs.uart2Regs.rxisrCnt;
 			mCtrlRegs.Testtxcntdiff = mCtrlRegs.Testtxcnt - mCtrlRegs.Testtxcntwatch;
 
-			if(test2 > 1 )
-			{
-				board_led_g_on_macro();
-				board_led_r_on_macro();
-			}
-
 			if(mCtrlRegs.Testtxcntdiff != 9 )
 			{
 				board_led_g_on_macro();
 				board_led_r_on_macro();
 			}
-			mCtrlRegs.Testtxcntwatch = mCtrlRegs.Testtxcnt;
 
+			mCtrlRegs.Testtxcntwatch = mCtrlRegs.Testtxcnt;
 			mCtrlRegs.uart2Regs.txCnt = UART_TX_PACKET_LENGTH;
 			mCtrlRegs.uart2Regs.txState = UART_TX_STATE_IDLE;
+
 			LPUART_DisableInterrupts(LPUART3, kLPUART_TxDataRegEmptyInterruptEnable);
-			test2++;
+
 		}
 	}
 #else
