@@ -116,6 +116,11 @@ typedef struct
 	volatile uint32	global_read_cnt;
 	volatile uint32 ulCheckCnt;
 
+	volatile uint32 ulZaxisTxcnt;
+	volatile uint32 ulXaxisTxcnt;
+	volatile uint32 ulZaxisRxcnt;
+	volatile uint32 ulXaxisRxcnt;
+
 	volatile  uint32 packetMode;
 	volatile  uint32 rxpacketMode;
 	volatile  uint32 txpacketMode;
