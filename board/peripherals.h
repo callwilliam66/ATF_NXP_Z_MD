@@ -18,6 +18,7 @@
 #include "fsl_gpio.h"
 #include "fsl_lpuart.h"
 #include "fsl_pwm.h"
+#include "fsl_gpt.h"
 
 #if defined(__cplusplus)
 extern "C" {
@@ -274,6 +275,10 @@ enum ADC_ETC_trigger_config_trigger_group_names
 #define LPUART2_SERIAL_RX_TX_IRQ_PRIORITY 1
 /* LPUART2 interrupt handler identifier. */
 #define LPUART2_SERIAL_RX_TX_IRQHANDLER LPUART2_IRQHandler
+/* Definition of peripheral ID */
+#define GPT1_PERIPHERAL GPT1
+/* Definition of the clock source frequency */
+#define GPT1_CLOCK_SOURCE 24000000UL
 
 /***********************************************************************************************************************
  * Global variables
@@ -319,6 +324,7 @@ extern const pwm_fault_param_t PWM4_Fault1_fault_config;
 extern const pwm_fault_param_t PWM4_Fault2_fault_config;
 extern const pwm_fault_param_t PWM4_Fault3_fault_config;
 extern const lpuart_config_t LPUART2_config;
+extern const gpt_config_t GPT1_config;
 
 /***********************************************************************************************************************
  * Initialization functions

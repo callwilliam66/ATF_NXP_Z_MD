@@ -8,6 +8,9 @@
 ////*****************************************////
 #include "main.h"
 
+
+
+
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
 __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
@@ -31,8 +34,11 @@ int main(void)
 
     board_HSIO2_off_macro();
 
+
     uint32 startcnt;
+
     for(startcnt = 0; startcnt < 240000000; startcnt++);
+
 
     board_led_r_off_macro();
 

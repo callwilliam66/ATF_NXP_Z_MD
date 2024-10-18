@@ -8,16 +8,17 @@
 
 extern uint32 ulCurrentAdjustCnt;
 
+uint32 timer1 = 0;
+uint32 timer1_old = 0;
+uint32 timer1_diff = 0;
+
 void mCtrl_uart_init(UART_REGS *uartRegs,LPUART_Type *module)
 {
 
 	uartRegs->module = module;
 	//module->FIFO |= 0xff;
-	uartRegs->txState = UART_TX_STATE_IDLE;
-	uartRegs->txUpdate = UART_TX_DATA_IDLE;
 
-	uartRegs->rxState = UART_RX_STATE_IDLE;
-	uartRegs->rxUpdate = UART_RX_DATA_IDLE;
+
 	uartRegs->rxCheckFail = UART_RX_CHECK_PASS;
 
 	uartRegs->txCnt = 9;
@@ -390,7 +391,7 @@ void mCtrl_inner_uart_tx_dataUpdate(UART_REGS *uartRegs)
 {
 #if  UART_X_MODE == X_AXIS
 
-	if(uartRegs->txUpdate == UART_TX_STATE_IDLE	|| mCtrlRegs.uart2Regs.txState == UART_TX_STATE_BUSY )				return;
+	if(uartRegs->txUpdate == UART_TX_STATE_IDLE	|| uartRegs->txState == UART_TX_STATE_BUSY )				return;
 
 	static uint32 TxXcmdUpdateFlag;
 
@@ -408,6 +409,7 @@ void mCtrl_inner_uart_tx_dataUpdate(UART_REGS *uartRegs)
 
 		TxXcmdUpdateFlag = 1;
 	}
+
 	mCtrlRegs.ulProgramTimeWatch = 0;
 	mCtrlRegs.uart2Regs.txState = UART_TX_STATE_BUSY;
 
@@ -443,7 +445,7 @@ void mCtrl_inner_uart_rx(UART_REGS *uartRegs)
 
 	if(queue_size == 0 || uartRegs->global_read_cnt == uartRegs->rxisrCnt)	return;
 
-	while( queue_size > 0 && uartRegs->rxCnt < UART_TX_REDUCE_PACKET_LENGTH  )
+	while( queue_size > 0 )
 	{
 		uartRegs->rxRegs.data[uartRegs->rxCnt] = Queue_Pop(&uartRegs->Rx_Data_Queue);
 
@@ -465,7 +467,7 @@ void mCtrl_inner_uart_rx(UART_REGS *uartRegs)
 
 		uartRegs->rxCnt++;
 
-		if(uartRegs->rxCnt >= UART_TX_REDUCE_PACKET_LENGTH || local_read_cnt >= 4 || uartRegs->global_read_cnt == uartRegs->rxisrCnt)
+		if(uartRegs->rxCnt >= UART_TX_REDUCE_PACKET_LENGTH || local_read_cnt > 3 || uartRegs->global_read_cnt == uartRegs->rxisrCnt)
 		{
 			break;
 		}
@@ -611,6 +613,10 @@ void mCtrl_fpga_uart_tx_dataUpdate(UART_REGS *uartRegs)
 
 	}*/
 
+	timer1 = GPT_GetCurrentTimerCount(GPT1);
+	timer1_diff = timer1- timer1_old;
+	timer1_old = timer1;
+
 	LPUART_EnableInterrupts(uartRegs->module, kLPUART_TxDataRegEmptyInterruptEnable);
 #else
 
@@ -734,7 +740,6 @@ void mCtrl_fpga_uart_rx(UART_REGS *uartRegs)
 		return;
 	}
 
-
 	uartRegs->rxdataReg_H = 0;
 	uartRegs->rxdataReg_H |= ((uint32) uartRegs->rxRegs.data[1] << 16);
 	uartRegs->rxdataReg_H |= ((uint32) uartRegs->rxRegs.data[2] << 8);
@@ -767,27 +772,31 @@ void mCtrl_fpga_uart_rx(UART_REGS *uartRegs)
 			mCtrlRegs.uart3Regs.txState = UART_TX_STATE_BUSY;
 			mCtrlRegs.uart3Regs.txCnt = UART_TX_REDUCE_PACKET_LENGTH;
 
-			uartRegs->rxCnt = 0;
+
+
 			XcmdUpdateFlag = 0;
+
+			mCtrlRegs.ulProgramTimeWatch = mCtrlRegs.ulProgramTime;
 
 			LPUART_EnableInterrupts(LPUART4, kLPUART_TxDataRegEmptyInterruptEnable);
 
+			EnableIRQ(LPUART4_SERIAL_RX_TX_IRQN);
+
+			uartRegs->XcmdPendStatus = 1;
+
 		}
 
-		uartRegs->XcmdPendStatus = 1;
-
-		EnableIRQ(LPUART4_SERIAL_RX_TX_IRQN);
-
-		mCtrlRegs.ulProgramTimeWatch = mCtrlRegs.ulProgramTime;
+		uartRegs->rxCnt = 0;
 
 		uartRegs->ulXaxisRxcnt++;
 
 		return;
 
 	}
-	uartRegs->ulZaxisRxcnt++;
 
 	uartRegs->XcmdPendStatus = 0;
+
+	uartRegs->ulZaxisRxcnt++;
 
 	uartRegs->RxPacket[uartRegs->rxcmdCnt % 2] = (uartRegs->rxdataReg_H & 0x00ff0000) >> 16;
 
@@ -845,6 +854,7 @@ void mCtrl_fpga_uart_rx_dataUpdate(UART_REGS *uartRegs)
 	mCtrl_uart_firmwareUpdate_rx(uartRegs);
 
 	uartRegs->rxcmdCnt++;
+
 	uartRegs->rxUpdate = UART_RX_DATA_IDLE;
 
 #endif

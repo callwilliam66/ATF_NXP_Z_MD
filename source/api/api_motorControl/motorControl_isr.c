@@ -17,7 +17,7 @@ void motorControl_isr(void)
 
 #if TESTMODE == UART_TEST_MODE
 
-	if( mCtrlRegs.ulProgramTimeWatch != 0 && mCtrlRegs.ulProgramTime > ( mCtrlRegs.ulProgramTimeWatch + 4000) )
+	if( mCtrlRegs.ulProgramTimeWatch != 0 && mCtrlRegs.ulProgramTime > ( mCtrlRegs.ulProgramTimeWatch + 400000) )
 	{
 		mCtrlRegs.ulTimeOutFlag = 1;
 

@@ -13,6 +13,10 @@ uint32  testrxcnt;
 uint32  testrxcnt_diff;
 uint32  testrxcntwatch;
 
+
+
+uint8 logtime[100] = {0};
+uint32 log_index = 0;
 #if defined(RAM_FUNC_ENABLE) && (RAM_FUNC_ENABLE == 1)
 __RAMFUNC(RAM_FUNC_BLOCK)
 #endif
@@ -149,6 +153,8 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 
 		Queue_Push(&mCtrlRegs.uart2Regs.Rx_Data_Queue, u8rxisrtempdata);
 
+
+
 		if( u8rxisrtempdata == 50)
 		{
 			testrxcnt = mCtrlRegs.uart2Regs.rxisrCnt;
@@ -172,6 +178,7 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 
 	}else if( (kLPUART_TxDataRegEmptyFlag ) & LPUART_GetStatusFlags(LPUART3_PERIPHERAL))
 	{
+
 		mCtrlRegs.uart2Regs.txState = UART_TX_STATE_BUSY;
 
 		device_uart_module_txWriteByte_macro(LPUART3_PERIPHERAL, mCtrlRegs.uart2Regs.txRegs.data[UART_TX_PACKET_LENGTH - mCtrlRegs.uart2Regs.txCnt]);
@@ -192,10 +199,13 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 
 		if(mCtrlRegs.uart2Regs.txCnt == 0)
 		{
+			LPUART_DisableInterrupts(LPUART3, kLPUART_TxDataRegEmptyInterruptEnable);
+
 			if( mCtrlRegs.uart2Regs.XcmdPendStatus == 0)
 			{
 				mCtrlRegs.uart2Regs.txpwmCnt++;
 			}
+
 
 			mCtrlRegs.Testtxcnt = mCtrlRegs.uart2Regs.rxisrCnt;
 			mCtrlRegs.Testtxcntdiff = mCtrlRegs.Testtxcnt - mCtrlRegs.Testtxcntwatch;
@@ -204,13 +214,34 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 			{
 				board_led_g_on_macro();
 				board_led_r_on_macro();
+
+				logtime[0] = mCtrlRegs.uart2Regs.txRegs.data[0];
+				logtime[1] = mCtrlRegs.uart2Regs.txRegs.data[1];
+				logtime[2] = mCtrlRegs.uart2Regs.txRegs.data[2];
+				logtime[3] = mCtrlRegs.uart2Regs.txRegs.data[3];
+				logtime[4] = mCtrlRegs.uart2Regs.txRegs.data[4];
+				logtime[5] = mCtrlRegs.uart2Regs.txRegs.data[5];
+				logtime[6] = mCtrlRegs.uart2Regs.txRegs.data[6];
+				logtime[7] = mCtrlRegs.uart2Regs.txRegs.data[7];
+				logtime[8] = mCtrlRegs.uart2Regs.txRegs.data[8];
+
+			}else
+			{
+				logtime[9] = mCtrlRegs.uart2Regs.txRegs.data[0];
+				logtime[10] = mCtrlRegs.uart2Regs.txRegs.data[1];
+				logtime[11] = mCtrlRegs.uart2Regs.txRegs.data[2];
+				logtime[12] = mCtrlRegs.uart2Regs.txRegs.data[3];
+				logtime[13] = mCtrlRegs.uart2Regs.txRegs.data[4];
+				logtime[14] = mCtrlRegs.uart2Regs.txRegs.data[5];
+				logtime[15] = mCtrlRegs.uart2Regs.txRegs.data[6];
+				logtime[16] = mCtrlRegs.uart2Regs.txRegs.data[7];
+				logtime[17] = mCtrlRegs.uart2Regs.txRegs.data[8];
 			}
 
 			mCtrlRegs.Testtxcntwatch = mCtrlRegs.Testtxcnt;
+
 			mCtrlRegs.uart2Regs.txCnt = UART_TX_PACKET_LENGTH;
 			mCtrlRegs.uart2Regs.txState = UART_TX_STATE_IDLE;
-
-			LPUART_DisableInterrupts(LPUART3, kLPUART_TxDataRegEmptyInterruptEnable);
 
 		}
 	}
@@ -279,15 +310,19 @@ void LPUART4_SERIAL_RX_TX_IRQHANDLER(void) {
 		}
 	}else if((kLPUART_TxDataRegEmptyFlag ) & LPUART_GetStatusFlags(LPUART4_PERIPHERAL))
 	{
+		mCtrlRegs.uart3Regs.txState = UART_TX_STATE_BUSY;
+
 		device_uart_module_txWriteByte_macro(LPUART4_PERIPHERAL, mCtrlRegs.uart3Regs.txRegs.data[UART_TX_REDUCE_PACKET_LENGTH - mCtrlRegs.uart3Regs.txCnt]);
 
 		mCtrlRegs.uart3Regs.txCnt--;
-		mCtrlRegs.uart3Regs.txpwmCnt++;
 
 		if(mCtrlRegs.uart3Regs.txCnt == 0)
 		{
-			mCtrlRegs.uart3Regs.txState = UART_TX_STATE_IDLE;
 			LPUART_DisableInterrupts(LPUART4, kLPUART_TxDataRegEmptyInterruptEnable);
+
+			mCtrlRegs.uart3Regs.txpwmCnt++;
+			mCtrlRegs.uart3Regs.txCnt = UART_TX_REDUCE_PACKET_LENGTH;
+			mCtrlRegs.uart3Regs.txState = UART_TX_STATE_IDLE;
 
 		}
 	}

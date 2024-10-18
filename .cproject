@@ -98,8 +98,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/drivers}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/device}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/CMSIS}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/device}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/drivers}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/device}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/CMSIS}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/board}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/source}&quot;"/>
@@ -430,8 +430,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/drivers}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/device}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/CMSIS}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/device}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/drivers}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/device}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/CMSIS}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/board}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/source}&quot;"/>
@@ -701,7 +701,7 @@
 	<storageModule moduleId="com.nxp.mcuxpresso.core.datamodels">
 		<sdkName>SDK_2.x_MIMXRT1064xxxxA</sdkName>
 		<sdkVersion>2.9.1</sdkVersion>
-		<sdkComponents>middleware.baremetal.MIMXRT1064;device.MIMXRT1064_startup.MIMXRT1064;platform.Include_common.MIMXRT1064;platform.Include_core_cm7.MIMXRT1064;platform.Include_dsp.MIMXRT1064;device.MIMXRT1064_CMSIS.MIMXRT1064;platform.drivers.common.MIMXRT1064;platform.drivers.clock.MIMXRT1064;platform.drivers.iomuxc.MIMXRT1064;platform.drivers.igpio.MIMXRT1064;platform.drivers.pwm.MIMXRT1064;platform.drivers.xbara.MIMXRT1064;platform.drivers.adc_12b1msps_sar.MIMXRT1064;platform.drivers.cmp.MIMXRT1064;platform.drivers.adc_etc.MIMXRT1064;platform.drivers.lpspi.MIMXRT1064;platform.drivers.enc.MIMXRT1064;platform.drivers.lpuart.MIMXRT1064;platform.drivers.pit.MIMXRT1064;</sdkComponents>
+		<sdkComponents>middleware.baremetal.MIMXRT1064;device.MIMXRT1064_startup.MIMXRT1064;platform.Include_common.MIMXRT1064;platform.Include_core_cm7.MIMXRT1064;platform.Include_dsp.MIMXRT1064;device.MIMXRT1064_CMSIS.MIMXRT1064;platform.drivers.common.MIMXRT1064;platform.drivers.clock.MIMXRT1064;platform.drivers.iomuxc.MIMXRT1064;platform.drivers.igpio.MIMXRT1064;platform.drivers.pwm.MIMXRT1064;platform.drivers.xbara.MIMXRT1064;platform.drivers.adc_12b1msps_sar.MIMXRT1064;platform.drivers.cmp.MIMXRT1064;platform.drivers.adc_etc.MIMXRT1064;platform.drivers.lpspi.MIMXRT1064;platform.drivers.enc.MIMXRT1064;platform.drivers.lpuart.MIMXRT1064;platform.drivers.pit.MIMXRT1064;platform.drivers.gpt.MIMXRT1064;</sdkComponents>
 		<package>MIMXRT1064DVL6A</package>
 		<core>cm7</core>
 		<coreId>core0_MIMXRT1064xxxxA</coreId>
@@ -745,22 +745,22 @@
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.650618850.1108807027;com.crt.advproject.config.exe.debug.650618850.1108807027.;com.crt.advproject.gas.exe.debug.1446998517;com.crt.advproject.assembler.input.729239443">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfile"/>
-		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.650618850;com.crt.advproject.config.exe.debug.650618850.;com.crt.advproject.gas.exe.debug.1566297480;com.crt.advproject.assembler.input.92744659">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.release.2079177460;com.crt.advproject.config.exe.release.2079177460.;com.crt.advproject.gcc.exe.release.1077508163;com.crt.advproject.compiler.input.1401772184">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.650618850.1108807027;com.crt.advproject.config.exe.debug.650618850.1108807027.;com.crt.advproject.gcc.exe.debug.78427668;com.crt.advproject.compiler.input.2096880582">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfile"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.650618850;com.crt.advproject.config.exe.debug.650618850.;com.crt.advproject.gcc.exe.debug.1007542224;com.crt.advproject.compiler.input.1214892957">
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.release.2079177460;com.crt.advproject.config.exe.release.2079177460.;com.crt.advproject.gas.exe.release.1933615008;com.crt.advproject.assembler.input.1420624399">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.release.2079177460;com.crt.advproject.config.exe.release.2079177460.;com.crt.advproject.gas.exe.release.1933615008;com.crt.advproject.assembler.input.1420624399">
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.650618850.1108807027;com.crt.advproject.config.exe.debug.650618850.1108807027.;com.crt.advproject.gas.exe.debug.1446998517;com.crt.advproject.assembler.input.729239443">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfile"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.release.2079177460;com.crt.advproject.config.exe.release.2079177460.;com.crt.advproject.gcc.exe.release.1077508163;com.crt.advproject.compiler.input.1401772184">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.650618850;com.crt.advproject.config.exe.debug.650618850.;com.crt.advproject.gcc.exe.debug.1007542224;com.crt.advproject.compiler.input.1214892957">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 	</storageModule>
