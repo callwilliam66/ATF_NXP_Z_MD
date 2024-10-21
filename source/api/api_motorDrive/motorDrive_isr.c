@@ -93,8 +93,6 @@ void motorDrive_isr(void)
 	// servo on IO control
 	mDrv_servoIO_control(&mDrvRegs);
 
-
-
 	// clear loop flag
 
 	mDrv_loopClear();

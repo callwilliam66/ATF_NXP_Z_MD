@@ -183,7 +183,7 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 
 		device_uart_module_txWriteByte_macro(LPUART3_PERIPHERAL, mCtrlRegs.uart2Regs.txRegs.data[UART_TX_PACKET_LENGTH - mCtrlRegs.uart2Regs.txCnt]);
 
-		/*		if(mCtrlRegs.uart2Regs.txCnt == 9 )
+/*		if(mCtrlRegs.uart2Regs.txCnt == 9 )
 		{
 			if(mCtrlRegs.uart2Regs.txRegs.data[UART_TX_PACKET_LENGTH - mCtrlRegs.uart2Regs.txCnt] == 49)
 			{
@@ -206,14 +206,11 @@ void LPUART3_SERIAL_RX_TX_IRQHANDLER(void) {
 				mCtrlRegs.uart2Regs.txpwmCnt++;
 			}
 
-
 			mCtrlRegs.Testtxcnt = mCtrlRegs.uart2Regs.rxisrCnt;
 			mCtrlRegs.Testtxcntdiff = mCtrlRegs.Testtxcnt - mCtrlRegs.Testtxcntwatch;
 
 			if(mCtrlRegs.Testtxcntdiff != 9 )
 			{
-				board_led_g_on_macro();
-				board_led_r_on_macro();
 
 				logtime[0] = mCtrlRegs.uart2Regs.txRegs.data[0];
 				logtime[1] = mCtrlRegs.uart2Regs.txRegs.data[1];

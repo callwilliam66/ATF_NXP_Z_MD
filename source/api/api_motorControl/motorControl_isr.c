@@ -37,6 +37,7 @@ void motorControl_isr(void)
 		EnableIRQ(LPUART3_SERIAL_RX_TX_IRQN);
 
 		mCtrlRegs.uart3Regs.txUpdate = UART_TX_STATE_IDLE;
+
 		mCtrlRegs.ulProgramTimeWatch = 0;
 	}
 #endif

@@ -391,7 +391,7 @@ void mCtrl_inner_uart_tx_dataUpdate(UART_REGS *uartRegs)
 {
 #if  UART_X_MODE == X_AXIS
 
-	if(uartRegs->txUpdate == UART_TX_STATE_IDLE	|| uartRegs->txState == UART_TX_STATE_BUSY )				return;
+	if(uartRegs->txUpdate == UART_TX_STATE_IDLE	|| mCtrlRegs.uart2Regs.txState == UART_TX_STATE_BUSY )				return;
 
 	static uint32 TxXcmdUpdateFlag;
 
@@ -414,7 +414,8 @@ void mCtrl_inner_uart_tx_dataUpdate(UART_REGS *uartRegs)
 	mCtrlRegs.uart2Regs.txState = UART_TX_STATE_BUSY;
 
 	LPUART_EnableInterrupts(LPUART3, kLPUART_TxDataRegEmptyInterruptEnable);
-	EnableIRQ(LPUART3_SERIAL_RX_TX_IRQN);
+
+	//EnableIRQ(LPUART3_SERIAL_RX_TX_IRQN);
 
 	TxXcmdUpdateFlag = 0;
 
@@ -601,6 +602,8 @@ void mCtrl_fpga_uart_tx_dataUpdate(UART_REGS *uartRegs)
 
 	mCtrl_uart_firmwareUpdate_tx(uartRegs);
 
+	uartRegs->txState = UART_TX_STATE_BUSY;
+
 	uartRegs->tx_expect_Cnt++;
 
 	/*if( uartRegs->firmwareUpdateState.bit.bit7 == 1 )
@@ -612,6 +615,11 @@ void mCtrl_fpga_uart_tx_dataUpdate(UART_REGS *uartRegs)
 		uartRegs->rxCnt = 0;
 
 	}*/
+	if( uartRegs->txpwmCnt >= uartRegs->rxcmdCnt)
+	{
+		board_led_g_on_macro();
+		board_led_r_on_macro();
+	}
 
 	timer1 = GPT_GetCurrentTimerCount(GPT1);
 	timer1_diff = timer1- timer1_old;
@@ -659,22 +667,17 @@ void mCtrl_fpga_uart_rx(UART_REGS *uartRegs)
 		{
 			uartRegs->rxRegs.data[uartRegs->rxCnt] = Queue_Pop(&uartRegs->Rx_Data_Queue);
 			uartRegs->global_read_cnt++;
+
 			local_read_cnt++;
 
 			if(uartRegs->rxCnt == 0)
 			{
-				if(uartRegs->rxRegs.data[uartRegs->rxCnt] == UART_HEADER_DATA)
-				{
-					uartRegs->packetMode = UART_PACKET_MODE0_9BITS;
-				}
-				else if(uartRegs->rxRegs.data[uartRegs->rxCnt] == UART_NOSEWHEEL_HEADER_DATA )
-				{
-					uartRegs->packetMode = UART_PACKET_MODE2_NOSE;
-				}
-				else
+				if(uartRegs->rxRegs.data[uartRegs->rxCnt] != UART_HEADER_DATA && uartRegs->rxRegs.data[uartRegs->rxCnt] != UART_NOSEWHEEL_HEADER_DATA)
 				{
 					return;
 				}
+
+				uartRegs->RxPacket[uartRegs->rxcmdCnt % 2] = uartRegs->rxRegs.data[uartRegs->rxCnt];
 			}
 
 			uartRegs->rxCnt++;
@@ -740,6 +743,15 @@ void mCtrl_fpga_uart_rx(UART_REGS *uartRegs)
 		return;
 	}
 
+	if(uartRegs->RxPacket[uartRegs->rxcmdCnt % 2] == UART_HEADER_DATA)
+	{
+		uartRegs->packetMode = UART_PACKET_MODE0_9BITS;
+	}
+	else if(uartRegs->RxPacket[uartRegs->rxcmdCnt % 2] == UART_NOSEWHEEL_HEADER_DATA )
+	{
+		uartRegs->packetMode = UART_PACKET_MODE2_NOSE;
+	}
+
 	uartRegs->rxdataReg_H = 0;
 	uartRegs->rxdataReg_H |= ((uint32) uartRegs->rxRegs.data[1] << 16);
 	uartRegs->rxdataReg_H |= ((uint32) uartRegs->rxRegs.data[2] << 8);
@@ -772,8 +784,6 @@ void mCtrl_fpga_uart_rx(UART_REGS *uartRegs)
 			mCtrlRegs.uart3Regs.txState = UART_TX_STATE_BUSY;
 			mCtrlRegs.uart3Regs.txCnt = UART_TX_REDUCE_PACKET_LENGTH;
 
-
-
 			XcmdUpdateFlag = 0;
 
 			mCtrlRegs.ulProgramTimeWatch = mCtrlRegs.ulProgramTime;
@@ -793,7 +803,6 @@ void mCtrl_fpga_uart_rx(UART_REGS *uartRegs)
 		return;
 
 	}
-
 	uartRegs->XcmdPendStatus = 0;
 
 	uartRegs->ulZaxisRxcnt++;
